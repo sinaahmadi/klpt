@@ -1,4 +1,9 @@
 # Kurdish Language Processing Toolkit
+
+<p align="center" width="100%">
+    <img width="33%" src="docs/KLPT_logo.png"> 
+</p>
+
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) [![Awesome](https://awesome.re/badge.svg)](https://awesome.re) [![PyPI version fury.io](https://badge.fury.io/py/ansicolortags.svg)]() [![PyPI status](https://img.shields.io/pypi/status/ansicolortags.svg)](https://pypi.python.org/pypi/ansicolortags/) 
 
 
