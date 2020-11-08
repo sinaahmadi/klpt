@@ -9,10 +9,13 @@ Based on the Hunspell implementation of Sorani Kurdish by Sina Ahmadi (2020)
 """
 
 import sys
+
 from hunspell import Hunspell
+
 # from klpt.configuration import Configuration
 sys.path.append('../klpt')
 import klpt
+
 
 class Stem():
     """The Stem class deals with various tasks as follows:
@@ -29,7 +32,8 @@ class Stem():
         if dialect == "Sorani" and script == "Arabic":
             self.huns = Hunspell("ckb-Arab", hunspell_data_dir=klpt.get_data("data/"))
         else:
-            raise Exception("Sorry, only Sorani dialect in the Arabic script is supported now. Stay tuned for other dialects and scripts!")
+            raise Exception(
+                "Sorry, only Sorani dialect in the Arabic script is supported now. Stay tuned for other dialects and scripts!")
 
     # def stem(self, word):
     #     """A function for stemming a single word"""
@@ -113,7 +117,8 @@ class Stem():
                         # ts flag exceptionally appears after the value as value:key in the Hunspell output
                         analysis_dict["base"] = item.split(":")[0]
                         # anything except the terminal_suffix is considered to be the base
-                        analysis_dict[self.hunspell_flags[item.split(":")[1]]] = word_form.replace(item.split(":")[0], "")
+                        analysis_dict[self.hunspell_flags[item.split(":")[1]]] = word_form.replace(item.split(":")[0],
+                                                                                                   "")
                     elif item.split(":")[0] in self.hunspell_flags.keys():
                         # assign the key:value pairs from the Hunspell string output to the dictionary output of the current function
                         # for ds flag, add derivation as the formation type, otherwise inflection

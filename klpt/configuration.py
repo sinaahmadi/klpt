@@ -11,12 +11,14 @@ Returns:
     obj: an object to be passed to other packages
 """
 import sys
+
 sys.path.append('../klpt')
 import json
 import klpt
 
+
 class Configuration:
-    def __init__(self, config_dict):#dialect, script, numeral="Latin", target_script=None, unknown="�"):
+    def __init__(self, config_dict):  # dialect, script, numeral="Latin", target_script=None, unknown="�"):
         """
 
         Args:
@@ -28,7 +30,7 @@ class Configuration:
 
         with open(klpt.get_data("data/default-options.json")) as options_file:
             self.options = json.load(options_file)
-        
+
         self.unknown = None
 
         if "script" in config_dict:
@@ -45,7 +47,7 @@ class Configuration:
             self.validate_numeral(config_dict["numeral"])
         else:
             self.numeral = None
-    
+
         if "target_script" in config_dict:
             self.validate_target_script(config_dict["target_script"])
         else:
@@ -69,7 +71,8 @@ class Configuration:
         if self.normalize_arguments(dialect) in self.options["dialects"]:
             self.dialect = self.normalize_arguments(dialect)
         elif self.normalize_arguments(dialect) in list(self.options["dialects"].values()):
-            self.dialect = dict(zip(self.options["dialects"].values(), self.options["dialects"].keys()))[self.normalize_arguments(dialect)]
+            self.dialect = dict(zip(self.options["dialects"].values(), self.options["dialects"].keys()))[
+                self.normalize_arguments(dialect)]
         else:
             raise ValueError(f'Unknown dialect. Available options: {self.options["dialects"]}')
 
@@ -95,7 +98,6 @@ class Configuration:
             self.user_UNKNOWN = unknown
         else:
             raise ValueError(f'Unknown unknown tag. Select a non-empty token (e.g. <UNK>.')
-
 
 # To Do:
 # User should be able to update the configuration at any point in such a way that the class that uses that instance also get updated

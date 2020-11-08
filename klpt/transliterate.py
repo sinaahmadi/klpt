@@ -10,14 +10,14 @@
 
 """
 
-import sys
 # sys.path.append('../klpt')
 import itertools
 import json
-import re
-from .preprocess import Preprocess
-from .configuration import Configuration
+
 import klpt
+from .configuration import Configuration
+from .preprocess import Preprocess
+
 
 class Transliterate:
     """
@@ -43,15 +43,17 @@ class Transliterate:
         """
         # with open("data/default-options.json") as f:
         #     options = json.load(f)
-        
+
         self.UNKNOWN = "�"
         with open(klpt.get_data("data/wergor.json")) as f:
             self.wergor_configurations = json.load(f)
 
         with open(klpt.get_data("data/preprocess_map.json")) as f:
             self.preprocess_map = json.load(f)["normalizer"]
-        
-        configuration = Configuration({"dialect": dialect, "script": script, "numeral": numeral, "target_script": target_script, "unknown": unknown})
+
+        configuration = Configuration(
+            {"dialect": dialect, "script": script, "numeral": numeral, "target_script": target_script,
+             "unknown": unknown})
         # self.preprocess_map = object.preprocess_map["normalizer"]
         self.dialect = configuration.dialect
         self.script = configuration.script
@@ -67,7 +69,7 @@ class Transliterate:
         #     target_script = "Arabic"
         # else:
         #     raise ValueError(f'Unknown transliteration option. Available options: {options["transliterator"]}')
-    
+
         # if len(unknown):
         #     self.user_UNKNOWN = unknown
         # else:
@@ -75,10 +77,13 @@ class Transliterate:
 
         self.characters_mapping = self.wergor_configurations["characters_mapping"]
         self.digits_mapping = self.preprocess_map["universal"]["numerals"][self.target_script]
-        self.digits_mapping_all = list(set(list(self.preprocess_map["universal"]["numerals"][self.target_script].keys()) + list(self.preprocess_map["universal"]["numerals"][self.target_script].values())))
+        self.digits_mapping_all = list(set(
+            list(self.preprocess_map["universal"]["numerals"][self.target_script].keys()) + list(
+                self.preprocess_map["universal"]["numerals"][self.target_script].values())))
         self.punctuation_mapping = self.wergor_configurations["punctuation"][self.target_script]
-        self.punctuation_mapping_all = list(set(list(self.wergor_configurations["punctuation"][self.target_script].keys()) + 
-                                                list(self.wergor_configurations["punctuation"][self.target_script].values())))
+        self.punctuation_mapping_all = list(
+            set(list(self.wergor_configurations["punctuation"][self.target_script].keys()) +
+                list(self.wergor_configurations["punctuation"][self.target_script].values())))
         # self.tricky_characters = self.wergor_configurations["characters_mapping"]
         self.wy_mappings = self.wergor_configurations["wy_mappings"]
 
@@ -90,18 +95,18 @@ class Transliterate:
         self.arabic_cons = self.wergor_configurations["arabic_cons"]
         self.latin_vowels = self.wergor_configurations["latin_vowels"]
         self.latin_cons = self.wergor_configurations["latin_cons"]
-        
-        self.characters_pack = {"arabic_to_latin": self.characters_mapping.values(), "latin_to_arabic": self.characters_mapping.keys()}
+
+        self.characters_pack = {"arabic_to_latin": self.characters_mapping.values(),
+                                "latin_to_arabic": self.characters_mapping.keys()}
         if self.target_script == "Arabic":
             self.prep = Preprocess("Sorani", "Latin", numeral=self.numeral)
         else:
             self.prep = Preprocess("Sorani", "Latin", numeral="Latin")
 
-
     def to_pieces(self, token):
-        """Given a token, find other segments composed of numbers and punctuation marks not seperated by space ▁""" 
+        """Given a token, find other segments composed of numbers and punctuation marks not seperated by space ▁"""
         tokens_dict = dict()
-        flag = False # True if a token is a \w
+        flag = False  # True if a token is a \w
         i = 0
 
         for char_index in range(len(token)):
@@ -110,17 +115,17 @@ class Transliterate:
                 flag = False
                 i = 0
             elif token[char_index] in self.characters_pack[self.mode] or \
-                token[char_index] in self.target_char or \
-                token[char_index] == self.hemze or token[char_index].lower() == self.bizroke:
+                    token[char_index] in self.target_char or \
+                    token[char_index] == self.hemze or token[char_index].lower() == self.bizroke:
                 if flag:
-                    tokens_dict[char_index-i] = tokens_dict[char_index-i] + token[char_index]
+                    tokens_dict[char_index - i] = tokens_dict[char_index - i] + token[char_index]
                 else:
                     tokens_dict[char_index] = token[char_index]
                 flag = True
                 i += 1
             else:
                 tokens_dict[char_index] = self.UNKNOWN
-        
+
         return tokens_dict
 
     def transliterate(self, text):
@@ -143,7 +148,8 @@ class Transliterate:
             for token in line.split():
                 trans_token = ""
                 # try:
-                token = self.preprocessor(token) # This is not correct as the capital letter should be kept the way it is given.
+                token = self.preprocessor(
+                    token)  # This is not correct as the capital letter should be kept the way it is given.
                 tokens_dict = self.to_pieces(token)
                 # Transliterate words
                 for token_key in tokens_dict:
@@ -153,7 +159,7 @@ class Transliterate:
                             # w/y detection based on the priority in "word"
                             for char in word:
                                 if char in self.target_char:
-                                    word = self.uw_iy_Detector(word, char)  
+                                    word = self.uw_iy_Detector(word, char)
                             if word[0] == self.hemze and word[1] in self.arabic_vowels:
                                 word = word[1:]
                             word = list(word)
@@ -168,12 +174,13 @@ class Transliterate:
                                     word[char_index] = self.latin_to_arabic(word[char_index])
                                 if word[0] in self.arabic_vowels or word[0].lower() == self.bizroke:
                                     word.insert(0, self.hemze)
-                                word = "".join(word).replace("û", "وو").replace(self.bizroke.lower(), "").replace(self.bizroke.upper(), "")
+                                word = "".join(word).replace("û", "وو").replace(self.bizroke.lower(), "").replace(
+                                    self.bizroke.upper(), "")
                             # else:
                             #     return self.UNKNOWN
 
                         trans_token = trans_token + word
-            
+
                 transliterated_line.append(trans_token)
             transliterated_text.append(" ".join(transliterated_line).replace(u" w ", u" û "))
 
@@ -187,7 +194,10 @@ class Transliterate:
     def preprocessor(self, word):
         """Preprocessing by normalizing text encoding and removing embedding characters"""
         # replace this by the normalization part
-        word = list(word.replace('\u202b', "").replace('\u202c', "").replace('\u202a', "").replace(u"وو", "û").replace("\u200c", "").replace("ـ", ""))
+        word = list(
+            word.replace('\u202b', "").replace('\u202c', "").replace('\u202a', "").replace(u"وو", "û").replace("\u200c",
+                                                                                                               "").replace(
+                "ـ", ""))
         # for char_index in range(len(word)):
         #     if(word[char_index] in self.tricky_characters.keys()):
         #         word[char_index] = self.tricky_characters[word[char_index]]
@@ -200,43 +210,44 @@ class Transliterate:
             dic_index = 1
         else:
             dic_index = 0
-        
+
         if word == target_char:
             word = self.uw_iy_forms["target_char_cons"][dic_index]
         else:
             for index in range(len(word)):
-                if word[index] == self.hemze and word[index+1] == target_char:
-                    word[index+1] = self.uw_iy_forms["target_char_vowel"][dic_index]
+                if word[index] == self.hemze and word[index + 1] == target_char:
+                    word[index + 1] = self.uw_iy_forms["target_char_vowel"][dic_index]
                     index += 1
                 else:
                     if word[index] == target_char:
                         if index == 0:
                             word[index] = self.uw_iy_forms["target_char_cons"][dic_index]
                         else:
-                            if word[index-1] in self.arabic_vowels:
+                            if word[index - 1] in self.arabic_vowels:
                                 word[index] = self.uw_iy_forms["target_char_cons"][dic_index]
                             else:
-                                if index+1 < len(word):
-                                    if word[index+1] in self.arabic_vowels:
+                                if index + 1 < len(word):
+                                    if word[index + 1] in self.arabic_vowels:
                                         word[index] = self.uw_iy_forms["target_char_cons"][dic_index]
                                     else:
                                         word[index] = self.uw_iy_forms["target_char_vowel"][dic_index]
                                 else:
                                     word[index] = self.uw_iy_forms["target_char_vowel"][dic_index]
 
-        word = "".join(word).replace(self.hemze+self.uw_iy_forms["target_char_vowel"][dic_index], self.uw_iy_forms["target_char_vowel"][dic_index])
+        word = "".join(word).replace(self.hemze + self.uw_iy_forms["target_char_vowel"][dic_index],
+                                     self.uw_iy_forms["target_char_vowel"][dic_index])
         return word
 
     def syllable_detector(self, word):
         """Detection of the syllable based on the given pattern. May be used for transcription applications."""
         syllable_templates = ["V", "VC", "VCC", "CV", "CVC", "CVCCC"]
-        CV_converted_list = ""       
+        CV_converted_list = ""
         for char in word:
             if char in self.latin_vowels:
                 CV_converted_list += "V"
             else:
                 CV_converted_list += "C"
-        
+
         syllables = list()
         for i in range(1, len(CV_converted_list)):
             syllable_templates_permutated = [p for p in itertools.product(syllable_templates, repeat=i)]
@@ -249,7 +260,8 @@ class Transliterate:
     def bizroke_finder(self, word):
         """Detection of the "i" character in the Arabic-based script. Incomplete version."""
         word = list(word)
-        if len(word) > 2 and word[0] in self.latin_cons and word[1] in self.latin_cons and word[1] != "w" and word[1] != "y":
+        if len(word) > 2 and word[0] in self.latin_cons and word[1] in self.latin_cons and word[1] != "w" and word[
+            1] != "y":
             word.insert(1, "i")
         return "".join(word)
 
@@ -268,7 +280,7 @@ class Transliterate:
         """Mapping Latin-based characters to the Arabic-based equivalents"""
         # check if the character is in upper case
         mapped_char = ""
-        
+
         if char.lower() != "":
             if char.lower() in self.wy_mappings.keys():
                 mapped_char = self.wy_mappings[char.lower()]
@@ -278,14 +290,13 @@ class Transliterate:
                 mapped_char = self.punctuation_mapping[char.lower()]
             # elif char.lower() in self.digits_mapping.values():
             #     mapped_char = self.digits_mapping.keys()[self.digits_mapping.values().index(char.lower())]
-        
+
         if len(mapped_char):
             if char.isupper():
                 return mapped_char.upper()
             return mapped_char
         else:
             return char
-
 
 # Known bugs:
 # لە ئیسپانیان ژنان لەدژی ‘patriarkavirus’ ڕێپێوانیان ئەنجامدا

@@ -2,18 +2,21 @@
 # -*- coding: utf-8 -*-
 
 import sys
+
 sys.path.append('../klpt')
 import unittest
 from klpt.preprocess import Preprocess
 import klpt
 import json
 
+
 class TestPreprocess(unittest.TestCase):
     """ Test unit for the Preprocess class"""
+
     def setUp(self):
         with open(klpt.get_data("data/test_cases.json")) as f:
             self.test_cases = json.load(f)
-                    
+
         with open(klpt.get_data("data/default-options.json")) as f:
             self.options = json.load(f)
 
@@ -43,6 +46,7 @@ class TestPreprocess(unittest.TestCase):
             for case in self.test_cases["numerals"][numeral]:
                 prep = Preprocess("Sorani", "Latin", numeral)
                 self.assertEqual(prep.unify_numerals(case), self.test_cases["numerals"][numeral][case])
+
 
 if __name__ == "__main__":
     unittest.main()

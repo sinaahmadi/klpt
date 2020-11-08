@@ -14,9 +14,12 @@
 import json
 import re
 import sys
+
 from .configuration import Configuration
+
 sys.path.append('../klpt')
 import klpt
+
 
 class Preprocess:
     """
@@ -113,7 +116,6 @@ class Preprocess:
                 temp_text = re.sub(rf"{rep}", rf"{rep_tar}", temp_text, flags=re.I)
 
         return temp_text.strip()
-
 
     def unify_numerals(self, text):
         """

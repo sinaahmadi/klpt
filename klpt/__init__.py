@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys
+
 sys.path.append('../klpt')
 import os
 
@@ -21,15 +22,18 @@ __author_email__ = __maintainer_email__
 #         return " ".join([token for token in text.split() if token not in self.stopwords])
 
 _ROOT = os.path.abspath(os.path.dirname(__file__))
+
+
 def get_data(path):
     return os.path.join(_ROOT, '', path)
+
 
 data_directory = {
     "tokenize": {
         "Sorani": {
             "Arabic": get_data("data/lexicon_ckb_arab.json"),
             "Latin": get_data("data/lexicon_ckb_latn.json")
-            },
+        },
         "Kurmanji": {
             "Latin": get_data("data/lexicon_kmr_latn.json")
         }
@@ -39,4 +43,3 @@ data_directory = {
         "Kurmanji": get_data("data/kmr-morphemes.json")
     }
 }
-

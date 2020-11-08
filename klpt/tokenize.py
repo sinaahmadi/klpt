@@ -11,16 +11,17 @@
 
 """
 import json
-import sys
 import re
+import sys
+
 sys.path.append('../klpt')
-from .configuration import Configuration
-from .preprocess import Preprocess
 import klpt
+
 
 class Tokenize:
     """A class for tokenizing text in Sorani and Kurmanji Kurdish
     """
+
     def __init__(self, dialect, script, numeral="Latin", separator='▁'):
 
         # validate parameters
@@ -32,24 +33,24 @@ class Tokenize:
 
         # sentence tokenizer variables
         self.dialect, self.script = dialect, script
-        self.alphabets = "([%s])"%"".join(self.tokenize_map["sent_tokenize"][self.dialect][self.script]["alphabet"])
+        self.alphabets = "([%s])" % "".join(self.tokenize_map["sent_tokenize"][self.dialect][self.script]["alphabet"])
         self.prefixes = self.tokenize_map["sent_tokenize"][self.dialect][self.script]["prefixes"]
         self.suffixes = self.tokenize_map["sent_tokenize"][self.dialect][self.script]["suffixes"]
         self.starters = self.tokenize_map["sent_tokenize"][self.dialect][self.script]["starters"]
         self.websites = self.tokenize_map["sent_tokenize"]["universal"]["websites"]
         self.acronyms = self.tokenize_map["sent_tokenize"][self.dialect][self.script]["acronyms"]
-        self.digits = "([%s])"%"".join(list(set(list(self.preprocess_map["normalizer"]["universal"]["numerals"][numeral].values()))))
+        self.digits = "([%s])" % "".join(
+            list(set(list(self.preprocess_map["normalizer"]["universal"]["numerals"][numeral].values()))))
 
         # load lexicons
         with open(klpt.data_directory["tokenize"][self.dialect][self.script], "r") as f_lexicon:
             self.lexicon = json.load(f_lexicon)["Lexicon"]
-         
+
         self.mwe_lexicon = {lemma: form for lemma, form in self.lexicon.items() if "-" in lemma}
 
         with open(klpt.data_directory["morphemes"][self.dialect], "r") as f_morphemes:
             self.morphemes = json.load(f_morphemes)["Morphemes"]["Concatenated"][self.script]
-        
-    
+
     def mwe_tokenize(self, sentence, separator="▁▁", in_separator="‒", punct_marked=False, keep_form=False):
         """Multi-word expression tokenization
 
@@ -78,9 +79,10 @@ class Tokenize:
                 if keep_form:
                     sentence = sentence.replace(compound_lemma_context, " ▁▁" + compound_lemma + "▁▁ ")
                 else:
-                    sentence = sentence.replace(compound_lemma_context, " ▁▁" + compound_lemma.replace("-", in_separator) + "▁▁ ")                    
+                    sentence = sentence.replace(compound_lemma_context,
+                                                " ▁▁" + compound_lemma.replace("-", in_separator) + "▁▁ ")
 
-            # check the possible word forms available for each compound lemma in the lex files, too
+                    # check the possible word forms available for each compound lemma in the lex files, too
             # Note: compound forms don't have any hyphen or separator in the lex files
             for compound_form in self.mwe_lexicon[compound_lemma]["token_forms"]:
                 compound_form_context = " " + compound_form + " "
@@ -88,12 +90,11 @@ class Tokenize:
                     if keep_form:
                         sentence = sentence.replace(compound_form_context, " ▁▁" + compound_form + "▁▁ ")
                     else:
-                        sentence = sentence.replace(compound_form_context, " ▁▁" + compound_lemma.replace("-", in_separator) + "▁▁ ")
-                        
+                        sentence = sentence.replace(compound_form_context,
+                                                    " ▁▁" + compound_lemma.replace("-", in_separator) + "▁▁ ")
 
         # print(sentence)
         return sentence.replace("  ", " ").replace("▁▁", separator).strip()
-        
 
     def word_tokenize(self, sentence, separator="▁", mwe_separator="▁▁", keep_form=False):
         """Word tokenizer
@@ -132,28 +133,34 @@ class Tokenize:
                     for preposition in self.morphemes["prefixes"]:
                         if word.startswith(preposition) and len(word.split(preposition, 1)) > 1:
                             if word.split(preposition, 1)[1] in self.lexicon:
-                                word = "▁".join(["", self.morphemes["prefixes"][preposition], word.split(preposition, 1)[1], ""])
+                                word = "▁".join(
+                                    ["", self.morphemes["prefixes"][preposition], word.split(preposition, 1)[1], ""])
                                 token_identified = True
                                 break
-                            elif self.mwe_tokenize(word.split(preposition, 1)[1], keep_form=keep_form) != word.split(preposition, 1)[1]:
-                                word = "▁" + self.morphemes["prefixes"][preposition] + self.mwe_tokenize(word.split(preposition, 1)[1], keep_form=keep_form)
+                            elif self.mwe_tokenize(word.split(preposition, 1)[1], keep_form=keep_form) != \
+                                    word.split(preposition, 1)[1]:
+                                word = "▁" + self.morphemes["prefixes"][preposition] + self.mwe_tokenize(
+                                    word.split(preposition, 1)[1], keep_form=keep_form)
                                 token_identified = True
                                 break
-                    
+
                     if not token_identified:
                         for postposition in self.morphemes["suffixes"]:
                             if word.endswith(postposition) and len(word.rpartition(postposition)[0]):
                                 if word.rpartition(postposition)[0] in self.lexicon:
-                                    word = "▁" + word.rpartition(postposition)[0] + "▁" + self.morphemes["suffixes"][postposition]
+                                    word = "▁" + word.rpartition(postposition)[0] + "▁" + self.morphemes["suffixes"][
+                                        postposition]
                                     break
-                                elif self.mwe_tokenize(word.rpartition(postposition)[0], keep_form=keep_form) != word.rpartition(postposition)[0]:
-                                    word = ("▁" + self.mwe_tokenize(word.rpartition(postposition)[0], keep_form=keep_form) + "▁" + self.morphemes["suffixes"][postposition] + "▁").replace("▁▁▁", "▁▁")
+                                elif self.mwe_tokenize(word.rpartition(postposition)[0], keep_form=keep_form) != \
+                                        word.rpartition(postposition)[0]:
+                                    word = ("▁" + self.mwe_tokenize(word.rpartition(postposition)[0],
+                                                                    keep_form=keep_form) + "▁" +
+                                            self.morphemes["suffixes"][postposition] + "▁").replace("▁▁▁", "▁▁")
                                     break
-            
+
                     tokens.append(word)
         # print(tokens)
         return " ".join(tokens).replace("▁▁", mwe_separator).replace("▁", separator).split()
-
 
     def sent_tokenize(self, text):
         """Sentence tokenizer
@@ -171,21 +178,22 @@ class Tokenize:
         text = re.sub(self.websites, "<prd>\\1", text)
         text = re.sub("\s" + self.alphabets + "[.] ", " \\1<prd> ", text)
         text = re.sub(self.acronyms + " " + self.starters, "\\1<stop> \\2", text)
-        text = re.sub(self.alphabets + "[.]" + self.alphabets + "[.]" + self.alphabets + "[.]", "\\1<prd>\\2<prd>\\3<prd>", text)
+        text = re.sub(self.alphabets + "[.]" + self.alphabets + "[.]" + self.alphabets + "[.]",
+                      "\\1<prd>\\2<prd>\\3<prd>", text)
         text = re.sub(self.alphabets + "[.]" + self.alphabets + "[.]", "\\1<prd>\\2<prd>", text)
         text = re.sub(" " + self.suffixes + "[.] " + self.starters, " \\1<stop> \\2", text)
         text = re.sub(" " + self.suffixes + "[.]", " \\1<prd>", text)
         text = re.sub(self.digits + "[.]" + self.digits, "\\1<prd>\\2", text)
-        
+
         # for punct in self.tokenize_map[self.dialect][self.script]["compound_puncts"]:
         #     if punct in text:
         #         text = text.replace("." + punct, punct + ".")
-        
+
         for punct in self.tokenize_map["sent_tokenize"][self.dialect][self.script]["punct_boundary"]:
             text = text.replace(punct, punct + "<stop>")
-        
+
         text = text.replace("<prd>", ".")
         sentences = text.split("<stop>")
         sentences = [s.strip() for s in sentences if len(s.strip())]
-        
+
         return sentences

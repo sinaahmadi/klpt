@@ -4,16 +4,18 @@
 """
 
 import sys
+
 sys.path.append('../klpt')
 import unittest
-from klpt.preprocess import Preprocess
 from klpt.configuration import Configuration
 import json
 import klpt
 
+
 class TestPreprocess(unittest.TestCase):
     """ Test unit for the Preprocess class"""
-    def setUp(self):                    
+
+    def setUp(self):
         with open(klpt.get_data("data/default-options.json")) as f:
             self.options = json.load(f)
 
@@ -26,6 +28,6 @@ class TestPreprocess(unittest.TestCase):
                 for numeral in self.options["numerals"]:
                     Configuration({"dialect": dialect, "script": script, "numeral": numeral})
 
+
 if __name__ == '__main__':
     unittest.main()
-    

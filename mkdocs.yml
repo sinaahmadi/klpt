@@ -13,21 +13,21 @@ theme:
   colorscheme: github
   highlightjs: true
   hljs_languages:
-      - python
+    - python
 
 nav:
-    - Home: index.md
-    - User Guide:
-        - Getting started: user-guide/getting-started.md
-        - Preprocess: user-guide/preprocess.md
-        - Stem: user-guide/stem.md
-        - Tokenize: user-guide/tokenize.md
-        - Transliterate: user-guide/transliterate.md
-        - Configuration: user-guide/configuration.md
-    - About:
-        - Release Notes: about/release-notes.md
-        - Contributing: about/contributing.md
-        - License: about/license.md
+  - Home: index.md
+  - User Guide:
+      - Getting started: user-guide/getting-started.md
+      - Preprocess: user-guide/preprocess.md
+      - Stem: user-guide/stem.md
+      - Tokenize: user-guide/tokenize.md
+      - Transliterate: user-guide/transliterate.md
+      - Configuration: user-guide/configuration.md
+  - About:
+      - Release Notes: about/release-notes.md
+      - Contributing: about/contributing.md
+      - License: about/license.md
 
 plugins:
   - search
