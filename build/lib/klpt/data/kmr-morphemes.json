@@ -1,0 +1,96 @@
+{
+	"Copyright": [
+		"# Kurmanji Kurdish morphemes",
+		"# Kurdish Language Processing Toolkit: https://github.com/sinaahmadi/klpt",
+		"# Available under the Creative Commons Attribution-ShareAlike 4.0 International License.",
+		"# Copyright (c) 2020: Sina Ahmadi (ahmadi.sina@outlook.com)",
+		"# Version 0.1.0 Last updated on 22/07/2020"
+    ],
+	"Morphemes": {
+		"Concatenated": {
+			"Latin": {
+				"suffixes": {
+					"ê": "ê",
+					"î": "î",
+					"a": "a",
+					"m": "m",
+					"y": "y",
+					"ên": "ên",
+					"an": "an",
+					"ek": "ek",
+					"yê": "yê",
+					"yî": "yî",
+					"im": "im",
+					"in": "in",
+					"bû": "bû",
+					"re": "re",
+					"ve": "ve",
+					"de": "de",
+					"wî": "wî",
+					"wê": "wê",
+					"tê": "tê",
+					"jê": "jê",
+					"vî": "vî",
+					"da": "da",
+					"ra": "ra",
+					"ye": "ye",
+					"ekî": "ekî",
+					"yên": "yên",
+					"yan": "yan",
+					"yek": "yek",
+					"eke": "eke",
+					"eka": "eka",
+					"ekê": "ekê",
+					"îya": "îya",
+					"îyê": "îyê",
+					"tir": "tir",
+					"bûm": "bûm",
+					"bûn": "bûn",
+					"yekî": "yekî",
+					"yekê": "yekê",
+					"îyên": "îyên",
+					"îyan": "îyan",
+					"îyek": "îyek",
+					"bûyî": "bûyî",
+					"îyeke": "îyeke",
+					"îyekê": "îyekê",
+					"îyekî": "îyekî",
+					"tirîn": "tirîn"
+
+				},
+				"prefixes": {
+					"li": "li",
+					"çê": "çê",
+					"da": "da",
+					"ra": "ra",
+					"ve": "ve",
+					"ba": "ba",
+					"bê": "bê",
+					"bi": "bi",
+					"di": "di",
+					"ji": "ji",
+					"der": "der",
+					"ber": "ber",
+					"beyî": "beyî",
+					"berî": "berî",
+					"pê": "pê",
+					"tê": "tê",
+					"jê": "jê",
+					"lê": "lê"
+				}
+			},
+			"Arabic": {
+				"suffixes": [],
+				"prefixes": []
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+

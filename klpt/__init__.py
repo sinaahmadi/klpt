@@ -2,10 +2,7 @@
 # -*- coding: utf-8 -*-
 import sys
 sys.path.append('../klpt')
-import json
-# from klpt.preprocess import Preprocess
-# from klpt.transliterator import Transliterator
-# from klpt.configuration import Configuration
+import os
 
 __url__ = "https://sinaahmadi.github.io/klpt"
 
@@ -23,18 +20,23 @@ __author_email__ = __maintainer_email__
 #         """remove stopwords"""
 #         return " ".join([token for token in text.split() if token not in self.stopwords])
 
+_ROOT = os.path.abspath(os.path.dirname(__file__))
+def get_data(path):
+    return os.path.join(_ROOT, '', path)
+
 data_directory = {
     "tokenize": {
         "Sorani": {
-            "Arabic": "data/lexicon_ckb_arab.json",
-            "Latin": "data/lexicon_ckb_latn.json"
+            "Arabic": get_data("data/lexicon_ckb_arab.json"),
+            "Latin": get_data("data/lexicon_ckb_latn.json")
             },
         "Kurmanji": {
-            "Latin": "data/lexicon_kmr_latn.json"
+            "Latin": get_data("data/lexicon_kmr_latn.json")
         }
     },
     "morphemes": {
-        "Sorani": "data/ckb-morphemes.json",
-        "Kurmanji": "data/kmr-morphemes.json"
+        "Sorani": get_data("data/ckb-morphemes.json"),
+        "Kurmanji": get_data("data/kmr-morphemes.json")
     }
 }
+

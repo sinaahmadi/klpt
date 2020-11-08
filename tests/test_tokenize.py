@@ -6,14 +6,15 @@ sys.path.append('../klpt')
 import unittest
 from klpt.tokenize import Tokenize
 import json
+import klpt
 
 class TestTokenize(unittest.TestCase):
     """ Test unit for the Preprocess class"""
     def setUp(self):
-        with open("data/test_cases_tokenize.json") as f:
+        with open(klpt.get_data("data/test_cases_tokenize.json")) as f:
             self.test_cases = json.load(f)
                     
-        with open("data/default-options.json") as f:
+        with open(klpt.get_data("data/default-options.json")) as f:
             self.options = json.load(f)
 
     def tearDown(self):

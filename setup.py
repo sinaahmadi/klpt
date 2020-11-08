@@ -9,17 +9,17 @@ with open('requirements.txt') as f:
     required = [req.strip() for req in f.read().splitlines() if req.strip()]
 
 setup(
-    name="KLPT",
-    version="0.1.0",
+    name="klpt",
+    version="0.1.4",
     description="Kurdish Language Processing Toolkit",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Sina Ahmadi",
     author_email="ahmadi.sina@outlook.com",
     url="https://github.com/sinaahmadi/klpt",
-    packages=find_packages(exclude="tests"),  # same as name
+    packages=find_packages(exclude=["tests", "cinder"]),
     license="CC BY-SA 4.0",
     install_requires=required,
     include_package_data=True,
-    python_requires=">=3.6",
+    python_requires=">=3.6"
 )

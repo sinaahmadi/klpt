@@ -1,0 +1,15 @@
+include klpt/data/ckb-Arab.aff
+include klpt/data/ckb-Arab.dic
+include klpt/data/ckb-morphemes.json
+include klpt/data/default-options.json
+include klpt/data/kmr-morphemes.json
+include klpt/data/lexicon_ckb_arab.json
+include klpt/data/lexicon_ckb_latn.json
+include klpt/data/lexicon_kmr_latn.json
+include klpt/data/preprocess_map.json
+include klpt/data/stopwords.json
+include klpt/data/test_cases_stem.json
+include klpt/data/test_cases_tokenize.json
+include klpt/data/test_cases.json
+include klpt/data/tokenize.json
+include klpt/data/wergor.json

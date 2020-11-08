@@ -9,11 +9,12 @@ import unittest
 from klpt.preprocess import Preprocess
 from klpt.configuration import Configuration
 import json
+import klpt
 
 class TestPreprocess(unittest.TestCase):
     """ Test unit for the Preprocess class"""
     def setUp(self):                    
-        with open("data/default-options.json") as f:
+        with open(klpt.get_data("data/default-options.json")) as f:
             self.options = json.load(f)
 
     def tearDown(self):
