@@ -1,11 +1,24 @@
 {
     "dialects": {
-            "Sorani": "Ckb",
-            "Kurmanji": "Kmr"
-        },
-    "scripts": ["Arabic", "Latin"],
-    "numerals": ["Latin", "Farsi", "Arabic"],
-    "transliterator": ["arabic_to_latin", "latin_to_arabic"],
-    "target_scripts": ["Latin", "Arabic"]
+        "Sorani": "Ckb",
+        "Kurmanji": "Kmr"
+    },
+    "scripts": [
+        "Arabic",
+        "Latin"
+    ],
+    "numerals": [
+        "Latin",
+        "Farsi",
+        "Arabic"
+    ],
+    "transliterator": [
+        "arabic_to_latin",
+        "latin_to_arabic"
+    ],
+    "target_scripts": [
+        "Latin",
+        "Arabic"
+    ]
 }
 
