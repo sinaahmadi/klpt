@@ -1,7 +1,7 @@
 # Kurdish Language Processing Toolkit
 
 <p align="center" width="100%">
-    <img width="33%" src="docs/img/KLPT_logo.png"> 
+    <img width="33%" src="https://raw.githubusercontent.com/sinaahmadi/klpt/master/docs/img/KLPT_logo.png"> 
 </p>
 
 <p align="center">
