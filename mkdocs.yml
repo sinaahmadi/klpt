@@ -1,35 +1,37 @@
 use_directory_urls: true
 site_name: KLPT
-site_url: https://sinaahmadi.github.io/KLPT/
+site_url: https://sinaahmadi.github.io/klpt/
 site_description: "Kurdish Language Processing Project"
 site_author: Sina Ahmadi
 copyright: <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Kurdish Language Processing Toolkit</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/sinaahmadi/klpt" property="cc:attributionName" rel="cc:attributionURL">Sina Ahmadi</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
 
-repo_url: "https://github.com/sinaahmadi/KLPT"
+repo_url: "https://github.com/sinaahmadi/klpt"
 
 theme:
   name: null
   custom_dir: cinder
-  colorscheme: github
+  colorscheme: dracula
   highlightjs: true
   hljs_languages:
       - python
+      - json
 
 nav:
     - Home: index.md
     - User Guide:
         - Getting started: user-guide/getting-started.md
         - Preprocess: user-guide/preprocess.md
-        - Stem: user-guide/stem.md
         - Tokenize: user-guide/tokenize.md
         - Transliterate: user-guide/transliterate.md
-        - Configuration: user-guide/configuration.md
+        - Stem: user-guide/stem.md
     - About:
         - Release Notes: about/release-notes.md
         - Contributing: about/contributing.md
+        - Sponsors: about/sponsors.md
         - License: about/license.md
 
 plugins:
   - search
   - mkdocstrings
+  - git-revision-date
 

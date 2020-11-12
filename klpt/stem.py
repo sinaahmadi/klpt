@@ -14,13 +14,27 @@ from hunspell import Hunspell
 sys.path.append('../klpt')
 import klpt
 
-class Stem():
-    """The Stem class deals with various tasks as follows:
-        - spell error detection and correction
-        - morphological analysis
-        - stemming
+class Stem:
+    """
 
-        These tasks are carried out in the `Kurdish Hunspell project <https://github.com/sinaahmadi/KurdishHunspell>`_.
+    The Stem module deals with various tasks, mainly through the following functions:
+        - `check_spelling`: spell error detection
+        - `correct_spelling`: spell error correction
+        - `analyze`: morphological analysis
+
+    Please note that only Sorani is supported in this version in this module. The module is based on the [Kurdish Hunspell project](https://github.com/sinaahmadi/KurdishHunspell).
+
+    Example:
+    ```python
+    >>> from klpt.stem import Stem
+    >>> stemmer = Stem("Sorani", "Arabic")
+    >>> stemmer.check_spelling("سوتاندبووت")
+    False
+    >>> stemmer.correct_spelling("سوتاندبووت")
+    (False, ['ستاندبووت', 'سووتاندبووت', 'سووڕاندبووت', 'ڕووتاندبووت', 'فەوتاندبووت', 'بووژاندبووت'])
+    >>> stemmer.analyze("دیتبامن")
+    [{'pos': 'verb', 'description': 'past_stem_transitive_active', 'base': 'دیت', 'terminal_suffix': 'بامن'}]
+    ```
 
     """
 
@@ -57,7 +71,10 @@ class Stem():
             return self.huns.spell(word)
 
     def correct_spelling(self, word):
-        """Correct spelling errors if the input word is incorrect
+        """
+        Correct spelling errors if the input word is incorrect. It returns a tuple where the first element indicates the correctness of the word (True if correct, False if incorrect).
+            If the input word is incorrect, suggestions are provided in a list as the second element of the tuple, as (False, []).
+            If no suggestion is available, the list is returned empty as (True, []).
 
         Args:
             word (str): input word to be spell-checked
@@ -66,9 +83,8 @@ class Stem():
             TypeError: only string as input
 
         Returns:
-            tuple (boolean, list): a tuple where the first element indicates the correctness of the word (True if correct, False if incorrect).
-            If the input word is incorrect, suggestions are provided in a list as the second element of the tuple, as (False, []).
-            If no suggestion is available, the list is returned empty as (True, []).
+            tuple (boolean, list)
+
         """
         if not isinstance(word, str):
             raise TypeError("Only a word (str) is allowed.")
@@ -78,8 +94,18 @@ class Stem():
             return (False, list(self.huns.suggest(word)))
 
     def analyze(self, word_form):
-        """Morphological analysis of a given word
-        More details regarding Kurdish morphological analysis can be found at https://github.com/sinaahmadi/KurdishHunspell
+        """
+        Morphological analysis of a given word. More details regarding Kurdish morphological analysis can be found at [https://github.com/sinaahmadi/KurdishHunspell](https://github.com/sinaahmadi/KurdishHunspell).
+        
+        It returns morphological analyses. The morphological analysis is returned as a dictionary as follows:
+        
+        - "pos": the part-of-speech of the word-form according to [the Universal Dependency tag set](https://universaldependencies.org/u/pos/index.html). 
+        - "description": is flag
+        - "terminal_suffix": anything except ts flag
+        - "formation": if ds flag is set, its value is assigned to description and the value of formation is set to derivational. Although the majority of our morphological rules cover inflectional forms, it is not accurate to say all of them are inflectional. Therefore, we only set this value to derivational wherever we are sure.
+        - "base": `ts` flag. The definition of terminal suffix is a bit tricky in Hunspell. According to [the Hunspell documentation](http://manpages.ubuntu.com/manpages/trusty/en/man4/hunspell.4.html), "Terminal suffix fields are inflectional suffix fields "removed" by additional (not terminal) suffixes". In other words, the ts flag in Hunspell represents whatever is left after stripping all affixes. Therefore, it is the morphological base.
+
+        If the input cannot be analyzed morphologically, an empty list is returned.
 
         Args:
             word_form (str): a single word-form
@@ -90,14 +116,6 @@ class Stem():
         Returns:
             (list(dict)): a list of all possible morphological analyses according to the defined morphological rules
             
-            The morphological analysis is returned as a dictionary as follows:
-             - "pos": the part-of-speech of the word-form according to `the Universal Dependency tag set <https://universaldependencies.org/u/pos/index.html>`_ 
-             - "description": is flag
-             - "terminal_suffix": anything except ts flag
-             - "formation": if ds flag is set, its value is assigned to description and the value of formation is set to derivational. Although the majority of our morphological rules cover inflectional forms, it is not accurate to say all of them are inflectional. Therefore, we only set this value to derivational wherever we are sure.
-             - "base": `ts` flag. The definition of terminal suffix is a bit tricky in Hunspell. According to `the Hunspell documentation <http://manpages.ubuntu.com/manpages/trusty/en/man4/hunspell.4.html>`_, "Terminal suffix fields are inflectional suffix fields "removed" by additional (not terminal) suffixes". In other words, the ts flag in Hunspell represents whatever is left after stripping all affixes. Therefore, it is the morphological base.
-
-            If the input cannot be analyzed morphologically, an empty list is returned.
         """
         if not isinstance(word_form, str):
             raise TypeError("Only a word (str) is allowed.")

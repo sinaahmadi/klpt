@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Kurdish Language Processing Project" name="description"/>
+<meta content="Sina Ahmadi" name="author"/>
+<link href="https://sinaahmadi.github.io/klpt/user-guide/preprocess/" rel="canonical"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Preprocess - KLPT</title>
+<link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet"/>
+<link href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css" rel="stylesheet"/>
+<link href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css" rel="stylesheet"/>
+<link href="//rsms.me/inter/inter.css" rel="stylesheet" type="text/css"/>
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&amp;subset=latin-ext,latin" rel="stylesheet" type="text/css"/>
+<link href="../../css/bootstrap-custom.min.css" rel="stylesheet"/>
+<link href="../../css/base.min.css" rel="stylesheet"/>
+<link href="../../css/cinder.min.css" rel="stylesheet"/>
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/dracula.min.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+<div class="container">
+<!-- Collapsed navigation -->
+<div class="navbar-header">
+<!-- Expander button -->
+<button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<!-- Main title -->
+<a class="navbar-brand" href="../..">KLPT</a>
+</div>
+<!-- Expanded navigation -->
+<div class="navbar-collapse collapse">
+<!-- Main navigation -->
+<ul class="nav navbar-nav">
+<li>
+<a href="../..">Home</a>
+</li>
+<li class="dropdown active">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#">User Guide <b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li>
+<a href="../getting-started/">Getting started</a>
+</li>
+<li class="active">
+<a href="./">Preprocess</a>
+</li>
+<li>
+<a href="../tokenize/">Tokenize</a>
+</li>
+<li>
+<a href="../transliterate/">Transliterate</a>
+</li>
+<li>
+<a href="../stem/">Stem</a>
+</li>
+</ul>
+</li>
+<li class="dropdown">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#">About <b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li>
+<a href="../../about/release-notes/">Release Notes</a>
+</li>
+<li>
+<a href="../../about/contributing/">Contributing</a>
+</li>
+<li>
+<a href="../../about/sponsors/">Sponsors</a>
+</li>
+<li>
+<a href="../../about/license/">License</a>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+<a data-target="#mkdocs_search_modal" data-toggle="modal" href="#">
+<i class="fas fa-search"></i> Search
+                        </a>
+</li>
+<li>
+<a href="../getting-started/" rel="prev">
+<i class="fas fa-arrow-left"></i> Previous
+                        </a>
+</li>
+<li>
+<a href="../tokenize/" rel="next">
+                            Next <i class="fas fa-arrow-right"></i>
+</a>
+</li>
+<li>
+<a href="https://github.com/sinaahmadi/klpt/"><i class="fab fa-github"></i> GitHub</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="col-md-3">
+<div class="bs-sidebar hidden-print affix well" role="complementary">
+<ul class="nav bs-sidenav">
+<li class="first-level active"><a href="#preprocess-package">preprocess package</a></li>
+<li class="first-level"><a href="#klpt.preprocess.Preprocess">klpt.preprocess.Preprocess</a></li>
+<li class="first-level"><a href="#klpt.preprocess.Preprocess.__init__">__init__()</a></li>
+<li class="first-level"><a href="#klpt.preprocess.Preprocess.normalize">normalize()</a></li>
+<li class="first-level"><a href="#klpt.preprocess.Preprocess.preprocess">preprocess()</a></li>
+<li class="first-level"><a href="#klpt.preprocess.Preprocess.standardize">standardize()</a></li>
+<li class="first-level"><a href="#klpt.preprocess.Preprocess.unify_numerals">unify_numerals()</a></li>
+</ul>
+</div></div>
+<div class="col-md-9" role="main">
+<h2 id="preprocess-package"><code>preprocess</code> package</h2>
+<div class="doc doc-object doc-class">
+<h2 class="hidden-toc" href="#klpt.preprocess.Preprocess" id="klpt.preprocess.Preprocess" style="visibility: hidden; position: absolute;">
+</h2>
+<div class="doc doc-contents first">
+<p>This module deals with normalizing scripts and orthographies by using writing conventions based on dialects and scripts. The goal is not to correct the orthography but to normalize the text in terms of the encoding and common writing rules. The input encoding should be in UTF-8 only. To this end, three functions are provided as follows:</p>
+<ul>
+<li><code>normalize</code>: deals with different encodings and unifies characters based on dialects and scripts</li>
+<li><code>standardize</code>: given a normalized text, it returns standardized text based on the Kurdish orthographies following recommendations for <a href="https://books.google.ie/books?id=Z7lDnwEACAAJ">Kurmanji</a> and <a href="http://yageyziman.com/Renusi_Kurdi.htm">Sorani</a></li>
+<li><code>unify_numerals</code>: conversion of the various types of numerals used in Kurdish texts</li>
+</ul>
+<p>It is recommended that the output of this module be used as the input of subsequent tasks in an NLP pipeline.</p>
+<p><strong>Examples:</strong></p>
+<br/>
+<pre><code class="python">&gt;&gt;&gt; from klpt.preprocess import Preprocess
+
+&gt;&gt;&gt; preprocessor_ckb = Preprocess("Sorani", "Arabic", numeral="Latin")
+&gt;&gt;&gt; preprocessor_ckb.normalize("لە ســـاڵەکانی ١٩٥٠دا")
+'لە ساڵەکانی 1950دا'
+&gt;&gt;&gt; preprocessor_ckb.standardize("راستە لەو ووڵاتەدا")
+'ڕاستە لەو وڵاتەدا'
+&gt;&gt;&gt; preprocessor_ckb.unify_numerals("٢٠٢٠")
+'2020'
+
+&gt;&gt;&gt; preprocessor_kmr = Preprocess("Kurmanji", "Latin")
+&gt;&gt;&gt; preprocessor_kmr.standardize("di sala 2018-an")
+'di sala 2018an'
+&gt;&gt;&gt; preprocessor_kmr.standardize("hêviya")
+'hêvîya'
+</code></pre>
+<p>The preprocessing rules are provided at <a href="https://github.com/sinaahmadi/klpt/blob/master/klpt/data/preprocess_map.json"><code>data/preprocess_map.json</code></a>.</p>
+<div class="doc doc-children">
+<div class="doc doc-object doc-method">
+<h2 class="doc doc-heading" id="klpt.preprocess.Preprocess.__init__">
+<code class="highlight language-python">
+__init__<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialect</span><span class="p">,</span> <span class="n">script</span><span class="p">,</span> <span class="n">numeral</span><span class="o">=</span><span class="s1">'Latin'</span><span class="p">)</span> </code>
+<span class="doc doc-properties">
+<small class="doc doc-property doc-property-special"><code>special</code></small>
+</span>
+</h2>
+<div class="doc doc-contents">
+<p>Initialization of the Preprocess class</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dialect</code></td>
+<td><code>str</code></td>
+<td>
+<p>the name of the dialect or its ISO 639-3  code</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>script</code></td>
+<td><code>str</code></td>
+<td>
+<p>the name of the script</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>numeral</code></td>
+<td><code>str</code></td>
+<td>
+<p>the type of the numeral</p>
+</td>
+<td><code>'Latin'</code></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>klpt/preprocess.py</code></summary>
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialect</span><span class="p">,</span> <span class="n">script</span><span class="p">,</span> <span class="n">numeral</span><span class="o">=</span><span class="s2">"Latin"</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Initialization of the Preprocess class</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        dialect (str): the name of the dialect or its ISO 639-3  code</span>
+<span class="sd">        script (str): the name of the script</span>
+<span class="sd">        numeral (str): the type of the numeral</span>
+
+<span class="sd">    """</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">klpt</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s2">"data/preprocess_map.json"</span><span class="p">))</span> <span class="k">as</span> <span class="n">preprocess_file</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preprocess_map</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">preprocess_file</span><span class="p">)</span>
+
+    <span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">({</span><span class="s2">"dialect"</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span> <span class="s2">"script"</span><span class="p">:</span> <span class="n">script</span><span class="p">,</span> <span class="s2">"numeral"</span><span class="p">:</span> <span class="n">numeral</span><span class="p">})</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">dialect</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">script</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">numeral</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">numeral</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h2 class="doc doc-heading" id="klpt.preprocess.Preprocess.normalize">
+<code class="highlight language-python">
+normalize<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> </code>
+</h2>
+<div class="doc doc-contents">
+<p>Text normalization</p>
+<p>This function deals with different encodings and unifies characters based on dialects and scripts as follows:</p>
+<ul>
+<li>
+<p>Sorani-Arabic:</p>
+<ul>
+<li>replace frequent Arabic characters with their equivalent Kurdish ones, e.g. "ي" by "ی" and "ك" by "ک"</li>
+<li>replace "ه" followed by zero-width non-joiner (ZWNJ, U+200C) with "ە" where ZWNJ is removed ("ره‌زبه‌ر" is converted to "رەزبەر"). ZWNJ in HTML is also taken into account.</li>
+<li>replace "هـ" with "ھ" (U+06BE, ARABIC LETTER HEH DOACHASHMEE)</li>
+<li>remove Kashida "ـ"</li>
+<li>"ھ" in the middle of a word is replaced by ه (U+0647)</li>
+<li>replace different types of y, such as 'ARABIC LETTER ALEF MAKSURA' (U+0649)</li>
+</ul>
+</li>
+</ul>
+<p>It should be noted that the order of the replacements is important. Check out provided files for further details and test cases.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td><code>str</code></td>
+<td>
+<p>a string</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>str</code></td>
+<td>
+<p>normalized text</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>klpt/preprocess.py</code></summary>
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Text normalization</span>
+
+<span class="sd">    This function deals with different encodings and unifies characters based on dialects and scripts as follows:</span>
+
+<span class="sd">    - Sorani-Arabic:</span>
+
+<span class="sd">        - replace frequent Arabic characters with their equivalent Kurdish ones, e.g. "ي" by "ی" and "ك" by "ک"</span>
+<span class="sd">        - replace "ه" followed by zero-width non-joiner (ZWNJ, U+200C) with "ە" where ZWNJ is removed ("ره‌زبه‌ر" is converted to "رەزبەر"). ZWNJ in HTML is also taken into account.</span>
+<span class="sd">        - replace "هـ" with "ھ" (U+06BE, ARABIC LETTER HEH DOACHASHMEE)</span>
+<span class="sd">        - remove Kashida "ـ"</span>
+<span class="sd">        - "ھ" in the middle of a word is replaced by ه (U+0647)</span>
+<span class="sd">        - replace different types of y, such as 'ARABIC LETTER ALEF MAKSURA' (U+0649)</span>
+
+<span class="sd">    It should be noted that the order of the replacements is important. Check out provided files for further details and test cases.</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        text (str): a string</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: normalized text</span>
+
+<span class="sd">     """</span>
+    <span class="n">temp_text</span> <span class="o">=</span> <span class="s2">" "</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">unify_numerals</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="s2">" "</span>
+
+    <span class="k">for</span> <span class="n">normalization_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"universal"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">rep</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess_map</span><span class="p">[</span><span class="s2">"normalizer"</span><span class="p">][</span><span class="n">normalization_type</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">]:</span>
+            <span class="n">rep_tar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess_map</span><span class="p">[</span><span class="s2">"normalizer"</span><span class="p">][</span><span class="n">normalization_type</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">][</span><span class="n">rep</span><span class="p">]</span>
+            <span class="n">temp_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">rf</span><span class="s2">"</span><span class="si">{</span><span class="n">rep</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="sa">rf</span><span class="s2">"</span><span class="si">{</span><span class="n">rep_tar</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">temp_text</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">temp_text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h2 class="doc doc-heading" id="klpt.preprocess.Preprocess.preprocess">
+<code class="highlight language-python">
+preprocess<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> </code>
+</h2>
+<div class="doc doc-contents">
+<p>One single function for normalization, standardization and unification of numerals</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td><code>str</code></td>
+<td>
+<p>a string</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>str</code></td>
+<td>
+<p>preprocessed text</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>klpt/preprocess.py</code></summary>
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    One single function for normalization, standardization and unification of numerals</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        text (str): a string</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: preprocessed text</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">unify_numerals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">standardize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">text</span><span class="p">)))</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h2 class="doc doc-heading" id="klpt.preprocess.Preprocess.standardize">
+<code class="highlight language-python">
+standardize<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> </code>
+</h2>
+<div class="doc doc-contents">
+<p>Method of standardization of Kurdish orthographies</p>
+<p>Given a normalized text, it returns standardized text based on the Kurdish orthographies.</p>
+<ul>
+<li>
+<p>Sorani-Arabic:</p>
+<ul>
+<li>replace alveolar flap ر (/ɾ/) at the begging of the word by the alveolar trill ڕ (/r/)</li>
+<li>replace double rr and ll with ř and ł respectively</li>
+</ul>
+</li>
+<li>
+<p>Kurmanji-Latin:</p>
+<ul>
+<li>replace "-an" or "'an" in dates and numerals ("di sala 2018'an" and "di sala 2018-an" -&gt; "di sala 2018an")</li>
+</ul>
+</li>
+</ul>
+<p>Open issues:
+    - replace " وە " by  " و "? But this is not always possible, "min bo we" (ریزگـرتنا من بو وە  نە ئە وە ئــە ز)
+    - "pirtükê": "pirtûkê"?
+    - Should <a href="https://www.compart.com/en/unicode/U+0131">ı (LATIN SMALL LETTER DOTLESS I</a> be replaced by i?</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td><code>str</code></td>
+<td>
+<p>a string</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>str</code></td>
+<td>
+<p>standardized text</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>klpt/preprocess.py</code></summary>
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">standardize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Method of standardization of Kurdish orthographies</span>
+
+<span class="sd">    Given a normalized text, it returns standardized text based on the Kurdish orthographies.</span>
+
+<span class="sd">    - Sorani-Arabic:</span>
+<span class="sd">        - replace alveolar flap ر (/ɾ/) at the begging of the word by the alveolar trill ڕ (/r/)</span>
+<span class="sd">        - replace double rr and ll with ř and ł respectively</span>
+
+<span class="sd">    - Kurmanji-Latin:</span>
+<span class="sd">        - replace "-an" or "'an" in dates and numerals ("di sala 2018'an" and "di sala 2018-an" -&gt; "di sala 2018an")</span>
+
+<span class="sd">    Open issues:</span>
+<span class="sd">        - replace " وە " by  " و "? But this is not always possible, "min bo we" (ریزگـرتنا من بو وە  نە ئە وە ئــە ز)</span>
+<span class="sd">        - "pirtükê": "pirtûkê"?</span>
+<span class="sd">        - Should [ı (LATIN SMALL LETTER DOTLESS I](https://www.compart.com/en/unicode/U+0131) be replaced by i?</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        text (str): a string</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: standardized text</span>
+
+<span class="sd">    """</span>
+    <span class="n">temp_text</span> <span class="o">=</span> <span class="s2">" "</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">unify_numerals</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="s2">" "</span>
+
+    <span class="k">for</span> <span class="n">standardization_type</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">rep</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess_map</span><span class="p">[</span><span class="s2">"standardizer"</span><span class="p">][</span><span class="n">standardization_type</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">]:</span>
+            <span class="n">rep_tar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess_map</span><span class="p">[</span><span class="s2">"standardizer"</span><span class="p">][</span><span class="n">standardization_type</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">][</span><span class="n">rep</span><span class="p">]</span>
+            <span class="n">temp_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">rf</span><span class="s2">"</span><span class="si">{</span><span class="n">rep</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="sa">rf</span><span class="s2">"</span><span class="si">{</span><span class="n">rep_tar</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">temp_text</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">temp_text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h2 class="doc doc-heading" id="klpt.preprocess.Preprocess.unify_numerals">
+<code class="highlight language-python">
+unify_numerals<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> </code>
+</h2>
+<div class="doc doc-contents">
+<p>Convert numerals to the desired one</p>
+<p>There are three types of numerals:
+- Arabic [١٢٣٤٥٦٧٨٩٠]
+- Farsi [۱۲۳۴۵۶۷۸۹۰]
+- Latin [1234567890]</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td><code>str</code></td>
+<td>
+<p>a string</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>str</code></td>
+<td>
+<p>text with unified numerals</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>klpt/preprocess.py</code></summary>
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">unify_numerals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Convert numerals to the desired one</span>
+
+<span class="sd">    There are three types of numerals:</span>
+<span class="sd">    - Arabic [١٢٣٤٥٦٧٨٩٠]</span>
+<span class="sd">    - Farsi [۱۲۳۴۵۶۷۸۹۰]</span>
+<span class="sd">    - Latin [1234567890]</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        text (str): a string</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: text with unified numerals</span>
+
+<span class="sd">    """</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess_map</span><span class="p">[</span><span class="s2">"normalizer"</span><span class="p">][</span><span class="s2">"universal"</span><span class="p">][</span><span class="s2">"numerals"</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">numeral</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">text</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+<footer class="col-md-12 text-center">
+<hr/>
+<p>
+<small><a href="http://creativecommons.org/licenses/by-sa/4.0/" rel="license"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" style="border-width:0"/></a><br/><span property="dct:title" xmlns:dct="http://purl.org/dc/terms/">Kurdish Language Processing Toolkit</span> by <a href="https://github.com/sinaahmadi/klpt" property="cc:attributionName" rel="cc:attributionURL" xmlns:cc="http://creativecommons.org/ns#">Sina Ahmadi</a> is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/" rel="license">Creative Commons Attribution-ShareAlike 4.0 International License</a></small><br/>
+<small>© 2020 KLPT - Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</small>
+</p>
+<br/>
+<small>Revised on: 2020-11-08</small>
+</footer>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../../js/bootstrap-3.0.3.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/python.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/json.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script>var base_url = "../.."</script>
+<script src="../../js/base.js"></script>
+<script src="../../search/main.js"></script>
+<div aria-hidden="true" aria-labelledby="searchModalLabel" class="modal" id="mkdocs_search_modal" role="dialog" tabindex="-1">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<button class="close" data-dismiss="modal" type="button">
+<span aria-hidden="true">×</span>
+<span class="sr-only">Close</span>
+</button>
+<h4 class="modal-title" id="searchModalLabel">Search</h4>
+</div>
+<div class="modal-body">
+<p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+<form>
+<div class="form-group">
+<input class="form-control" id="mkdocs-search-query" placeholder="Search..." title="Type search term here" type="text"/>
+</div>
+</form>
+<div id="mkdocs-search-results"></div>
+</div>
+<div class="modal-footer">
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" aria-labelledby="keyboardModalLabel" class="modal" id="mkdocs_keyboard_modal" role="dialog" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+<button class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+</div>
+<div class="modal-body">
+<table class="table">
+<thead>
+<tr>
+<th style="width: 20%;">Keys</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="help shortcut"><kbd>?</kbd></td>
+<td>Open this help</td>
+</tr>
+<tr>
+<td class="next shortcut"><kbd>n</kbd></td>
+<td>Next page</td>
+</tr>
+<tr>
+<td class="prev shortcut"><kbd>p</kbd></td>
+<td>Previous page</td>
+</tr>
+<tr>
+<td class="search shortcut"><kbd>s</kbd></td>
+<td>Search</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="modal-footer">
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

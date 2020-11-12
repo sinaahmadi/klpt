@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kurdish Language Processing Project">
+    <meta name="author" content="Sina Ahmadi">
+    <link rel="canonical" href="https://sinaahmadi.github.io/klpt/user-guide/stem/">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+
+    
+    <title>Stem - KLPT</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../css/base.min.css" rel="stylesheet">
+    <link href="../../css/cinder.min.css" rel="stylesheet">
+
+    
+        
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/dracula.min.css">
+        
+    
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    
+
+     
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+              <a class="navbar-brand" href="../..">KLPT</a>
+            
+        </div>
+
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../getting-started/">Getting started</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../preprocess/">Preprocess</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../tokenize/">Tokenize</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../transliterate/">Transliterate</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Stem</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../about/release-notes/">Release Notes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../about/contributing/">Contributing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../about/sponsors/">Sponsors</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../about/license/">License</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fas fa-search"></i> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../transliterate/">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../../about/release-notes/">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/sinaahmadi/klpt/"><i class="fab fa-github"></i> GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3">
+<div class="bs-sidebar hidden-print affix well" role="complementary">
+
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#stem-package">stem package</a></li>
+        <li class="first-level "><a href="#klpt.stem.Stem">klpt.stem.Stem</a></li>
+        <li class="first-level "><a href="#klpt.stem.Stem.analyze">analyze()</a></li>
+        <li class="first-level "><a href="#klpt.stem.Stem.check_spelling">check_spelling()</a></li>
+        <li class="first-level "><a href="#klpt.stem.Stem.correct_spelling">correct_spelling()</a></li>
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h2 id="stem-package"><code>stem</code> package</h2>
+<div class="doc doc-object doc-class">
+<h2 class="hidden-toc" href="#klpt.stem.Stem" id="klpt.stem.Stem" style="visibility: hidden; position: absolute;">
+        </h2>
+<div class="doc doc-contents first">
+<p>The Stem module deals with various tasks, mainly through the following functions:
+    - <code>check_spelling</code>: spell error detection
+    - <code>correct_spelling</code>: spell error correction
+    - <code>analyze</code>: morphological analysis</p>
+<p>Please note that only Sorani is supported in this version in this module. The module is based on the <a href="https://github.com/sinaahmadi/KurdishHunspell">Kurdish Hunspell project</a>.</p>
+<p><strong>Examples:</strong></p>
+<br />
+<pre><code class="python">&gt;&gt;&gt; from klpt.stem import Stem
+&gt;&gt;&gt; stemmer = Stem("Sorani", "Arabic")
+&gt;&gt;&gt; stemmer.check_spelling("سوتاندبووت")
+False
+&gt;&gt;&gt; stemmer.correct_spelling("سوتاندبووت")
+(False, ['ستاندبووت', 'سووتاندبووت', 'سووڕاندبووت', 'ڕووتاندبووت', 'فەوتاندبووت', 'بووژاندبووت'])
+&gt;&gt;&gt; stemmer.analyze("دیتبامن")
+[{'pos': 'verb', 'description': 'past_stem_transitive_active', 'base': 'دیت', 'terminal_suffix': 'بامن'}]
+</code></pre>
+<div class="doc doc-children">
+<div class="doc doc-object doc-method">
+<h2 class="doc doc-heading" id="klpt.stem.Stem.analyze">
+
+        <code class="highlight language-python">
+analyze<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word_form</span><span class="p">)</span>        </code>
+
+
+      </h2>
+<div class="doc doc-contents ">
+<p>Morphological analysis of a given word. More details regarding Kurdish morphological analysis can be found at <a href="https://github.com/sinaahmadi/KurdishHunspell">https://github.com/sinaahmadi/KurdishHunspell</a>.</p>
+<p>It returns morphological analyses. The morphological analysis is returned as a dictionary as follows:</p>
+<ul>
+<li>"pos": the part-of-speech of the word-form according to <a href="https://universaldependencies.org/u/pos/index.html">the Universal Dependency tag set</a>. </li>
+<li>"description": is flag</li>
+<li>"terminal_suffix": anything except ts flag</li>
+<li>"formation": if ds flag is set, its value is assigned to description and the value of formation is set to derivational. Although the majority of our morphological rules cover inflectional forms, it is not accurate to say all of them are inflectional. Therefore, we only set this value to derivational wherever we are sure.</li>
+<li>"base": <code>ts</code> flag. The definition of terminal suffix is a bit tricky in Hunspell. According to <a href="http://manpages.ubuntu.com/manpages/trusty/en/man4/hunspell.4.html">the Hunspell documentation</a>, "Terminal suffix fields are inflectional suffix fields "removed" by additional (not terminal) suffixes". In other words, the ts flag in Hunspell represents whatever is left after stripping all affixes. Therefore, it is the morphological base.</li>
+</ul>
+<p>If the input cannot be analyzed morphologically, an empty list is returned.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>word_form</code></td>
+<td><code>str</code></td>
+<td>
+<p>a single word-form</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exceptions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TypeError</code></td>
+<td>
+<p>only string as input</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(list(dict))</code></td>
+<td>
+<p>a list of all possible morphological analyses according to the defined morphological rules</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+          <summary>Source code in <code>klpt/stem.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word_form</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Morphological analysis of a given word. More details regarding Kurdish morphological analysis can be found at [https://github.com/sinaahmadi/KurdishHunspell](https://github.com/sinaahmadi/KurdishHunspell).</span>
+
+<span class="sd">    It returns morphological analyses. The morphological analysis is returned as a dictionary as follows:</span>
+
+<span class="sd">    - "pos": the part-of-speech of the word-form according to [the Universal Dependency tag set](https://universaldependencies.org/u/pos/index.html). </span>
+<span class="sd">    - "description": is flag</span>
+<span class="sd">    - "terminal_suffix": anything except ts flag</span>
+<span class="sd">    - "formation": if ds flag is set, its value is assigned to description and the value of formation is set to derivational. Although the majority of our morphological rules cover inflectional forms, it is not accurate to say all of them are inflectional. Therefore, we only set this value to derivational wherever we are sure.</span>
+<span class="sd">    - "base": `ts` flag. The definition of terminal suffix is a bit tricky in Hunspell. According to [the Hunspell documentation](http://manpages.ubuntu.com/manpages/trusty/en/man4/hunspell.4.html), "Terminal suffix fields are inflectional suffix fields "removed" by additional (not terminal) suffixes". In other words, the ts flag in Hunspell represents whatever is left after stripping all affixes. Therefore, it is the morphological base.</span>
+
+<span class="sd">    If the input cannot be analyzed morphologically, an empty list is returned.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        word_form (str): a single word-form</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeError: only string as input</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (list(dict)): a list of all possible morphological analyses according to the defined morphological rules</span>
+
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">word_form</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Only a word (str) is allowed."</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Given the morphological analysis of a word-form with Hunspell flags, extract relevant information and return a dictionary</span>
+        <span class="n">word_analysis</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">analysis</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">word_form</span><span class="p">)):</span>
+            <span class="n">analysis_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">analysis</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+                <span class="k">if</span> <span class="s2">":"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"ts"</span><span class="p">:</span>
+                    <span class="c1"># ts flag exceptionally appears after the value as value:key in the Hunspell output</span>
+                    <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">"base"</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="c1"># anything except the terminal_suffix is considered to be the base</span>
+                    <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">word_form</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">""</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="c1"># assign the key:value pairs from the Hunspell string output to the dictionary output of the current function</span>
+                    <span class="c1"># for ds flag, add derivation as the formation type, otherwise inflection</span>
+                    <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"ds"</span><span class="p">:</span>
+                        <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]]</span> <span class="o">=</span> <span class="s2">"derivational"</span>
+                        <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">"is"</span><span class="p">]]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># if there is no value assigned to the ts flag, the terminal suffix is a zero-morpheme 0</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">"ts"</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">analysis_dict</span> <span class="ow">or</span> <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">"ts"</span><span class="p">]]</span> <span class="o">==</span> <span class="s2">""</span><span class="p">:</span>
+                <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">"ts"</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">"0"</span>
+
+            <span class="n">word_analysis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">analysis_dict</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">word_analysis</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h2 class="doc doc-heading" id="klpt.stem.Stem.check_spelling">
+
+        <code class="highlight language-python">
+check_spelling<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>        </code>
+
+
+      </h2>
+<div class="doc doc-contents ">
+<p>Check spelling of a word</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>word</code></td>
+<td><code>str</code></td>
+<td>
+<p>input word to be spell-checked</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exceptions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TypeError</code></td>
+<td>
+<p>only string as input</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bool</code></td>
+<td>
+<p>True if the spelling is correct, False if the spelling is incorrect</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+          <summary>Source code in <code>klpt/stem.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">check_spelling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+    <span class="sd">"""Check spelling of a word</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        word (str): input word to be spell-checked</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeError: only string as input</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if the spelling is correct, False if the spelling is incorrect</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Only a word (str) is allowed."</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">spell</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h2 class="doc doc-heading" id="klpt.stem.Stem.correct_spelling">
+
+        <code class="highlight language-python">
+correct_spelling<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>        </code>
+
+
+      </h2>
+<div class="doc doc-contents ">
+<p>Correct spelling errors if the input word is incorrect. It returns a tuple where the first element indicates the correctness of the word (True if correct, False if incorrect).
+    If the input word is incorrect, suggestions are provided in a list as the second element of the tuple, as (False, []).
+    If no suggestion is available, the list is returned empty as (True, []).</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>word</code></td>
+<td><code>str</code></td>
+<td>
+<p>input word to be spell-checked</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exceptions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TypeError</code></td>
+<td>
+<p>only string as input</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code></code></td>
+<td>
+<p>tuple (boolean, list)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+          <summary>Source code in <code>klpt/stem.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">correct_spelling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Correct spelling errors if the input word is incorrect. It returns a tuple where the first element indicates the correctness of the word (True if correct, False if incorrect).</span>
+<span class="sd">        If the input word is incorrect, suggestions are provided in a list as the second element of the tuple, as (False, []).</span>
+<span class="sd">        If no suggestion is available, the list is returned empty as (True, []).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        word (str): input word to be spell-checked</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeError: only string as input</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple (boolean, list)</span>
+
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Only a word (str) is allowed."</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_spelling</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">suggest</span><span class="p">(</span><span class="n">word</span><span class="p">)))</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+        
+        
+    </div>
+
+    
+      <footer class="col-md-12 text-center">
+          
+          
+            <hr>
+            <p>
+            <small><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Kurdish Language Processing Toolkit</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/sinaahmadi/klpt" property="cc:attributionName" rel="cc:attributionURL">Sina Ahmadi</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a></small><br>
+            
+            <small>&copy; 2020 KLPT - Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</small>
+            </p>
+          
+
+          
+          <br>
+            <small>Revised on: 2020-11-08</small>
+          
+          
+      </footer>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/bootstrap-3.0.3.min.js"></script>
+
+    
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+        
+                <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/python.min.js"></script>
+                <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/json.min.js"></script>
+        
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    <script>var base_url = "../.."</script>
+    
+    <script src="../../js/base.js"></script>
+    <script src="../../search/main.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

@@ -19,7 +19,32 @@ from .preprocess import Preprocess
 import klpt
 
 class Tokenize:
-    """A class for tokenizing text in Sorani and Kurmanji Kurdish
+    """
+
+    This module focuses on the tokenization of both Kurmanji and Sorani dialects of Kurdish with the following functions:
+
+    - `word_tokenize`: tokenization of texts into tokens (both [multi-word expressions](https://aclweb.org/aclwiki/Multiword_Expressions) and single-word tokens).
+    - `mwe_tokenize`: tokenization of texts by only taking compound forms into account
+    - `sent_tokenize`: tokenization of texts into sentences
+
+    The module is based on the [Kurdish tokenization project](https://github.com/sinaahmadi/KurdishTokenization).
+
+    Example:
+    
+    ```python
+    >>> from klpt.tokenize import Tokenize
+
+    >>> tokenizer = Tokenize("Kurmanji", "Latin")
+    >>> tokenizer.word_tokenize("ji bo fortê xwe avêtin")
+    ['▁ji▁', 'bo', '▁▁fortê‒xwe‒avêtin▁▁']
+    >>> tokenizer.mwe_tokenize("bi serokê hukûmeta herêma Kurdistanê Prof. Salih re saz kir.")
+    'bi serokê hukûmeta herêma Kurdistanê Prof . Salih re saz kir .'
+
+    >>> tokenizer_ckb = Tokenize("Sorani", "Arabic")
+    >>> tokenizer_ckb.word("بە هەموو هەمووانەوە ڕێک کەوتن")
+    ['▁بە▁', '▁هەموو▁', 'هەمووانەوە', '▁▁ڕێک‒کەوتن▁▁']
+    ```
+
     """
     def __init__(self, dialect, script, numeral="Latin", separator='▁'):
 
@@ -51,7 +76,8 @@ class Tokenize:
         
     
     def mwe_tokenize(self, sentence, separator="▁▁", in_separator="‒", punct_marked=False, keep_form=False):
-        """Multi-word expression tokenization
+        """
+        Multi-word expression tokenization
 
         Args:
             sentence (str): sentence to be split by multi-word expressions

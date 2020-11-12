@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Kurdish Language Processing Project" name="description"/>
+<meta content="Sina Ahmadi" name="author"/>
+<link href="https://sinaahmadi.github.io/klpt/user-guide/tokenize/" rel="canonical"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Tokenize - KLPT</title>
+<link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet"/>
+<link href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css" rel="stylesheet"/>
+<link href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css" rel="stylesheet"/>
+<link href="//rsms.me/inter/inter.css" rel="stylesheet" type="text/css"/>
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&amp;subset=latin-ext,latin" rel="stylesheet" type="text/css"/>
+<link href="../../css/bootstrap-custom.min.css" rel="stylesheet"/>
+<link href="../../css/base.min.css" rel="stylesheet"/>
+<link href="../../css/cinder.min.css" rel="stylesheet"/>
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/dracula.min.css" rel="stylesheet"/>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+<div class="container">
+<!-- Collapsed navigation -->
+<div class="navbar-header">
+<!-- Expander button -->
+<button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<!-- Main title -->
+<a class="navbar-brand" href="../..">KLPT</a>
+</div>
+<!-- Expanded navigation -->
+<div class="navbar-collapse collapse">
+<!-- Main navigation -->
+<ul class="nav navbar-nav">
+<li>
+<a href="../..">Home</a>
+</li>
+<li class="dropdown active">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#">User Guide <b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li>
+<a href="../getting-started/">Getting started</a>
+</li>
+<li>
+<a href="../preprocess/">Preprocess</a>
+</li>
+<li class="active">
+<a href="./">Tokenize</a>
+</li>
+<li>
+<a href="../transliterate/">Transliterate</a>
+</li>
+<li>
+<a href="../stem/">Stem</a>
+</li>
+</ul>
+</li>
+<li class="dropdown">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#">About <b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li>
+<a href="../../about/release-notes/">Release Notes</a>
+</li>
+<li>
+<a href="../../about/contributing/">Contributing</a>
+</li>
+<li>
+<a href="../../about/sponsors/">Sponsors</a>
+</li>
+<li>
+<a href="../../about/license/">License</a>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+<a data-target="#mkdocs_search_modal" data-toggle="modal" href="#">
+<i class="fas fa-search"></i> Search
+                        </a>
+</li>
+<li>
+<a href="../preprocess/" rel="prev">
+<i class="fas fa-arrow-left"></i> Previous
+                        </a>
+</li>
+<li>
+<a href="../transliterate/" rel="next">
+                            Next <i class="fas fa-arrow-right"></i>
+</a>
+</li>
+<li>
+<a href="https://github.com/sinaahmadi/klpt/"><i class="fab fa-github"></i> GitHub</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="col-md-3">
+<div class="bs-sidebar hidden-print affix well" role="complementary">
+<ul class="nav bs-sidenav">
+<li class="first-level active"><a href="#tokenize-package">tokenize package</a></li>
+<li class="first-level"><a href="#klpt.tokenize.Tokenize">klpt.tokenize.Tokenize</a></li>
+<li class="first-level"><a href="#klpt.tokenize.Tokenize.mwe_tokenize">mwe_tokenize()</a></li>
+<li class="first-level"><a href="#klpt.tokenize.Tokenize.sent_tokenize">sent_tokenize()</a></li>
+<li class="first-level"><a href="#klpt.tokenize.Tokenize.word_tokenize">word_tokenize()</a></li>
+</ul>
+</div></div>
+<div class="col-md-9" role="main">
+<h2 id="tokenize-package"><code>tokenize</code> package</h2>
+<div class="doc doc-object doc-class">
+<h2 class="hidden-toc" href="#klpt.tokenize.Tokenize" id="klpt.tokenize.Tokenize" style="visibility: hidden; position: absolute;">
+</h2>
+<div class="doc doc-contents first">
+<p>This module focuses on the tokenization of both Kurmanji and Sorani dialects of Kurdish with the following functions:</p>
+<ul>
+<li><code>word_tokenize</code>: tokenization of texts into tokens (both <a href="https://aclweb.org/aclwiki/Multiword_Expressions">multi-word expressions</a> and single-word tokens).</li>
+<li><code>mwe_tokenize</code>: tokenization of texts by only taking compound forms into account</li>
+<li><code>sent_tokenize</code>: tokenization of texts into sentences</li>
+</ul>
+<p>The module is based on the <a href="https://github.com/sinaahmadi/KurdishTokenization">Kurdish tokenization project</a>.</p>
+<p><strong>Examples:</strong></p>
+<br/>
+<pre><code class="python">&gt;&gt;&gt; from klpt.tokenize import Tokenize
+
+&gt;&gt;&gt; tokenizer = Tokenize("Kurmanji", "Latin")
+&gt;&gt;&gt; tokenizer.word_tokenize("ji bo fortê xwe avêtin")
+['▁ji▁', 'bo', '▁▁fortê‒xwe‒avêtin▁▁']
+&gt;&gt;&gt; tokenizer.mwe_tokenize("bi serokê hukûmeta herêma Kurdistanê Prof. Salih re saz kir.")
+'bi serokê hukûmeta herêma Kurdistanê Prof . Salih re saz kir .'
+
+&gt;&gt;&gt; tokenizer_ckb = Tokenize("Sorani", "Arabic")
+&gt;&gt;&gt; tokenizer_ckb.word("بە هەموو هەمووانەوە ڕێک کەوتن")
+['▁بە▁', '▁هەموو▁', 'هەمووانەوە', '▁▁ڕێک‒کەوتن▁▁']
+</code></pre>
+<div class="doc doc-children">
+<div class="doc doc-object doc-method">
+<h2 class="doc doc-heading" id="klpt.tokenize.Tokenize.mwe_tokenize">
+<code class="highlight language-python">
+mwe_tokenize<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentence</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">'▁▁'</span><span class="p">,</span> <span class="n">in_separator</span><span class="o">=</span><span class="s1">'‒'</span><span class="p">,</span> <span class="n">punct_marked</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">keep_form</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> </code>
+</h2>
+<div class="doc doc-contents">
+<p>Multi-word expression tokenization</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sentence</code></td>
+<td><code>str</code></td>
+<td>
+<p>sentence to be split by multi-word expressions</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td><code>str</code></td>
+<td>
+<p>a specific token to specify a multi-word expression. By default two ▁ (▁▁) are used for this purpose.</p>
+</td>
+<td><code>'▁▁'</code></td>
+</tr>
+<tr>
+<td><code>in_separator</code></td>
+<td><code>str</code></td>
+<td>
+<p>a specific token to specify the composing parts of a multi-word expression. By default a dash - is used for this purpose.</p>
+</td>
+<td><code>'‒'</code></td>
+</tr>
+<tr>
+<td><code>keep_form</code></td>
+<td><code>boolean</code></td>
+<td>
+<p>if set to True, the original form of the multi-word expression is returned the same way provided in the input. On the other hand, if set to False, the lemma form is used where the parts are delimited by a dash ‒, as in "dab‒û‒nerît"</p>
+</td>
+<td><code>False</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>str</code></td>
+<td>
+<p>sentence containing d multi-word expressions using the separator</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>klpt/tokenize.py</code></summary>
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">mwe_tokenize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentence</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s2">"▁▁"</span><span class="p">,</span> <span class="n">in_separator</span><span class="o">=</span><span class="s2">"‒"</span><span class="p">,</span> <span class="n">punct_marked</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">keep_form</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Multi-word expression tokenization</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sentence (str): sentence to be split by multi-word expressions</span>
+<span class="sd">        separator (str): a specific token to specify a multi-word expression. By default two ▁ (▁▁) are used for this purpose.</span>
+<span class="sd">        in_separator (str): a specific token to specify the composing parts of a multi-word expression. By default a dash - is used for this purpose.</span>
+<span class="sd">        keep_form (boolean): if set to True, the original form of the multi-word expression is returned the same way provided in the input. On the other hand, if set to False, the lemma form is used where the parts are delimited by a dash ‒, as in "dab‒û‒nerît"</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: sentence containing d multi-word expressions using the separator</span>
+
+<span class="sd">    """</span>
+    <span class="n">sentence</span> <span class="o">=</span> <span class="s2">" "</span> <span class="o">+</span> <span class="n">sentence</span> <span class="o">+</span> <span class="s2">" "</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">punct_marked</span><span class="p">:</span>
+        <span class="c1"># find punctuation marks and add a space around</span>
+        <span class="k">for</span> <span class="n">punct</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenize_map</span><span class="p">[</span><span class="s2">"word_tokenize"</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">][</span><span class="s2">"punctuation"</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">punct</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+                <span class="n">sentence</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">punct</span><span class="p">,</span> <span class="s2">" "</span> <span class="o">+</span> <span class="n">punct</span> <span class="o">+</span> <span class="s2">" "</span><span class="p">)</span>
+
+    <span class="c1"># look for compound words and delimit them by double the separator</span>
+    <span class="k">for</span> <span class="n">compound_lemma</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mwe_lexicon</span><span class="p">:</span>
+        <span class="n">compound_lemma_context</span> <span class="o">=</span> <span class="s2">" "</span> <span class="o">+</span> <span class="n">compound_lemma</span> <span class="o">+</span> <span class="s2">" "</span>
+        <span class="k">if</span> <span class="n">compound_lemma_context</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">keep_form</span><span class="p">:</span>
+                <span class="n">sentence</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">compound_lemma_context</span><span class="p">,</span> <span class="s2">" ▁▁"</span> <span class="o">+</span> <span class="n">compound_lemma</span> <span class="o">+</span> <span class="s2">"▁▁ "</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sentence</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">compound_lemma_context</span><span class="p">,</span> <span class="s2">" ▁▁"</span> <span class="o">+</span> <span class="n">compound_lemma</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"-"</span><span class="p">,</span> <span class="n">in_separator</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"▁▁ "</span><span class="p">)</span>                  <br/>
+<span class="c1"># check the possible word forms available for each compound lemma in the lex files, too</span>
+        <span class="c1"># Note: compound forms don't have any hyphen or separator in the lex files</span>
+        <span class="k">for</span> <span class="n">compound_form</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mwe_lexicon</span><span class="p">[</span><span class="n">compound_lemma</span><span class="p">][</span><span class="s2">"token_forms"</span><span class="p">]:</span>
+            <span class="n">compound_form_context</span> <span class="o">=</span> <span class="s2">" "</span> <span class="o">+</span> <span class="n">compound_form</span> <span class="o">+</span> <span class="s2">" "</span>
+            <span class="k">if</span> <span class="n">compound_form_context</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">keep_form</span><span class="p">:</span>
+                    <span class="n">sentence</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">compound_form_context</span><span class="p">,</span> <span class="s2">" ▁▁"</span> <span class="o">+</span> <span class="n">compound_form</span> <span class="o">+</span> <span class="s2">"▁▁ "</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">sentence</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">compound_form_context</span><span class="p">,</span> <span class="s2">" ▁▁"</span> <span class="o">+</span> <span class="n">compound_lemma</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"-"</span><span class="p">,</span> <span class="n">in_separator</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"▁▁ "</span><span class="p">)</span>
+
+
+    <span class="c1"># print(sentence)</span>
+    <span class="k">return</span> <span class="n">sentence</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"  "</span><span class="p">,</span> <span class="s2">" "</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"▁▁"</span><span class="p">,</span> <span class="n">separator</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h2 class="doc doc-heading" id="klpt.tokenize.Tokenize.sent_tokenize">
+<code class="highlight language-python">
+sent_tokenize<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> </code>
+</h2>
+<div class="doc doc-contents">
+<p>Sentence tokenizer</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td><code>[str]</code></td>
+<td>
+<p>[input text to be tokenized by sentences]</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[list]</code></td>
+<td>
+<p>[a list of sentences]</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>klpt/tokenize.py</code></summary>
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">sent_tokenize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="sd">"""Sentence tokenizer</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text ([str]): [input text to be tokenized by sentences]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        [list]: [a list of sentences]</span>
+
+<span class="sd">    """</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s2">" "</span> <span class="o">+</span> <span class="n">text</span> <span class="o">+</span> <span class="s2">"  "</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">" "</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefixes</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">1&lt;prd&gt;"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">websites</span><span class="p">,</span> <span class="s2">"&lt;prd&gt;</span><span class="se">\\</span><span class="s2">1"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">"\s"</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphabets</span> <span class="o">+</span> <span class="s2">"[.] "</span><span class="p">,</span> <span class="s2">" </span><span class="se">\\</span><span class="s2">1&lt;prd&gt; "</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acronyms</span> <span class="o">+</span> <span class="s2">" "</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">starters</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">1&lt;stop&gt; </span><span class="se">\\</span><span class="s2">2"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alphabets</span> <span class="o">+</span> <span class="s2">"[.]"</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphabets</span> <span class="o">+</span> <span class="s2">"[.]"</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphabets</span> <span class="o">+</span> <span class="s2">"[.]"</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">1&lt;prd&gt;</span><span class="se">\\</span><span class="s2">2&lt;prd&gt;</span><span class="se">\\</span><span class="s2">3&lt;prd&gt;"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alphabets</span> <span class="o">+</span> <span class="s2">"[.]"</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphabets</span> <span class="o">+</span> <span class="s2">"[.]"</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">1&lt;prd&gt;</span><span class="se">\\</span><span class="s2">2&lt;prd&gt;"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">" "</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">suffixes</span> <span class="o">+</span> <span class="s2">"[.] "</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">starters</span><span class="p">,</span> <span class="s2">" </span><span class="se">\\</span><span class="s2">1&lt;stop&gt; </span><span class="se">\\</span><span class="s2">2"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">" "</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">suffixes</span> <span class="o">+</span> <span class="s2">"[.]"</span><span class="p">,</span> <span class="s2">" </span><span class="se">\\</span><span class="s2">1&lt;prd&gt;"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">digits</span> <span class="o">+</span> <span class="s2">"[.]"</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">digits</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">1&lt;prd&gt;</span><span class="se">\\</span><span class="s2">2"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+
+    <span class="c1"># for punct in self.tokenize_map[self.dialect][self.script]["compound_puncts"]:</span>
+    <span class="c1">#     if punct in text:</span>
+    <span class="c1">#         text = text.replace("." + punct, punct + ".")</span>
+
+    <span class="k">for</span> <span class="n">punct</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenize_map</span><span class="p">[</span><span class="s2">"sent_tokenize"</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">][</span><span class="s2">"punct_boundary"</span><span class="p">]:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">punct</span><span class="p">,</span> <span class="n">punct</span> <span class="o">+</span> <span class="s2">"&lt;stop&gt;"</span><span class="p">)</span>
+
+    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"&lt;prd&gt;"</span><span class="p">,</span> <span class="s2">"."</span><span class="p">)</span>
+    <span class="n">sentences</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"&lt;stop&gt;"</span><span class="p">)</span>
+    <span class="n">sentences</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sentences</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">())]</span>
+
+    <span class="k">return</span> <span class="n">sentences</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h2 class="doc doc-heading" id="klpt.tokenize.Tokenize.word_tokenize">
+<code class="highlight language-python">
+word_tokenize<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentence</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">'▁'</span><span class="p">,</span> <span class="n">mwe_separator</span><span class="o">=</span><span class="s1">'▁▁'</span><span class="p">,</span> <span class="n">keep_form</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> </code>
+</h2>
+<div class="doc doc-contents">
+<p>Word tokenizer</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sentence</code></td>
+<td><code>str</code></td>
+<td>
+<p>sentence or text to be tokenized</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[list]</code></td>
+<td>
+<p>[a list of words]</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>klpt/tokenize.py</code></summary>
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">word_tokenize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentence</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s2">"▁"</span><span class="p">,</span> <span class="n">mwe_separator</span><span class="o">=</span><span class="s2">"▁▁"</span><span class="p">,</span> <span class="n">keep_form</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">"""Word tokenizer</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sentence (str): sentence or text to be tokenized</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        [list]: [a list of words]</span>
+
+<span class="sd">    """</span>
+    <span class="c1"># find multi-word expressions in the sentence</span>
+    <span class="n">sentence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mwe_tokenize</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">keep_form</span><span class="o">=</span><span class="n">keep_form</span><span class="p">)</span>
+
+    <span class="c1"># find punctuation marks and add a space around</span>
+    <span class="k">for</span> <span class="n">punct</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenize_map</span><span class="p">[</span><span class="s2">"word_tokenize"</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">][</span><span class="s2">"punctuation"</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">punct</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+            <span class="n">sentence</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">punct</span><span class="p">,</span> <span class="s2">" "</span> <span class="o">+</span> <span class="n">punct</span> <span class="o">+</span> <span class="s2">" "</span><span class="p">)</span>
+
+    <span class="c1"># print(sentence)</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="c1"># split the sentence by space and look for identifiable tokens</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sentence</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="k">if</span> <span class="s2">"▁▁"</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
+            <span class="c1"># the word is previously detected as a compound word</span>
+            <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexicon</span><span class="p">:</span>
+                <span class="c1"># check if the word exists in the lexicon</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"▁"</span> <span class="o">+</span> <span class="n">word</span> <span class="o">+</span> <span class="s2">"▁"</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># the word is neither a lemma nor a compound</span>
+                <span class="c1"># morphological analysis by identifying affixes and clitics</span>
+                <span class="n">token_identified</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="k">for</span> <span class="n">preposition</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">morphemes</span><span class="p">[</span><span class="s2">"prefixes"</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">preposition</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">preposition</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">preposition</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexicon</span><span class="p">:</span>
+                            <span class="n">word</span> <span class="o">=</span> <span class="s2">"▁"</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">""</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">morphemes</span><span class="p">[</span><span class="s2">"prefixes"</span><span class="p">][</span><span class="n">preposition</span><span class="p">],</span> <span class="n">word</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">preposition</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">""</span><span class="p">])</span>
+                            <span class="n">token_identified</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="k">break</span>
+                        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mwe_tokenize</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">preposition</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span> <span class="n">keep_form</span><span class="o">=</span><span class="n">keep_form</span><span class="p">)</span> <span class="o">!=</span> <span class="n">word</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">preposition</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]:</span>
+                            <span class="n">word</span> <span class="o">=</span> <span class="s2">"▁"</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">morphemes</span><span class="p">[</span><span class="s2">"prefixes"</span><span class="p">][</span><span class="n">preposition</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">mwe_tokenize</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">preposition</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span> <span class="n">keep_form</span><span class="o">=</span><span class="n">keep_form</span><span class="p">)</span>
+                            <span class="n">token_identified</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="k">break</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">token_identified</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">postposition</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">morphemes</span><span class="p">[</span><span class="s2">"suffixes"</span><span class="p">]:</span>
+                        <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">postposition</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="n">postposition</span><span class="p">)[</span><span class="mi">0</span><span class="p">]):</span>
+                            <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="n">postposition</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexicon</span><span class="p">:</span>
+                                <span class="n">word</span> <span class="o">=</span> <span class="s2">"▁"</span> <span class="o">+</span> <span class="n">word</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="n">postposition</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">"▁"</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">morphemes</span><span class="p">[</span><span class="s2">"suffixes"</span><span class="p">][</span><span class="n">postposition</span><span class="p">]</span>
+                                <span class="k">break</span>
+                            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mwe_tokenize</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="n">postposition</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">keep_form</span><span class="o">=</span><span class="n">keep_form</span><span class="p">)</span> <span class="o">!=</span> <span class="n">word</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="n">postposition</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span>
+                                <span class="n">word</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"▁"</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">mwe_tokenize</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="n">postposition</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">keep_form</span><span class="o">=</span><span class="n">keep_form</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"▁"</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">morphemes</span><span class="p">[</span><span class="s2">"suffixes"</span><span class="p">][</span><span class="n">postposition</span><span class="p">]</span> <span class="o">+</span> <span class="s2">"▁"</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"▁▁▁"</span><span class="p">,</span> <span class="s2">"▁▁"</span><span class="p">)</span>
+                                <span class="k">break</span>
+
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+    <span class="c1"># print(tokens)</span>
+    <span class="k">return</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"▁▁"</span><span class="p">,</span> <span class="n">mwe_separator</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"▁"</span><span class="p">,</span> <span class="n">separator</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+<footer class="col-md-12 text-center">
+<hr/>
+<p>
+<small><a href="http://creativecommons.org/licenses/by-sa/4.0/" rel="license"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" style="border-width:0"/></a><br/><span property="dct:title" xmlns:dct="http://purl.org/dc/terms/">Kurdish Language Processing Toolkit</span> by <a href="https://github.com/sinaahmadi/klpt" property="cc:attributionName" rel="cc:attributionURL" xmlns:cc="http://creativecommons.org/ns#">Sina Ahmadi</a> is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/" rel="license">Creative Commons Attribution-ShareAlike 4.0 International License</a></small><br/>
+<small>© 2020 KLPT - Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</small>
+</p>
+<br/>
+<small>Revised on: 2020-11-08</small>
+</footer>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../../js/bootstrap-3.0.3.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/python.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/json.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script>var base_url = "../.."</script>
+<script src="../../js/base.js"></script>
+<script src="../../search/main.js"></script>
+<div aria-hidden="true" aria-labelledby="searchModalLabel" class="modal" id="mkdocs_search_modal" role="dialog" tabindex="-1">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<button class="close" data-dismiss="modal" type="button">
+<span aria-hidden="true">×</span>
+<span class="sr-only">Close</span>
+</button>
+<h4 class="modal-title" id="searchModalLabel">Search</h4>
+</div>
+<div class="modal-body">
+<p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+<form>
+<div class="form-group">
+<input class="form-control" id="mkdocs-search-query" placeholder="Search..." title="Type search term here" type="text"/>
+</div>
+</form>
+<div id="mkdocs-search-results"></div>
+</div>
+<div class="modal-footer">
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" aria-labelledby="keyboardModalLabel" class="modal" id="mkdocs_keyboard_modal" role="dialog" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+<button class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+</div>
+<div class="modal-body">
+<table class="table">
+<thead>
+<tr>
+<th style="width: 20%;">Keys</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="help shortcut"><kbd>?</kbd></td>
+<td>Open this help</td>
+</tr>
+<tr>
+<td class="next shortcut"><kbd>n</kbd></td>
+<td>Next page</td>
+</tr>
+<tr>
+<td class="prev shortcut"><kbd>p</kbd></td>
+<td>Previous page</td>
+</tr>
+<tr>
+<td class="search shortcut"><kbd>s</kbd></td>
+<td>Search</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="modal-footer">
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

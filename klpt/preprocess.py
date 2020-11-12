@@ -8,7 +8,7 @@
 
         * created: 2020/05/10 02:10:54
         * author: Sina Ahmadi
-
+    
 """
 
 import json
@@ -20,10 +20,35 @@ import klpt
 
 class Preprocess:
     """
-    Text preprocessing by normalizing encodings and standardizing orthographies
+    This module deals with normalizing scripts and orthographies by using writing conventions based on dialects and scripts. The goal is not to correct the orthography but to normalize the text in terms of the encoding and common writing rules. The input encoding should be in UTF-8 only. To this end, three functions are provided as follows:
 
-    A class to deal with various text preprocessing tasks, particularly encoding normalization and orthographic standardization. Input encoding only in UTF-8.
+    - `normalize`: deals with different encodings and unifies characters based on dialects and scripts
+    - `standardize`: given a normalized text, it returns standardized text based on the Kurdish orthographies following recommendations for [Kurmanji](https://books.google.ie/books?id=Z7lDnwEACAAJ) and [Sorani](http://yageyziman.com/Renusi_Kurdi.htm)
+    - `unify_numerals`: conversion of the various types of numerals used in Kurdish texts
 
+    It is recommended that the output of this module be used as the input of subsequent tasks in an NLP pipeline.
+    
+    Example:
+
+    ```python
+    >>> from klpt.preprocess import Preprocess
+
+    >>> preprocessor_ckb = Preprocess("Sorani", "Arabic", numeral="Latin")
+    >>> preprocessor_ckb.normalize("لە ســـاڵەکانی ١٩٥٠دا")
+    'لە ساڵەکانی 1950دا'
+    >>> preprocessor_ckb.standardize("راستە لەو ووڵاتەدا")
+    'ڕاستە لەو وڵاتەدا'
+    >>> preprocessor_ckb.unify_numerals("٢٠٢٠")
+    '2020'
+
+    >>> preprocessor_kmr = Preprocess("Kurmanji", "Latin")
+    >>> preprocessor_kmr.standardize("di sala 2018-an")
+    'di sala 2018an'
+    >>> preprocessor_kmr.standardize("hêviya")
+    'hêvîya'
+    ```
+
+    The preprocessing rules are provided at [`data/preprocess_map.json`](https://github.com/sinaahmadi/klpt/blob/master/klpt/data/preprocess_map.json).
     """
 
     def __init__(self, dialect, script, numeral="Latin"):
@@ -34,9 +59,7 @@ class Preprocess:
             dialect (str): the name of the dialect or its ISO 639-3  code
             script (str): the name of the script
             numeral (str): the type of the numeral
-            
-            preprocess_map (dict): a dictionary exported from a JSON file containing the mapping rules
-
+        
         """
         with open(klpt.get_data("data/preprocess_map.json")) as preprocess_file:
             self.preprocess_map = json.load(preprocess_file)
@@ -141,5 +164,8 @@ class Preprocess:
 
         Arguments:
             text (str): a string
+
+        Returns:
+            str: preprocessed text
         """
         return self.unify_numerals(self.standardize(self.normalize(text)))

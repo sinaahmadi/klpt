@@ -5,14 +5,17 @@
 </p>
 
 <p align="center">
-    <a href="https://circleci.com/gh/huggingface/transformers">
+    <a href="">
         <img alt="Build" src="https://badges.frapsoft.com/os/v1/open-source.png?v=103">
     </a>
     <a href="https://github.com/sinaahmadi/KLPT/blob/master/LICENSE">
         <img alt="GitHub" src="https://img.shields.io/badge/license-CC%20BY--SA%204.0-blue">
     </a>
     <a href="https://sinaahmadi.github.io/klpt/">
-        <img alt="Documentation" src="https://img.shields.io/website?down_color=red&down_message=offline&up_color=orange&url=https%3A%2F%2Fsinaahmadi.github.io%2FKLPT%2F">
+        <img alt="Documentation" src="https://img.shields.io/website?down_color=green&down_message=online&up_color=orange&url=https%3A%2F%2Fsinaahmadi.github.io%2FKLPT%2F">
+    </a>
+    <a href="https://gitter.im/KurdishNLP/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge">
+      <img alt="Documentation" src="https://badges.gitter.im/KurdishNLP/community.svg">
     </a>
 </p>
 
@@ -23,7 +26,7 @@
 ### Welcome / *Hûn bi xêr hatin* / بە خێر بێن! 🙂
 
 
-Kurdish Language Processing Toolkit--KLPT is a [natural language processing](https://en.wikipedia.org/wiki/Natural_language_processing) (NLP) toolkit in Python for the [Kurdish language](https://en.wikipedia.org/wiki/Kurdish_languages). The current version comes with four core modules, namely `preprocess`, `stem`, `transliterate` and `tokenize` and addresses basic language processing tasks such as text preprocessing, stemming, tokenziation, spell-checking and morphological analysis for the [Sorani](https://en.wikipedia.org/wiki/Sorani) and the [Kurmanji](https://en.wikipedia.org/wiki/Kurmanji) dialects of Kurdish.
+Kurdish Language Processing Toolkit--KLPT is a [natural language processing](https://en.wikipedia.org/wiki/Natural_language_processing) (NLP) toolkit in Python for the [Kurdish language](https://en.wikipedia.org/wiki/Kurdish_languages). The current version comes with four core modules, namely `preprocess`, `stem`, `transliterate` and `tokenize` and addresses basic language processing tasks such as text preprocessing, stemming, tokenization, spell-checking and morphological analysis for the [Sorani](https://en.wikipedia.org/wiki/Sorani) and the [Kurmanji](https://en.wikipedia.org/wiki/Kurmanji) dialects of Kurdish.
 
 
 ## Install KLPT

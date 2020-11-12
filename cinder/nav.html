@@ -20,6 +20,7 @@
             {% endif %}
         </div>
 
+
         <!-- Expanded navigation -->
         <div class="navbar-collapse collapse">
             {%- block site_nav %}
@@ -75,15 +76,15 @@
                 {%- block repo %}
                     {%- if page and page.edit_url %}
                     <li>
-                        <a href="{{ page.edit_url }}">
+                        <a href="{{ config.repo_url }}">
                             {%- if config.repo_name == 'GitHub' -%}
-                            <i class="fab fa-github"></i> Edit on {{ config.repo_name }}
+                            <i class="fab fa-github"></i> {{ config.repo_name }}
                             {%- elif config.repo_name == 'Bitbucket' -%}
                             <i class="fab fa-bitbucket"></i> Edit on {{ config.repo_name }}
                             {%- elif config.repo_name == 'GitLab' -%}
                             <i class="fab fa-gitlab"></i> Edit on {{ config.repo_name }}
                             {%- else -%}
-                            Edit on {{ config.repo_name }}
+                            {{ config.repo_name }}
                             {%- endif -%}
                         </a>
                     </li>

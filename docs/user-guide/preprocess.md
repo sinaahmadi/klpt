@@ -1,4 +1,3 @@
-
-## Preprocess package
+## `preprocess` package
 
 ::: klpt.preprocess.Preprocess

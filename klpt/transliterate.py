@@ -21,7 +21,22 @@ import klpt
 
 class Transliterate:
     """
-    A class for transliterating various Kurdish scripts. 
+    This module aims at transliterating one script of Kurdish into another one. Currently, only the Latin-based and the Arabic-based scripts of Sorani and Kurmanji are supported. The main function in this module is `transliterate()` which also takes care of detecting the correct form of double-usage graphemes, namely و ↔ w/u and ی ↔ î/y. In some specific occasions, it can also predict the placement of the missing *i* (also known as *Bizroke/بزرۆکە*).
+
+    The module is based on the [Kurdish transliteration project](https://github.com/sinaahmadi/wergor).
+
+    Example:
+    ```python
+    >>> from klpt.transliterate import Transliterate
+    >>> transliterate = Transliterate("Kurmanji", "Latin", target_script="Arabic")
+    >>> transliterate.transliterate("rojhilata navîn")
+    'رۆژهلاتا ناڤین'
+
+    >>> transliterate_ckb = Transliterate("Sorani", "Arabic", target_script="Latin")
+    >>> transliterate_ckb.transliterate("لە وڵاتەکانی دیکەدا")
+    'le wiłatekanî dîkeda'
+    ```
+
     """
 
     def __init__(self, dialect, script, target_script, unknown="�", numeral="Latin"):
