@@ -280,7 +280,9 @@ Are you interested in this project? Each task is addressed individually. Please 
 - [Kurdish Hunspell](https://github.com/sinaahmadi/KurdishHunspell)
 - [Kurdish transliteration](https://github.com/sinaahmadi/wergor)
 
-In addition, our main objective is to extend the current toolkit to include more tasks, particularly part-of-speech tagging, named-entity recognition and syntactic analysis. Further instructions will be provided to be a contributor to this toolkit. Don't forget, **open-source is fun!** 😊
+In addition, our main objective is to extend the current toolkit to include more tasks, particularly part-of-speech tagging, named-entity recognition and syntactic analysis. Further instructions are provided at [https://sinaahmadi.github.io/klpt/about/contributing/](https://sinaahmadi.github.io/klpt/about/contributing/). You can also join us on [Gitter](https://gitter.im/KurdishNLP/community).
+
+Don't forget, **open-source is fun!** 😊
 
 ## Requirements
 - Python >=3.6
