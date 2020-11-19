@@ -37,6 +37,10 @@ data_directory = {
     "morphemes": {
         "Sorani": get_data("data/ckb-morphemes.json"),
         "Kurmanji": get_data("data/kmr-morphemes.json")
+    },
+    "analyser": {
+        "Sorani": get_data("data/ckb-analyser.att"),
+        "Kurmanji": get_data("data/kmr-analyser.att")
     }
 }
 
