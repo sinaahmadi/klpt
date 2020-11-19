@@ -133,24 +133,3 @@ class Analysis:
        
         return (word, accepting_output_pairs)
 
-# a = Analysis("Kurmanji", "Latin")
-# print(a.analyze('dibêjim'))
-# # att_result_2 = a.analyse('dengdanekê')
-# # print(a.analyse('xêzikine'))
-# att_result = a.analyse('nikarim')
-# # It returns a tuple in the form of ('nikarim', [[('@0@karîn<vblex><tv><neg><pri><p1><sg>', 12669)]]) or ('dengdanekê', [[('@0@dengdan<n><f><sg><con><ind>', 12669), ('@0@dengdan<n><f><sg><obl><ind>', 12669)]])
-# # different parts of this should be separated, structured and returned as a list of dictionaires
-# analysis_dict = dict()
-
-# word_forms = ["dengdanekê", "nikarim", "xêzikine", "dixwî"]
-# for word_form in word_forms:
-#     for form_analysis in list(a.analyse(word_form)[-1]):
-#         print(word_form)
-#         for analysis in form_analysis:
-#             structure = analysis[0].rsplit('@', 1)[1].split("<", 1)
-#             analysis_dict["base"], analysis_dict["description"] = structure[0], structure[1].replace("><", "_").replace(">", "").strip()
-#             analysis_dict["terminal_suffix"] = word_form.replace(analysis_dict["base"], "")
-#             print(analysis_dict)
-
-
-# [{'pos': 'verb', 'description': 'past_stem_transitive_active', 'base': 'دیت', 'terminal_suffix': 'بامن'}]
