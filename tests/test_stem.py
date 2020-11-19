@@ -23,13 +23,22 @@ class TestStem(unittest.TestCase):
     def test_analyze(self):
         for dialect in self.options["dialects"]:
             for script in self.options["scripts"]:
-                if (dialect == "Sorani" and script == "Arabic") or (dialect == "Kurmanji" and script == "Latin"): # otherwise, not supported currently
+                if dialect == "Sorani" and script == "Arabic": 
                     stemmer = Stem("Sorani", "Arabic")
                     # print(dialect, script)
                     for test_case in self.test_cases["analyze"][dialect][script]:
                         # print(test_case)
                         self.assertEqual(stemmer.analyze(test_case), self.test_cases["analyze"][dialect][script][test_case])
-        
+
+                elif dialect == "Kurmanji" and script == "Latin":
+                    stemmer = Stem("Kurmanji", "Latin")
+                    # NOTICE: the order in which att_analyze returns morphological analyses may make these tests fail. Make sure the tests are run enough times.
+                    for test_case in self.test_cases["analyze"][dialect][script]:
+                        # print(test_case)
+                        self.assertEqual(stemmer.analyze(test_case), self.test_cases["analyze"][dialect][script][test_case])
+
+                else: # otherwise, not supported currently
+                    pass
 
 if __name__ == "__main__":
     unittest.main()

@@ -14,8 +14,8 @@ import json
 import sys
 import re
 sys.path.append('../klpt')
-from .configuration import Configuration
-from .preprocess import Preprocess
+from klpt.configuration import Configuration
+from klpt.preprocess import Preprocess
 import klpt
 
 class Tokenize:

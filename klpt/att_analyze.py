@@ -5,14 +5,18 @@ import json
 import sys
 import re
 sys.path.append('../klpt')
-from .configuration import Configuration
-from .preprocess import Preprocess
 import klpt
 
 class Analysis:
+    """
+    Utility for reading .att format automata and transducers from the Apertium project. Particuarly used to integrate the [Kurmanji part](https://github.com/apertium/apertium-kmr) in KLPT
 
+    Returns:
+        [str]: [output of the Apertium morphological analyzer]
+    """
+    
 
-    def __init__(self, dialect, script):
+    def __init__(self, dialect="Kurmanji", script="Latin"):
 
         self.eps = '@0@'
         self.initial_state = 0;
@@ -20,14 +24,16 @@ class Analysis:
         self.states = set()
         self.transitions = {}
         self.alphabet = set()
-
+        
         # validate parameters
-        if dialect == "Kurmanji":
-            with open(klpt.get_data("data/kmr-analyser.att")) as analysis_file:
+        if dialect == "Kurmanji" and script == "Latin":
+            with open(klpt.get_data("data/kmr-Latn.att")) as analysis_file:
                 self.load(analysis_file)
-        elif dialect == "Sorani":
-            with open(klpt.get_data("data/ckb-analyser.att")) as analysis_file:
-                self.load(analysis_file)
+        else:
+            raise Exception("dialect not supported")
+        # elif dialect == "Sorani":
+        #     with open(klpt.get_data("data/ckb-analyser.att")) as analysis_file:
+        #         self.load(analysis_file)
     
     def load(self, analysis_file):
         for line in analysis_file.readlines():
@@ -95,7 +101,7 @@ class Analysis:
     
         return reached_states;
 
-    def analyse(self, word):
+    def analyze(self, word):
         self.state_output_pairs = {};           # A structure to contain the list of "alive state-output pairs" 
         self.state_output_pairs[0] = set([(self.eps, 0)]); 
         self.accepting_output_pairs = set();    # The set of state-output pairs that are accepting
@@ -126,3 +132,25 @@ class Analysis:
         
        
         return (word, accepting_output_pairs)
+
+# a = Analysis("Kurmanji", "Latin")
+# print(a.analyze('dibêjim'))
+# # att_result_2 = a.analyse('dengdanekê')
+# # print(a.analyse('xêzikine'))
+# att_result = a.analyse('nikarim')
+# # It returns a tuple in the form of ('nikarim', [[('@0@karîn<vblex><tv><neg><pri><p1><sg>', 12669)]]) or ('dengdanekê', [[('@0@dengdan<n><f><sg><con><ind>', 12669), ('@0@dengdan<n><f><sg><obl><ind>', 12669)]])
+# # different parts of this should be separated, structured and returned as a list of dictionaires
+# analysis_dict = dict()
+
+# word_forms = ["dengdanekê", "nikarim", "xêzikine", "dixwî"]
+# for word_form in word_forms:
+#     for form_analysis in list(a.analyse(word_form)[-1]):
+#         print(word_form)
+#         for analysis in form_analysis:
+#             structure = analysis[0].rsplit('@', 1)[1].split("<", 1)
+#             analysis_dict["base"], analysis_dict["description"] = structure[0], structure[1].replace("><", "_").replace(">", "").strip()
+#             analysis_dict["terminal_suffix"] = word_form.replace(analysis_dict["base"], "")
+#             print(analysis_dict)
+
+
+# [{'pos': 'verb', 'description': 'past_stem_transitive_active', 'base': 'دیت', 'terminal_suffix': 'بامن'}]

@@ -124,7 +124,7 @@ Please note that KLPT is under development and some of the functionalities will 
     <td rowspan="5"><code>stem</code></td>
     <td>morphological analysis</td>
     <td>&#10003; (v0.1.0)</td>
-    <td>&#x2717;</td>
+    <td>&#10003; (v0.1.1) 🆕</td>
   </tr>
   <tr>
     <td>morphological generation</td>
@@ -239,9 +239,9 @@ The module is based on the [Kurdish transliteration project](https://github.com/
 ### Stem
 
 The Stem module deals with various tasks, mainly through the following functions:
-	- `check_spelling`: spell error detection
-	- `correct_spelling`: spell error correction
-	- `analyze`: morphological analysis
+- `check_spelling`: spell error detection
+- `correct_spelling`: spell error correction
+- `analyze`: morphological analysis
 
 Please note that only Sorani is supported in this version in this module. The module is based on the [Kurdish Hunspell project](https://github.com/sinaahmadi/KurdishHunspell).
 
@@ -283,6 +283,9 @@ Are you interested in this project? Each task is addressed individually. Please 
 In addition, our main objective is to extend the current toolkit to include more tasks, particularly part-of-speech tagging, named-entity recognition and syntactic analysis. Further instructions are provided at [https://sinaahmadi.github.io/klpt/about/contributing/](https://sinaahmadi.github.io/klpt/about/contributing/). You can also join us on [Gitter](https://gitter.im/KurdishNLP/community).
 
 Don't forget, **open-source is fun!** 😊
+
+#### Thanks to all the following contributors for their valuable contributions!
+[![](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/images/0)](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/links/0)[![](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/images/1)](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/links/1)[![](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/images/2)](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/links/2)[![](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/images/3)](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/links/3)[![](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/images/4)](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/links/4)[![](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/images/5)](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/links/5)[![](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/images/6)](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/links/6)[![](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/images/7)](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/links/7)
 
 ## Requirements
 - Python >=3.6
