@@ -22,9 +22,13 @@ class Analysis:
         self.alphabet = set()
 
         # validate parameters
-        with open(klpt.get_data("data/kmr-analyser.att")) as analysis_file:
-            self.tokenize_map = self.load(analysis_file)
-
+        if dialect == "Kurmanji":
+            with open(klpt.get_data("data/kmr-analyser.att")) as analysis_file:
+                self.load(analysis_file)
+        elif dialect == "Sorani":
+            with open(klpt.get_data("data/ckb-analyser.att")) as analysis_file:
+                self.load(analysis_file)
+    
     def load(self, analysis_file):
         for line in analysis_file.readlines():
             row = line.strip('\n\t').split('\t') 
