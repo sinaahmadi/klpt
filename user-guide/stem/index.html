@@ -220,7 +220,7 @@ analyze<span class="p">(</span><span class="bp">self</span><span class="p">,</sp
 
       </h2>
 <div class="doc doc-contents ">
-<p>Morphological analysis of a given word. More details regarding Kurdish morphological analysis can be found at <a href="https://github.com/sinaahmadi/KurdishHunspell">https://github.com/sinaahmadi/KurdishHunspell</a>.</p>
+<p>Morphological analysis of a given word.</p>
 <p>It returns morphological analyses. The morphological analysis is returned as a dictionary as follows:</p>
 <ul>
 <li>"pos": the part-of-speech of the word-form according to <a href="https://universaldependencies.org/u/pos/index.html">the Universal Dependency tag set</a>. </li>
@@ -229,7 +229,13 @@ analyze<span class="p">(</span><span class="bp">self</span><span class="p">,</sp
 <li>"formation": if ds flag is set, its value is assigned to description and the value of formation is set to derivational. Although the majority of our morphological rules cover inflectional forms, it is not accurate to say all of them are inflectional. Therefore, we only set this value to derivational wherever we are sure.</li>
 <li>"base": <code>ts</code> flag. The definition of terminal suffix is a bit tricky in Hunspell. According to <a href="http://manpages.ubuntu.com/manpages/trusty/en/man4/hunspell.4.html">the Hunspell documentation</a>, "Terminal suffix fields are inflectional suffix fields "removed" by additional (not terminal) suffixes". In other words, the ts flag in Hunspell represents whatever is left after stripping all affixes. Therefore, it is the morphological base.</li>
 </ul>
-<p>If the input cannot be analyzed morphologically, an empty list is returned.</p>
+<p>As in [{'pos': 'verb', 'description': 'past_stem_transitive_active', 'base': 'دیت', 'terminal_suffix': 'بامن'}]
+If the input cannot be analyzed morphologically, an empty list is returned.</p>
+<p>Sorani: 
+More details regarding Sorani Kurdish morphological analysis can be found at <a href="https://github.com/sinaahmadi/KurdishHunspell">https://github.com/sinaahmadi/KurdishHunspell</a>.</p>
+<p>Kurmanji:
+Regarding Kurmanji, we use the morphological analyzer provided by the <a href="https://github.com/apertium/apertium-kmr">Kurmanji part</a></p>
+<p>Please note that there are delicate difference between who the analyzers work in Hunspell and Apertium. For instane, the <code>base</code> in the Kurmanji analysis refers to the lemma while in Sorani (from Hunspell), it refers to the morphological base.</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -290,7 +296,7 @@ analyze<span class="p">(</span><span class="bp">self</span><span class="p">,</sp
           <div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word_form</span><span class="p">):</span>
     <span class="sd">"""</span>
-<span class="sd">    Morphological analysis of a given word. More details regarding Kurdish morphological analysis can be found at [https://github.com/sinaahmadi/KurdishHunspell](https://github.com/sinaahmadi/KurdishHunspell).</span>
+<span class="sd">    Morphological analysis of a given word.</span>
 
 <span class="sd">    It returns morphological analyses. The morphological analysis is returned as a dictionary as follows:</span>
 
@@ -300,7 +306,16 @@ analyze<span class="p">(</span><span class="bp">self</span><span class="p">,</sp
 <span class="sd">    - "formation": if ds flag is set, its value is assigned to description and the value of formation is set to derivational. Although the majority of our morphological rules cover inflectional forms, it is not accurate to say all of them are inflectional. Therefore, we only set this value to derivational wherever we are sure.</span>
 <span class="sd">    - "base": `ts` flag. The definition of terminal suffix is a bit tricky in Hunspell. According to [the Hunspell documentation](http://manpages.ubuntu.com/manpages/trusty/en/man4/hunspell.4.html), "Terminal suffix fields are inflectional suffix fields "removed" by additional (not terminal) suffixes". In other words, the ts flag in Hunspell represents whatever is left after stripping all affixes. Therefore, it is the morphological base.</span>
 
+<span class="sd">    As in [{'pos': 'verb', 'description': 'past_stem_transitive_active', 'base': 'دیت', 'terminal_suffix': 'بامن'}]</span>
 <span class="sd">    If the input cannot be analyzed morphologically, an empty list is returned.</span>
+
+<span class="sd">    Sorani: </span>
+<span class="sd">    More details regarding Sorani Kurdish morphological analysis can be found at [https://github.com/sinaahmadi/KurdishHunspell](https://github.com/sinaahmadi/KurdishHunspell).</span>
+
+<span class="sd">    Kurmanji:</span>
+<span class="sd">    Regarding Kurmanji, we use the morphological analyzer provided by the [Kurmanji part](https://github.com/apertium/apertium-kmr)</span>
+
+<span class="sd">    Please note that there are delicate difference between who the analyzers work in Hunspell and Apertium. For instane, the `base` in the Kurmanji analysis refers to the lemma while in Sorani (from Hunspell), it refers to the morphological base.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        word_form (str): a single word-form</span>
@@ -315,32 +330,52 @@ analyze<span class="p">(</span><span class="bp">self</span><span class="p">,</sp
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">word_form</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Only a word (str) is allowed."</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># Given the morphological analysis of a word-form with Hunspell flags, extract relevant information and return a dictionary</span>
         <span class="n">word_analysis</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">analysis</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">word_form</span><span class="p">)):</span>
-            <span class="n">analysis_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">analysis</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
-                <span class="k">if</span> <span class="s2">":"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
-                    <span class="k">continue</span>
-                <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"ts"</span><span class="p">:</span>
-                    <span class="c1"># ts flag exceptionally appears after the value as value:key in the Hunspell output</span>
-                    <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">"base"</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                    <span class="c1"># anything except the terminal_suffix is considered to be the base</span>
-                    <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">word_form</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">""</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                    <span class="c1"># assign the key:value pairs from the Hunspell string output to the dictionary output of the current function</span>
-                    <span class="c1"># for ds flag, add derivation as the formation type, otherwise inflection</span>
-                    <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"ds"</span><span class="p">:</span>
-                        <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]]</span> <span class="o">=</span> <span class="s2">"derivational"</span>
-                        <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">"is"</span><span class="p">]]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">==</span> <span class="s2">"Sorani"</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">==</span> <span class="s2">"Arabic"</span><span class="p">:</span>
+            <span class="c1"># Given the morphological analysis of a word-form with Hunspell flags, extract relevant information and return a dictionary</span>
+            <span class="k">for</span> <span class="n">analysis</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">word_form</span><span class="p">)):</span>
+                <span class="n">analysis_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">analysis</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="s2">":"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"ts"</span><span class="p">:</span>
+                        <span class="c1"># ts flag exceptionally appears after the value as value:key in the Hunspell output</span>
+                        <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">"base"</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="c1"># anything except the terminal_suffix is considered to be the base</span>
+                        <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">word_form</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">""</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="c1"># assign the key:value pairs from the Hunspell string output to the dictionary output of the current function</span>
+                        <span class="c1"># for ds flag, add derivation as the formation type, otherwise inflection</span>
+                        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"ds"</span><span class="p">:</span>
+                            <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]]</span> <span class="o">=</span> <span class="s2">"derivational"</span>
+                            <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">"is"</span><span class="p">]]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
 
-            <span class="c1"># if there is no value assigned to the ts flag, the terminal suffix is a zero-morpheme 0</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">"ts"</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">analysis_dict</span> <span class="ow">or</span> <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">"ts"</span><span class="p">]]</span> <span class="o">==</span> <span class="s2">""</span><span class="p">:</span>
-                <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">"ts"</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">"0"</span>
+                <span class="c1"># if there is no value assigned to the ts flag, the terminal suffix is a zero-morpheme 0</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">"ts"</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">analysis_dict</span> <span class="ow">or</span> <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">"ts"</span><span class="p">]]</span> <span class="o">==</span> <span class="s2">""</span><span class="p">:</span>
+                    <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">"ts"</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">"0"</span>
 
-            <span class="n">word_analysis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">analysis_dict</span><span class="p">)</span>
+                <span class="n">word_analysis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">analysis_dict</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">==</span> <span class="s2">"Kurmanji"</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">==</span> <span class="s2">"Latin"</span><span class="p">:</span>
+            <span class="n">att_analysis</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">(</span><span class="s2">"Kurmanji"</span><span class="p">,</span> <span class="s2">"Latin"</span><span class="p">)</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">word_form</span><span class="p">)</span>
+            <span class="c1"># check if the word-form is analyzed or no</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">att_analysis</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="c1"># the word-form could not be analyzed</span>
+                <span class="k">return</span> <span class="p">[]</span>
+
+            <span class="k">for</span> <span class="n">form_analysis</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">att_analysis</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="k">for</span> <span class="n">analysis</span> <span class="ow">in</span> <span class="n">form_analysis</span><span class="p">:</span>
+                    <span class="n">analysis_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+                    <span class="n">structure</span> <span class="o">=</span> <span class="n">analysis</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">'@'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"&lt;"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">"base"</span><span class="p">],</span> <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">"description"</span><span class="p">]</span> <span class="o">=</span> <span class="n">structure</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">structure</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"&gt;&lt;"</span><span class="p">,</span> <span class="s2">"_"</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"&gt;"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                    <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">"pos"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">""</span>
+                    <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">"terminal_suffix"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">""</span>
+                    <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">"formation"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">""</span>
+                    <span class="c1"># TODO: the description needs further information extraction in such a way that some values should be assigned to the "pos" key </span>
+                    <span class="c1"># analysis_dict["terminal_suffix"] = word_form.replace(analysis_dict["base"], "")</span>
+                    <span class="n">word_analysis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">analysis_dict</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">word_analysis</span>
 </code></pre>
@@ -428,8 +463,8 @@ check_spelling<span class="p">(</span><span class="bp">self</span><span class="p
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: True if the spelling is correct, False if the spelling is incorrect</span>
 <span class="sd">    """</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Only a word (str) is allowed."</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">==</span> <span class="s2">"Sorani"</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">==</span> <span class="s2">"Arabic"</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Not supported yet."</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">spell</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
 </code></pre>
@@ -523,8 +558,8 @@ correct_spelling<span class="p">(</span><span class="bp">self</span><span class=
 <span class="sd">        tuple (boolean, list)</span>
 
 <span class="sd">    """</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Only a word (str) is allowed."</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">==</span> <span class="s2">"Sorani"</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">==</span> <span class="s2">"Arabic"</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Not supported yet."</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_spelling</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
             <span class="k">return</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="p">[])</span>
