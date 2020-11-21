@@ -42,6 +42,7 @@
                 "xêzikine": [{"base": "xêzik", "description": "n_f_pl_con_ind", "pos": "", "terminal_suffix": "", "formation": ""}],
                 "bêje": [],
                 "dibêjim": [{"base": "gotin", "description": "vblex_tv_pri_p1_sg", "pos": "", "terminal_suffix": "", "formation": ""}],
+                "dixwî": [{"base": "xwarin", "description": "vblex_tv_pri_p2_sg", "pos": "", "terminal_suffix": "", "formation": ""}],
                 "nonesense": []
             },
             "Arabic": {}
