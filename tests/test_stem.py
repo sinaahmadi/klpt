@@ -33,9 +33,8 @@ class TestStem(unittest.TestCase):
                 elif dialect == "Kurmanji" and script == "Latin":
                     stemmer = Stem("Kurmanji", "Latin")
                     # NOTICE: the order in which att_analyze returns morphological analyses may make these tests fail. Make sure the tests are run enough times.
-                    print(stemmer.analyze("dixwî"))
                     for test_case in self.test_cases["analyze"][dialect][script]:
-                        # print(test_case)
+                        # print(test_case, stemmer.analyze(test_case))
                         self.assertEqual(stemmer.analyze(test_case), self.test_cases["analyze"][dialect][script][test_case])
 
                 else: # otherwise, not supported currently

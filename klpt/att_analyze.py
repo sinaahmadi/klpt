@@ -1,27 +1,29 @@
 # -*- coding: utf-8 -*-
 
 """
-Utility for reading .att format automata and transducers and doing apply up or down,
-written in Python.  Also supports weighted FSMs.  In the weighted case the apply routines
-return the strings in order cheapest first.  The apply functions work as a generator,
-yielding output strings as long as there is a valid transduction.  Input files are
-standard AT&T format, with the last column being optionally a weight.  The files can be
-compressed with gzip.  The apply generator produces tuples of (output, weight). For
-unweighted automata/transducers, the weight is always 0.0.
+    A modified version of https://github.com/mhulden/foma/blob/master/foma/python/attapply.py
+    
+    Utility for reading .att format automata and transducers and doing apply up or down,
+    written in Python.  Also supports weighted FSMs.  In the weighted case the apply routines
+    return the strings in order cheapest first.  The apply functions work as a generator,
+    yielding output strings as long as there is a valid transduction.  Input files are
+    standard AT&T format, with the last column being optionally a weight.  The files can be
+    compressed with gzip.  The apply generator produces tuples of (output, weight). For
+    unweighted automata/transducers, the weight is always 0.0.
 
-Example usage:
+    Example usage:
 
->>> import attapply
->>> t = attapply.ATTFST('spanish.att.gz')  # Spanish morphological analyzer
->>> list(t.apply(u'tuviera', dir = 'up'))  # Analyze
-[(u'tener[Subj][Imp][Form1][1P][Sg]', 0.0), (u'tener[Subj][Imp][Form1][3P][Sg]', 0.0)]
+    >>> import attapply
+    >>> t = attapply.ATTFST('spanish.att.gz')  # Spanish morphological analyzer
+    >>> list(t.apply(u'tuviera', dir = 'up'))  # Analyze
+    [(u'tener[Subj][Imp][Form1][1P][Sg]', 0.0), (u'tener[Subj][Imp][Form1][3P][Sg]', 0.0)]
 
->>> list(t.apply('tener[Subj][Imp][Form1][1P][Sg]')) # Generate, default dir is 'down'
-[(u'tuviera', 0.0)]
+    >>> list(t.apply('tener[Subj][Imp][Form1][1P][Sg]')) # Generate, default dir is 'down'
+    [(u'tuviera', 0.0)]
 
-Author: Mans Hulden
-License: Apache (Version 2.0)
-Last Update: 11/07/2016
+    Author: Mans Hulden
+    License: Apache (Version 2.0)
+    Last Update: 11/07/2016
 """
 
 import json
@@ -77,7 +79,9 @@ class ATTFST:
         try:
             lines = [line.rstrip('\n') for line in codecs.getreader('utf-8')(gzip.open(attfile), errors='replace')]
         except:
-            lines = [line.rstrip('\n') for line in codecs.open(attfile, "r", encoding="utf-8")]
+            f_lines = codecs.open(attfile, "r", encoding="utf-8")
+            lines = [line.rstrip('\n') for line in f_lines]
+            f_lines.close()
         self.states = {}
         self.alphabet = set()
         for l in lines:

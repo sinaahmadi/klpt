@@ -38,9 +38,9 @@
         },
         "Kurmanji":{
             "Latin": {
-                "dengdanekê": [{"base": "dengdan", "description": "n_f_sg_obl_ind", "pos": "", "terminal_suffix": "", "formation": ""}, {"base": "dengdan", "description": "n_f_sg_con_ind", "pos": "", "terminal_suffix": "", "formation": ""}],
+                "dengdanekê": [{"base": "dengdan", "description": "n_f_sg_con_ind", "pos": "", "terminal_suffix": "", "formation": ""}, {"base": "dengdan", "description": "n_f_sg_obl_ind", "pos": "", "terminal_suffix": "", "formation": ""}],
                 "xêzikine": [{"base": "xêzik", "description": "n_f_pl_con_ind", "pos": "", "terminal_suffix": "", "formation": ""}],
-                "bêje": [],
+                "bêje": [{"base": "bêje", "description": "n_f_pl_nom_def", "pos": "", "terminal_suffix": "", "formation": ""}, {"base": "bêje", "description": "n_f_sg_nom_def", "pos": "", "terminal_suffix": "", "formation": ""}, {"base": "bêje", "description": "n_f_sg_obl_def", "pos": "", "terminal_suffix": "", "formation": ""}],
                 "dibêjim": [{"base": "gotin", "description": "vblex_tv_pri_p1_sg", "pos": "", "terminal_suffix": "", "formation": ""}],
                 "dixwî": [{"base": "xwarin", "description": "vblex_tv_pri_p2_sg", "pos": "", "terminal_suffix": "", "formation": ""}],
                 "nonesense": []

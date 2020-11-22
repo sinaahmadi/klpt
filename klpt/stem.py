@@ -165,21 +165,21 @@ class Stem:
 
             elif self.dialect == "Kurmanji" and self.script == "Latin":
                 att_analysis = Analysis("Kurmanji", "Latin").analyze(word_form)
+
                 # check if the word-form is analyzed or no
-                if not len(att_analysis[1]):
+                if not len(att_analysis):
                     # the word-form could not be analyzed
                     return []
 
-                for form_analysis in list(att_analysis[-1]):
-                    for analysis in form_analysis:
-                        analysis_dict = dict()
-                        structure = analysis[0].rsplit('@', 1)[1].split("<", 1)
-                        analysis_dict["base"], analysis_dict["description"] = structure[0], structure[1].replace("><", "_").replace(">", "").strip()
-                        analysis_dict["pos"] = ""
-                        analysis_dict["terminal_suffix"] = ""
-                        analysis_dict["formation"] = ""
-                        # TODO: the description needs further information extraction in such a way that some values should be assigned to the "pos" key 
-                        # analysis_dict["terminal_suffix"] = word_form.replace(analysis_dict["base"], "")
-                        word_analysis.append(analysis_dict)
+                for analysis in att_analysis:
+                    analysis_dict = dict()
+                    structure = analysis[0].split("<", 1)
+                    analysis_dict["base"], analysis_dict["description"] = structure[0], structure[1].replace("><", "_").replace(">", "").strip()
+                    analysis_dict["pos"] = ""
+                    analysis_dict["terminal_suffix"] = ""
+                    analysis_dict["formation"] = ""
+                    # TODO: the description needs further information extraction in such a way that some values should be assigned to the "pos" key 
+                    # analysis_dict["terminal_suffix"] = word_form.replace(analysis_dict["base"], "")
+                    word_analysis.append(analysis_dict)
 
         return word_analysis
