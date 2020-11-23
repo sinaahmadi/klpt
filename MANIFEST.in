@@ -13,3 +13,4 @@ include klpt/data/test_cases_tokenize.json
 include klpt/data/test_cases.json
 include klpt/data/tokenize.json
 include klpt/data/wergor.json
+include klpt/data/kmr-Latn.att

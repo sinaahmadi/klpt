@@ -35,6 +35,10 @@ class Stem:
     (False, ['ستاندبووت', 'سووتاندبووت', 'سووڕاندبووت', 'ڕووتاندبووت', 'فەوتاندبووت', 'بووژاندبووت'])
     >>> stemmer.analyze("دیتبامن")
     [{'pos': 'verb', 'description': 'past_stem_transitive_active', 'base': 'دیت', 'terminal_suffix': 'بامن'}]
+    
+    >>> stemmer = Stem("Kurmanji", "Latin")
+    >>> stemmer.analyze("dibêjim")
+    [{'base': 'gotin', 'description': 'vblex_tv_pri_p1_sg', 'pos': '', 'terminal_suffix': '', 'formation': ''}]
     ```
 
     """

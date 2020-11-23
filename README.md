@@ -20,11 +20,10 @@
     <a href="https://gitter.im/KurdishNLP/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge">
       <img alt="Documentation" src="https://badges.gitter.im/KurdishNLP/community.svg">
     </a>
+    <a href="https://badge.fury.io/py/klpt">
+        <img src="https://badge.fury.io/py/klpt.svg" alt="PyPI version" height="18">
+    </a>
 </p>
-
-
-<!--
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/sinaahmadi/KLPT) [![Awesome](https://awesome.re/badge.svg)](https://awesome.re) [![PyPI version fury.io](https://badge.fury.io/py/ansicolortags.svg)]() [![PyPI status](https://img.shields.io/pypi/status/ansicolortags.svg)](https://pypi.python.org/pypi/ansicolortags/) -->
 
 
 ### Welcome / *Hûn bi xêr hatin* / بە خێر بێن! 🙂
@@ -247,7 +246,7 @@ The Stem module deals with various tasks, mainly through the following functions
 - `correct_spelling`: spell error correction
 - `analyze`: morphological analysis
 
-Please note that only Sorani is supported in this version in this module. The module is based on the [Kurdish Hunspell project](https://github.com/sinaahmadi/KurdishHunspell).
+The module is based on the [Kurdish Hunspell project](https://github.com/sinaahmadi/KurdishHunspell) for Sorani and the [Apertium project](https://github.com/apertium/apertium-kmr) for Kurmanji. Please note that this module is currently getting further completed and we are aware of its current shortcomings.
 
 ```python
 >>> from klpt.stem import Stem
@@ -258,6 +257,10 @@ False
 (False, ['ستاندبووت', 'سووتاندبووت', 'سووڕاندبووت', 'ڕووتاندبووت', 'فەوتاندبووت', 'بووژاندبووت'])
 >>> stemmer.analyze("دیتبامن")
 [{'pos': 'verb', 'description': 'past_stem_transitive_active', 'base': 'دیت', 'terminal_suffix': 'بامن'}]
+
+>>> stemmer = Stem("Kurmanji", "Latin")
+>>> stemmer.analyze("dibêjim")
+[{'base': 'gotin', 'description': 'vblex_tv_pri_p1_sg', 'pos': '', 'terminal_suffix': '', 'formation': ''}]
 ```
 
 📖 **Please note that a more complete documentation of the toolkit will be available soon.**
