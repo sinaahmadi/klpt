@@ -11,9 +11,9 @@
     <a href="https://github.com/sinaahmadi/KLPT/blob/master/LICENSE">
         <img alt="GitHub" src="https://img.shields.io/badge/license-CC%20BY--SA%204.0-blue">
     </a>
-    
-<img alt="Downloads" src="https://static.pepy.tech/personalized-badge/klpt?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads">
-    
+    <a href="">
+        <img alt="Downloads" src="https://static.pepy.tech/personalized-badge/klpt?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads">
+    </a>
     <a href="https://sinaahmadi.github.io/klpt/">
         <img alt="Documentation" src="https://img.shields.io/website?down_color=green&down_message=online&up_color=orange&url=https%3A%2F%2Fsinaahmadi.github.io%2FKLPT%2F">
     </a>
