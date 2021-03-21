@@ -8,7 +8,7 @@
     <a href="">
         <img alt="Build" src="https://badges.frapsoft.com/os/v1/open-source.png?v=103">
     </a>
-    <a href="https://github.com/sinaahmadi/KLPT/blob/master/LICENSE">
+    <a href="https://github.com/sinaahmadi/KLPT/blob/master/license">
         <img alt="GitHub" src="https://img.shields.io/badge/license-CC%20BY--SA%204.0-blue">
     </a>
     <a href="">
@@ -263,7 +263,7 @@ False
 [{'base': 'gotin', 'description': 'vblex_tv_pri_p1_sg', 'pos': '', 'terminal_suffix': '', 'formation': ''}]
 ```
 
-📖 **Please note that a more complete documentation of the toolkit will be available soon.**
+📖 **Please note that a more complete documentation of the toolkit is available at [https://sinaahmadi.github.io/klpt/](https://sinaahmadi.github.io/klpt/)**.
 
 ## Become a sponsor 
 
@@ -275,9 +275,7 @@ Please consider donating to the project. Data annotation and resource creation r
 - If you want, I will add your name or company logo on the front page of your preferred project
 - Your contribution will be acknowledged in one of my future papers in a field of your choice
 
-**Number of sponsors**: ![Open Collective sponsors](https://img.shields.io/opencollective/sponsors/s) (You, be the first one! 🙂)
-
-
+*And, thanks for those who have already sponsored this project. More significant achievements will be made thanks to you!*
 
 ## Contribute
 
@@ -290,9 +288,6 @@ Are you interested in this project? Each task is addressed individually. Please 
 In addition, our main objective is to extend the current toolkit to include more tasks, particularly part-of-speech tagging, named-entity recognition and syntactic analysis. Further instructions are provided at [https://sinaahmadi.github.io/klpt/about/contributing/](https://sinaahmadi.github.io/klpt/about/contributing/). You can also join us on [Gitter](https://gitter.im/KurdishNLP/community).
 
 Don't forget, **open-source is fun!** 😊
-
-#### Thanks to all the following contributors for their valuable contributions!
-[![](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/images/0)](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/links/0)[![](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/images/1)](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/links/1)[![](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/images/2)](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/links/2)[![](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/images/3)](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/links/3)[![](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/images/4)](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/links/4)[![](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/images/5)](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/links/5)[![](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/images/6)](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/links/6)[![](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/images/7)](https://sourcerer.io/fame/sinaahmadi/sinaahmadi/klpt/links/7)
 
 ## Requirements
 - Python >=3.6
