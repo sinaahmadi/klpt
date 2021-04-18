@@ -218,7 +218,7 @@ The module is based on the [Kurdish tokenization project](https://github.com/sin
 'bi serokê hukûmeta herêma Kurdistanê Prof . Salih re saz kir .'
 
 >>> tokenizer_ckb = Tokenize("Sorani", "Arabic")
->>> tokenizer_ckb.word("بە هەموو هەمووانەوە ڕێک کەوتن")
+>>> tokenizer_ckb.word_tokenize("بە هەموو هەمووانەوە ڕێک کەوتن")
 ['▁بە▁', '▁هەموو▁', 'هەمووانەوە', '▁▁ڕێک‒کەوتن▁▁']
 ```
 
