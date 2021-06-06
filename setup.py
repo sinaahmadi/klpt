@@ -10,7 +10,7 @@ with open('requirements.txt') as f:
 
 setup(
     name="klpt",
-    version="0.1.2",
+    version="0.1.3",
     description="Kurdish Language Processing Toolkit",
     long_description=long_description,
     long_description_content_type="text/markdown",

@@ -35,6 +35,8 @@ class Stem:
     (False, ['ستاندبووت', 'سووتاندبووت', 'سووڕاندبووت', 'ڕووتاندبووت', 'فەوتاندبووت', 'بووژاندبووت'])
     >>> stemmer.analyze("دیتبامن")
     [{'pos': 'verb', 'description': 'past_stem_transitive_active', 'base': 'دیت', 'terminal_suffix': 'بامن'}]
+    >>> stemmer.stem("دەچینەوە")
+    ['چ']
     
     >>> stemmer = Stem("Kurmanji", "Latin")
     >>> stemmer.analyze("dibêjim")
@@ -48,20 +50,45 @@ class Stem:
         self.dialect = dialect
         self.script = script 
 
-        self.hunspell_flags = {"po": "pos", "is": "description", "ts": "terminal_suffix", "ds": "formation"}
+        self.hunspell_flags = {"po": "pos", "is": "description", "ts": "terminal_suffix", "ds": "formation", "st": "stem"}
         if self.dialect == "Sorani" and self.script == "Arabic":
             self.huns = Hunspell("ckb-Arab", hunspell_data_dir=klpt.get_data("data/"))
         else:
             if not (self.dialect == "Kurmanji" and self.script == "Latin"):
-                raise Exception("Sorry, only Sorani dialect in the Arabic script is supported now. Stay tuned for other dialects and scripts!")
+                raise Exception("Sorry, only Sorani dialect in the Arabic script and Kurmanji in the Latin script is supported now. Stay tuned for other dialects and scripts!")
 
-    # def stem(self, word):
-    #     """A function for stemming a single word"""
-    #     pass
+    def stem(self, word):
+        """A function for stemming a single word
+
+        Args:
+            word (str): input word to be spell-checked
+
+        Raises:
+            TypeError: only string as input
+
+        Returns:
+            list: list of stem(s)
+        """
+        if not isinstance(word, str) or not (self.dialect == "Sorani" and self.script == "Arabic"):
+            raise TypeError("Not supported yet.")
+        else:
+            return list(set([self.clean_stem(i) for i in self.huns.stem(word)]))
 
     # def lemmatize(self, word):
     #     """A function for lemmatization of a single word"""
     #     pass
+    def clean_stem(self, word):
+        """Remove extra characters in the stem
+        The following issue was observed when stemming with Hunspell (version 2.0.2) where
+        the retrieved stem of a verb is accompanied by the flag of the word, which is an unwanted extra character.
+        Possible flags are T, V and I. :lf should also be taken into account.
+
+        Args:
+            word ([str]): [stem]
+        """
+        for char in ["V", "I", "T"]:
+            word = word.replace(char, "")
+        return word.replace(":lf", "")
 
     def check_spelling(self, word):
         """Check spelling of a word
@@ -112,6 +139,7 @@ class Stem:
         - "pos": the part-of-speech of the word-form according to [the Universal Dependency tag set](https://universaldependencies.org/u/pos/index.html). 
         - "description": is flag
         - "terminal_suffix": anything except ts flag
+        - "st": the stem of the word
         - "formation": if ds flag is set, its value is assigned to description and the value of formation is set to derivational. Although the majority of our morphological rules cover inflectional forms, it is not accurate to say all of them are inflectional. Therefore, we only set this value to derivational wherever we are sure.
         - "base": `ts` flag. The definition of terminal suffix is a bit tricky in Hunspell. According to [the Hunspell documentation](http://manpages.ubuntu.com/manpages/trusty/en/man4/hunspell.4.html), "Terminal suffix fields are inflectional suffix fields "removed" by additional (not terminal) suffixes". In other words, the ts flag in Hunspell represents whatever is left after stripping all affixes. Therefore, it is the morphological base.
 
@@ -152,12 +180,16 @@ class Stem:
                             analysis_dict["base"] = item.split(":")[0]
                             # anything except the terminal_suffix is considered to be the base
                             analysis_dict[self.hunspell_flags[item.split(":")[1]]] = word_form.replace(item.split(":")[0], "")
+                            # TODO: prefixes and suffixes are merged together as ts. To be separated.  
                         elif item.split(":")[0] in self.hunspell_flags.keys():
                             # assign the key:value pairs from the Hunspell string output to the dictionary output of the current function
                             # for ds flag, add derivation as the formation type, otherwise inflection
                             if item.split(":")[0] == "ds":
                                 analysis_dict[self.hunspell_flags[item.split(":")[0]]] = "derivational"
                                 analysis_dict[self.hunspell_flags["is"]] = item.split(":")[1]
+                            # for st flag, stem should be cleaned first
+                            elif item.split(":")[0] == "st":
+                                analysis_dict[self.hunspell_flags[item.split(":")[0]]] = self.clean_stem(item.split(":")[1])
                             else:
                                 analysis_dict[self.hunspell_flags[item.split(":")[0]]] = item.split(":")[1]
 

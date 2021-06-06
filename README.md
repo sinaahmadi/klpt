@@ -127,7 +127,7 @@ Please note that KLPT is under development and some of the functionalities will 
     <td rowspan="5"><code>stem</code></td>
     <td>morphological analysis</td>
     <td>&#10003; (v0.1.0)</td>
-    <td>&#10003; (v0.1.1) 🆕</td>
+    <td>&#10003; (v0.1.1)</td>
   </tr>
   <tr>
     <td>morphological generation</td>
@@ -136,7 +136,7 @@ Please note that KLPT is under development and some of the functionalities will 
   </tr>
   <tr>
     <td>stemming</td>
-    <td>&#x2717;</td>
+    <td>only verbs (v.0.1.3) 🆕</td>
     <td>&#x2717;</td>
   </tr>
   <tr>
@@ -245,6 +245,7 @@ The Stem module deals with various tasks, mainly through the following functions
 - `check_spelling`: spell error detection
 - `correct_spelling`: spell error correction
 - `analyze`: morphological analysis
+- `stem`: stemming (only available for Sorani verbs for the moment).
 
 The module is based on the [Kurdish Hunspell project](https://github.com/sinaahmadi/KurdishHunspell) for Sorani and the [Apertium project](https://github.com/apertium/apertium-kmr) for Kurmanji. Please note that this module is currently getting further completed and we are aware of its current shortcomings.
 
@@ -257,6 +258,8 @@ False
 (False, ['ستاندبووت', 'سووتاندبووت', 'سووڕاندبووت', 'ڕووتاندبووت', 'فەوتاندبووت', 'بووژاندبووت'])
 >>> stemmer.analyze("دیتبامن")
 [{'pos': 'verb', 'description': 'past_stem_transitive_active', 'base': 'دیت', 'terminal_suffix': 'بامن'}]
+>>> stemmer.stem("دەچینەوە")
+['چ']
 
 >>> stemmer = Stem("Kurmanji", "Latin")
 >>> stemmer.analyze("dibêjim")
