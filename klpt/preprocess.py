@@ -44,8 +44,8 @@ class Preprocess:
     >>> preprocessor_kmr = Preprocess("Kurmanji", "Latin")
     >>> preprocessor_kmr.standardize("di sala 2018-an")
     'di sala 2018an'
-    >>> preprocessor_kmr.standardize("hêvîya")
-    'hêviya'
+    >>> preprocessor_kmr.standardize("hêviya")
+    'hêvîya'
     ```
 
     The preprocessing rules are provided at [`data/preprocess_map.json`](https://github.com/sinaahmadi/klpt/blob/master/klpt/data/preprocess_map.json).
