@@ -1,255 +1,338 @@
 <!DOCTYPE html>
-
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="Kurdish Language Processing Project" name="description"/>
-<meta content="Sina Ahmadi" name="author"/>
-<link href="https://sinaahmadi.github.io/klpt/user-guide/transliterate/" rel="canonical"/>
-<link href="../../img/favicon.ico" rel="shortcut icon"/>
-<title>Transliterate - KLPT</title>
-<link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet"/>
-<link href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css" rel="stylesheet"/>
-<link href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css" rel="stylesheet"/>
-<link href="//rsms.me/inter/inter.css" rel="stylesheet" type="text/css"/>
-<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&amp;subset=latin-ext,latin" rel="stylesheet" type="text/css"/>
-<link href="../../css/bootstrap-custom.min.css" rel="stylesheet"/>
-<link href="../../css/base.min.css" rel="stylesheet"/>
-<link href="../../css/cinder.min.css" rel="stylesheet"/>
-<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/dracula.min.css" rel="stylesheet"/>
-<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kurdish Language Processing Project">
+    <meta name="author" content="Sina Ahmadi">
+    <link rel="canonical" href="https://sinaahmadi.github.io/klpt/user-guide/transliterate/">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+
+    
+    <title>Transliterate - KLPT</title>
+    
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../css/base.min.css" rel="stylesheet">
+    <link href="../../css/cinder.min.css" rel="stylesheet">
+
+    
+        
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/dracula.min.css">
+        
+    
+    <link href="../../assets/_mkdocstrings.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
             <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
         <![endif]-->
+
+    
+
+     
 </head>
+
 <body>
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-<div class="container">
-<!-- Collapsed navigation -->
-<div class="navbar-header">
-<!-- Expander button -->
-<button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
-<span class="sr-only">Toggle navigation</span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-</button>
-<!-- Main title -->
-<a class="navbar-brand" href="../..">KLPT</a>
-</div>
-<!-- Expanded navigation -->
-<div class="navbar-collapse collapse">
-<!-- Main navigation -->
-<ul class="nav navbar-nav">
-<li>
-<a href="../..">Home</a>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            
+              <a class="navbar-brand" href="../..">KLPT</a>
+            
+        </div>
+
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../getting-started/">Getting started</a>
 </li>
-<li class="dropdown active">
-<a class="dropdown-toggle" data-toggle="dropdown" href="#">User Guide <b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li>
-<a href="../getting-started/">Getting started</a>
+
+                        
+                            
+<li >
+    <a href="../preprocess/">Preprocess</a>
 </li>
-<li>
-<a href="../preprocess/">Preprocess</a>
+
+                        
+                            
+<li >
+    <a href="../tokenize/">Tokenize</a>
 </li>
-<li>
-<a href="../tokenize/">Tokenize</a>
-</li>
+
+                        
+                            
 <li class="active">
-<a href="./">Transliterate</a>
+    <a href="./">Transliterate</a>
 </li>
-<li>
-<a href="../stem/">Stem</a>
+
+                        
+                            
+<li >
+    <a href="../stem/">Stem</a>
 </li>
-</ul>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../about/release-notes/">Release Notes</a>
 </li>
-<li class="dropdown">
-<a class="dropdown-toggle" data-toggle="dropdown" href="#">About <b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li>
-<a href="../../about/release-notes/">Release Notes</a>
+
+                        
+                            
+<li >
+    <a href="../../about/contributing/">Contributing</a>
 </li>
-<li>
-<a href="../../about/contributing/">Contributing</a>
+
+                        
+                            
+<li >
+    <a href="../../about/sponsors/">Sponsors</a>
 </li>
-<li>
-<a href="../../about/sponsors/">Sponsors</a>
+
+                        
+                            
+<li >
+    <a href="../../about/license/">License</a>
 </li>
-<li>
-<a href="../../about/license/">License</a>
-</li>
-</ul>
-</li>
-</ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-<a data-target="#mkdocs_search_modal" data-toggle="modal" href="#">
-<i class="fas fa-search"></i> Search
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fas fa-search"></i> Search
                         </a>
-</li>
-<li>
-<a href="../tokenize/" rel="prev">
-<i class="fas fa-arrow-left"></i> Previous
+                    </li>
+                    <li >
+                        <a rel="prev" href="../tokenize/">
+                            <i class="fas fa-arrow-left"></i> Previous
                         </a>
-</li>
-<li>
-<a href="../stem/" rel="next">
+                    </li>
+                    <li >
+                        <a rel="next" href="../stem/">
                             Next <i class="fas fa-arrow-right"></i>
-</a>
-</li>
-<li>
-<a href="https://github.com/sinaahmadi/klpt/"><i class="fab fa-github"></i> GitHub</a>
-</li>
-</ul>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/sinaahmadi/klpt/"><i class="fab fa-github"></i> GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-<div class="container">
-<div class="col-md-3">
+
+    <div class="container">
+        
+        
+        <div class="col-md-3">
 <div class="bs-sidebar hidden-print affix well" role="complementary">
-<ul class="nav bs-sidenav">
-<li class="first-level active"><a href="#transliterate-package">transliterate package</a></li>
-<li class="first-level"><a href="#klpt.transliterate.Transliterate">klpt.transliterate.Transliterate</a></li>
-<li class="first-level"><a href="#klpt.transliterate.Transliterate.__init__">__init__()</a></li>
-<li class="first-level"><a href="#klpt.transliterate.Transliterate.arabic_to_latin">arabic_to_latin()</a></li>
-<li class="first-level"><a href="#klpt.transliterate.Transliterate.bizroke_finder">bizroke_finder()</a></li>
-<li class="first-level"><a href="#klpt.transliterate.Transliterate.latin_to_arabic">latin_to_arabic()</a></li>
-<li class="first-level"><a href="#klpt.transliterate.Transliterate.preprocessor">preprocessor()</a></li>
-<li class="first-level"><a href="#klpt.transliterate.Transliterate.syllable_detector">syllable_detector()</a></li>
-<li class="first-level"><a href="#klpt.transliterate.Transliterate.to_pieces">to_pieces()</a></li>
-<li class="first-level"><a href="#klpt.transliterate.Transliterate.transliterate">transliterate()</a></li>
-<li class="first-level"><a href="#klpt.transliterate.Transliterate.uw_iy_Detector">uw_iy_Detector()</a></li>
-</ul>
+
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#transliterate-package">transliterate package</a></li>
+        <li class="first-level "><a href="#klpt.transliterate.Transliterate">klpt.transliterate.Transliterate</a></li>
+        <li class="first-level "><a href="#klpt.transliterate.Transliterate.__init__">__init__()</a></li>
+        <li class="first-level "><a href="#klpt.transliterate.Transliterate.arabic_to_latin">arabic_to_latin()</a></li>
+        <li class="first-level "><a href="#klpt.transliterate.Transliterate.bizroke_finder">bizroke_finder()</a></li>
+        <li class="first-level "><a href="#klpt.transliterate.Transliterate.latin_to_arabic">latin_to_arabic()</a></li>
+        <li class="first-level "><a href="#klpt.transliterate.Transliterate.preprocessor">preprocessor()</a></li>
+        <li class="first-level "><a href="#klpt.transliterate.Transliterate.syllable_detector">syllable_detector()</a></li>
+        <li class="first-level "><a href="#klpt.transliterate.Transliterate.to_pieces">to_pieces()</a></li>
+        <li class="first-level "><a href="#klpt.transliterate.Transliterate.transliterate">transliterate()</a></li>
+        <li class="first-level "><a href="#klpt.transliterate.Transliterate.uw_iy_Detector">uw_iy_Detector()</a></li>
+    </ul>
 </div></div>
-<div class="col-md-9" role="main">
+        <div class="col-md-9" role="main">
+
 <h2 id="transliterate-package"><code>transliterate</code> package</h2>
-<div class="doc doc-object doc-class">
-<h2 class="hidden-toc" href="#klpt.transliterate.Transliterate" id="klpt.transliterate.Transliterate" style="visibility: hidden; position: absolute;">
-</h2>
-<div class="doc doc-contents first">
-<p>This module aims at transliterating one script of Kurdish into another one. Currently, only the Latin-based and the Arabic-based scripts of Sorani and Kurmanji are supported. The main function in this module is <code>transliterate()</code> which also takes care of detecting the correct form of double-usage graphemes, namely و ↔ w/u and ی ↔ î/y. In some specific occasions, it can also predict the placement of the missing <em>i</em> (also known as <em>Bizroke/بزرۆکە</em>).</p>
+
+
+  <div class="doc doc-object doc-class">
+
+<a id="klpt.transliterate.Transliterate"></a>
+    <div class="doc doc-contents first">
+
+      <p>This module aims at transliterating one script of Kurdish into another one. Currently, only the Latin-based and the Arabic-based scripts of Sorani and Kurmanji are supported. The main function in this module is <code>transliterate()</code> which also takes care of detecting the correct form of double-usage graphemes, namely و ↔ w/u and ی ↔ î/y. In some specific occasions, it can also predict the placement of the missing <em>i</em> (also known as <em>Bizroke/بزرۆکە</em>).</p>
 <p>The module is based on the <a href="https://github.com/sinaahmadi/wergor">Kurdish transliteration project</a>.</p>
+
 <p><strong>Examples:</strong></p>
-<br/>
-<pre><code class="python">&gt;&gt;&gt; from klpt.transliterate import Transliterate
-&gt;&gt;&gt; transliterate = Transliterate("Kurmanji", "Latin", target_script="Arabic")
-&gt;&gt;&gt; transliterate.transliterate("rojhilata navîn")
+    
+      <pre><code class="language-python">&gt;&gt;&gt; from klpt.transliterate import Transliterate
+&gt;&gt;&gt; transliterate = Transliterate(&quot;Kurmanji&quot;, &quot;Latin&quot;, target_script=&quot;Arabic&quot;)
+&gt;&gt;&gt; transliterate.transliterate(&quot;rojhilata navîn&quot;)
 'رۆژهلاتا ناڤین'
 
-&gt;&gt;&gt; transliterate_ckb = Transliterate("Sorani", "Arabic", target_script="Latin")
-&gt;&gt;&gt; transliterate_ckb.transliterate("لە وڵاتەکانی دیکەدا")
+&gt;&gt;&gt; transliterate_ckb = Transliterate(&quot;Sorani&quot;, &quot;Arabic&quot;, target_script=&quot;Latin&quot;)
+&gt;&gt;&gt; transliterate_ckb.transliterate(&quot;لە وڵاتەکانی دیکەدا&quot;)
 'le wiłatekanî dîkeda'
 </code></pre>
-<div class="doc doc-children">
-<div class="doc doc-object doc-method">
-<h2 class="doc doc-heading" id="klpt.transliterate.Transliterate.__init__">
-<code class="highlight language-python">
-__init__<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialect</span><span class="p">,</span> <span class="n">script</span><span class="p">,</span> <span class="n">target_script</span><span class="p">,</span> <span class="n">unknown</span><span class="o">=</span><span class="s1">'�'</span><span class="p">,</span> <span class="n">numeral</span><span class="o">=</span><span class="s1">'Latin'</span><span class="p">)</span> </code>
-<span class="doc doc-properties">
-<small class="doc doc-property doc-property-special"><code>special</code></small>
-</span>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="klpt.transliterate.Transliterate.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialect</span><span class="p">,</span> <span class="n">script</span><span class="p">,</span> <span class="n">target_script</span><span class="p">,</span> <span class="n">unknown</span><span class="o">=</span><span class="s1">&#39;�&#39;</span><span class="p">,</span> <span class="n">numeral</span><span class="o">=</span><span class="s1">&#39;Latin&#39;</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
 </h2>
-<div class="doc doc-contents">
-<p>Initializing using a Configuration object</p>
+
+    <div class="doc doc-contents ">
+
+      <p>Initializing using a Configuration object</p>
 <p>To do:
     - "لە ئیسپانیا ژنان لە دژی ‘patriarkavirus’ ڕێپێوانیان کرد": "le îspanya jinan le dijî ‘patriarkavirus’ řêpêwanyan kird"
     - "egerçî damezrandnî rêkxrawe kurdîyekan her rêpênedraw mabûnewe Inzîbat.": "ئەگەرچی دامەزراندنی ڕێکخراوە کوردییەکان هەر رێپێنەدراو مابوونەوە ئنزیبات.",</p>
+
 <p><strong>Parameters:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>mode</code></td>
-<td><code>[type]</code></td>
-<td>
-<p>[description]</p>
-</td>
-<td><em>required</em></td>
-</tr>
-<tr>
-<td><code>unknown</code></td>
-<td><code>str</code></td>
-<td>
-<p>[description]. Defaults to "�".</p>
-</td>
-<td><code>'�'</code></td>
-</tr>
-<tr>
-<td><code>numeral</code></td>
-<td><code>str</code></td>
-<td>
-<p>[description]. Defaults to "Latin". Modifiable only if the source script is in Arabic. Otherwise, the Default value will be Latin.</p>
-</td>
-<td><code>'Latin'</code></td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>mode</code></td>
+        <td><code>[type]</code></td>
+        <td><p>[description]</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>unknown</code></td>
+        <td><code>str</code></td>
+        <td><p>[description]. Defaults to "�".</p></td>
+        <td><code>&#39;�&#39;</code></td>
+      </tr>
+      <tr>
+        <td><code>numeral</code></td>
+        <td><code>str</code></td>
+        <td><p>[description]. Defaults to "Latin". Modifiable only if the source script is in Arabic. Otherwise, the Default value will be Latin.</p></td>
+        <td><code>&#39;Latin&#39;</code></td>
+      </tr>
+  </tbody>
 </table>
 <p><strong>Exceptions:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ValueError</code></td>
-<td>
-<p>[description]</p>
-</td>
-</tr>
-<tr>
-<td><code>ValueError</code></td>
-<td>
-<p>[description]</p>
-</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>ValueError</code></td>
+        <td><p>[description]</p></td>
+      </tr>
+      <tr>
+        <td><code>ValueError</code></td>
+        <td><p>[description]</p></td>
+      </tr>
+  </tbody>
 </table>
-<details class="quote">
-<summary>Source code in <code>klpt/transliterate.py</code></summary>
-<div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialect</span><span class="p">,</span> <span class="n">script</span><span class="p">,</span> <span class="n">target_script</span><span class="p">,</span> <span class="n">unknown</span><span class="o">=</span><span class="s2">"�"</span><span class="p">,</span> <span class="n">numeral</span><span class="o">=</span><span class="s2">"Latin"</span><span class="p">):</span>
-    <span class="sd">"""Initializing using a Configuration object</span>
+        <details class="quote">
+          <summary>Source code in <code>klpt/transliterate.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialect</span><span class="p">,</span> <span class="n">script</span><span class="p">,</span> <span class="n">target_script</span><span class="p">,</span> <span class="n">unknown</span><span class="o">=</span><span class="s2">&quot;�&quot;</span><span class="p">,</span> <span class="n">numeral</span><span class="o">=</span><span class="s2">&quot;Latin&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Initializing using a Configuration object</span>
 
 <span class="sd">    To do:</span>
-<span class="sd">        - "لە ئیسپانیا ژنان لە دژی ‘patriarkavirus’ ڕێپێوانیان کرد": "le îspanya jinan le dijî ‘patriarkavirus’ řêpêwanyan kird"</span>
-<span class="sd">        - "egerçî damezrandnî rêkxrawe kurdîyekan her rêpênedraw mabûnewe Inzîbat.": "ئەگەرچی دامەزراندنی ڕێکخراوە کوردییەکان هەر رێپێنەدراو مابوونەوە ئنزیبات.",</span>
+<span class="sd">        - &quot;لە ئیسپانیا ژنان لە دژی ‘patriarkavirus’ ڕێپێوانیان کرد&quot;: &quot;le îspanya jinan le dijî ‘patriarkavirus’ řêpêwanyan kird&quot;</span>
+<span class="sd">        - &quot;egerçî damezrandnî rêkxrawe kurdîyekan her rêpênedraw mabûnewe Inzîbat.&quot;: &quot;ئەگەرچی دامەزراندنی ڕێکخراوە کوردییەکان هەر رێپێنەدراو مابوونەوە ئنزیبات.&quot;,</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        mode ([type]): [description]</span>
-<span class="sd">        unknown (str, optional): [description]. Defaults to "�".</span>
-<span class="sd">        numeral (str, optional): [description]. Defaults to "Latin". Modifiable only if the source script is in Arabic. Otherwise, the Default value will be Latin.</span>
+<span class="sd">        unknown (str, optional): [description]. Defaults to &quot;�&quot;.</span>
+<span class="sd">        numeral (str, optional): [description]. Defaults to &quot;Latin&quot;. Modifiable only if the source script is in Arabic. Otherwise, the Default value will be Latin.</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: [description]</span>
 <span class="sd">        ValueError: [description]</span>
 
-<span class="sd">    """</span>
-    <span class="c1"># with open("data/default-options.json") as f:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># with open(&quot;data/default-options.json&quot;) as f:</span>
     <span class="c1">#     options = json.load(f)</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">UNKNOWN</span> <span class="o">=</span> <span class="s2">"�"</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">klpt</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s2">"data/wergor.json"</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">UNKNOWN</span> <span class="o">=</span> <span class="s2">&quot;�&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">klpt</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s2">&quot;data/wergor.json&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">klpt</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s2">"data/preprocess_map.json"</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">preprocess_map</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="s2">"normalizer"</span><span class="p">]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">klpt</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s2">&quot;data/preprocess_map.json&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preprocess_map</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="s2">&quot;normalizer&quot;</span><span class="p">]</span>
 
-    <span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">({</span><span class="s2">"dialect"</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span> <span class="s2">"script"</span><span class="p">:</span> <span class="n">script</span><span class="p">,</span> <span class="s2">"numeral"</span><span class="p">:</span> <span class="n">numeral</span><span class="p">,</span> <span class="s2">"target_script"</span><span class="p">:</span> <span class="n">target_script</span><span class="p">,</span> <span class="s2">"unknown"</span><span class="p">:</span> <span class="n">unknown</span><span class="p">})</span>
-    <span class="c1"># self.preprocess_map = object.preprocess_map["normalizer"]</span>
+    <span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">({</span><span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span> <span class="s2">&quot;script&quot;</span><span class="p">:</span> <span class="n">script</span><span class="p">,</span> <span class="s2">&quot;numeral&quot;</span><span class="p">:</span> <span class="n">numeral</span><span class="p">,</span> <span class="s2">&quot;target_script&quot;</span><span class="p">:</span> <span class="n">target_script</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">:</span> <span class="n">unknown</span><span class="p">})</span>
+    <span class="c1"># self.preprocess_map = object.preprocess_map[&quot;normalizer&quot;]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">dialect</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">script</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">numeral</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">numeral</span>
@@ -258,59 +341,68 @@ __init__<span class="p">(</span><span class="bp">self</span><span class="p">,</s
     <span class="bp">self</span><span class="o">.</span><span class="n">user_UNKNOWN</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">user_UNKNOWN</span>
 
     <span class="c1"># self.mode = mode</span>
-    <span class="c1"># if mode=="arabic_to_latin":</span>
-    <span class="c1">#     target_script = "Latin"</span>
-    <span class="c1"># elif mode=="latin_to_arabic":</span>
-    <span class="c1">#     target_script = "Arabic"</span>
+    <span class="c1"># if mode==&quot;arabic_to_latin&quot;:</span>
+    <span class="c1">#     target_script = &quot;Latin&quot;</span>
+    <span class="c1"># elif mode==&quot;latin_to_arabic&quot;:</span>
+    <span class="c1">#     target_script = &quot;Arabic&quot;</span>
     <span class="c1"># else:</span>
-    <span class="c1">#     raise ValueError(f'Unknown transliteration option. Available options: {options["transliterator"]}')</span>
+    <span class="c1">#     raise ValueError(f&#39;Unknown transliteration option. Available options: {options[&quot;transliterator&quot;]}&#39;)</span>
 
     <span class="c1"># if len(unknown):</span>
     <span class="c1">#     self.user_UNKNOWN = unknown</span>
     <span class="c1"># else:</span>
-    <span class="c1">#     raise ValueError(f'Unknown unknown tag. Select a non-empty token (e.g. &lt;UNK&gt;.')</span>
+    <span class="c1">#     raise ValueError(f&#39;Unknown unknown tag. Select a non-empty token (e.g. &lt;UNK&gt;.&#39;)</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">characters_mapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">"characters_mapping"</span><span class="p">]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">digits_mapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess_map</span><span class="p">[</span><span class="s2">"universal"</span><span class="p">][</span><span class="s2">"numerals"</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">target_script</span><span class="p">]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">digits_mapping_all</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preprocess_map</span><span class="p">[</span><span class="s2">"universal"</span><span class="p">][</span><span class="s2">"numerals"</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">target_script</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preprocess_map</span><span class="p">[</span><span class="s2">"universal"</span><span class="p">][</span><span class="s2">"numerals"</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">target_script</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">punctuation_mapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">"punctuation"</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">target_script</span><span class="p">]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">punctuation_mapping_all</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">"punctuation"</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">target_script</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> 
-                                            <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">"punctuation"</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">target_script</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
-    <span class="c1"># self.tricky_characters = self.wergor_configurations["characters_mapping"]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">wy_mappings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">"wy_mappings"</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">characters_mapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">&quot;characters_mapping&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">digits_mapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess_map</span><span class="p">[</span><span class="s2">&quot;universal&quot;</span><span class="p">][</span><span class="s2">&quot;numerals&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">target_script</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">digits_mapping_all</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preprocess_map</span><span class="p">[</span><span class="s2">&quot;universal&quot;</span><span class="p">][</span><span class="s2">&quot;numerals&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">target_script</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preprocess_map</span><span class="p">[</span><span class="s2">&quot;universal&quot;</span><span class="p">][</span><span class="s2">&quot;numerals&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">target_script</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">punctuation_mapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">&quot;punctuation&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">target_script</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">punctuation_mapping_all</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">&quot;punctuation&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">target_script</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> 
+                                            <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">&quot;punctuation&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">target_script</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+    <span class="c1"># self.tricky_characters = self.wergor_configurations[&quot;characters_mapping&quot;]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">wy_mappings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">&quot;wy_mappings&quot;</span><span class="p">]</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">hemze</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">"hemze"</span><span class="p">]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">bizroke</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">"bizroke"</span><span class="p">]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">"uw_iy_forms"</span><span class="p">]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">target_char</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">"target_char"</span><span class="p">]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">arabic_vowels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">"arabic_vowels"</span><span class="p">]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">arabic_cons</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">"arabic_cons"</span><span class="p">]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">latin_vowels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">"latin_vowels"</span><span class="p">]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">latin_cons</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">"latin_cons"</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hemze</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">&quot;hemze&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">bizroke</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">&quot;bizroke&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">&quot;uw_iy_forms&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">target_char</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">&quot;target_char&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">arabic_vowels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">&quot;arabic_vowels&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">arabic_cons</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">&quot;arabic_cons&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">latin_vowels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">&quot;latin_vowels&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">latin_cons</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wergor_configurations</span><span class="p">[</span><span class="s2">&quot;latin_cons&quot;</span><span class="p">]</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">characters_pack</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"arabic_to_latin"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">characters_mapping</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="s2">"latin_to_arabic"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">characters_mapping</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_script</span> <span class="o">==</span> <span class="s2">"Arabic"</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">prep</span> <span class="o">=</span> <span class="n">Preprocess</span><span class="p">(</span><span class="s2">"Sorani"</span><span class="p">,</span> <span class="s2">"Latin"</span><span class="p">,</span> <span class="n">numeral</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">numeral</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">characters_pack</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;arabic_to_latin&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">characters_mapping</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="s2">&quot;latin_to_arabic&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">characters_mapping</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_script</span> <span class="o">==</span> <span class="s2">&quot;Arabic&quot;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prep</span> <span class="o">=</span> <span class="n">Preprocess</span><span class="p">(</span><span class="s2">&quot;Sorani&quot;</span><span class="p">,</span> <span class="s2">&quot;Latin&quot;</span><span class="p">,</span> <span class="n">numeral</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">numeral</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">prep</span> <span class="o">=</span> <span class="n">Preprocess</span><span class="p">(</span><span class="s2">"Sorani"</span><span class="p">,</span> <span class="s2">"Latin"</span><span class="p">,</span> <span class="n">numeral</span><span class="o">=</span><span class="s2">"Latin"</span><span class="p">)</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h2 class="doc doc-heading" id="klpt.transliterate.Transliterate.arabic_to_latin">
-<code class="highlight language-python">
-arabic_to_latin<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char</span><span class="p">)</span> </code>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prep</span> <span class="o">=</span> <span class="n">Preprocess</span><span class="p">(</span><span class="s2">&quot;Sorani&quot;</span><span class="p">,</span> <span class="s2">&quot;Latin&quot;</span><span class="p">,</span> <span class="n">numeral</span><span class="o">=</span><span class="s2">&quot;Latin&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="klpt.transliterate.Transliterate.arabic_to_latin" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">arabic_to_latin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char</span><span class="p">)</span></code>
+
+
 </h2>
-<div class="doc doc-contents">
-<p>Mapping Arabic-based characters to the Latin-based equivalents</p>
-<details class="quote">
-<summary>Source code in <code>klpt/transliterate.py</code></summary>
-<div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">arabic_to_latin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char</span><span class="p">):</span>
-    <span class="sd">"""Mapping Arabic-based characters to the Latin-based equivalents"""</span>
-    <span class="k">if</span> <span class="n">char</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">:</span>
+
+    <div class="doc doc-contents ">
+
+      <p>Mapping Arabic-based characters to the Latin-based equivalents</p>
+
+        <details class="quote">
+          <summary>Source code in <code>klpt/transliterate.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">arabic_to_latin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mapping Arabic-based characters to the Latin-based equivalents&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">char</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">char</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">characters_mapping</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
             <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">characters_mapping</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">characters_mapping</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">char</span><span class="p">)]</span>
         <span class="k">elif</span> <span class="n">char</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">punctuation_mapping</span><span class="p">:</span>
@@ -318,48 +410,66 @@ arabic_to_latin<span class="p">(</span><span class="bp">self</span><span class="
         <span class="k">elif</span> <span class="n">char</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">punctuation_mapping</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">punctuation_mapping</span><span class="p">[</span><span class="n">char</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">char</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h2 class="doc doc-heading" id="klpt.transliterate.Transliterate.bizroke_finder">
-<code class="highlight language-python">
-bizroke_finder<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span> </code>
-</h2>
-<div class="doc doc-contents">
-<p>Detection of the "i" character in the Arabic-based script. Incomplete version.</p>
-<details class="quote">
-<summary>Source code in <code>klpt/transliterate.py</code></summary>
-<div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">bizroke_finder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
-    <span class="sd">"""Detection of the "i" character in the Arabic-based script. Incomplete version."""</span>
-    <span class="n">word</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">latin_cons</span> <span class="ow">and</span> <span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">latin_cons</span> <span class="ow">and</span> <span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">"w"</span> <span class="ow">and</span> <span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">"y"</span><span class="p">:</span>
-        <span class="n">word</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"i"</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h2 class="doc doc-heading" id="klpt.transliterate.Transliterate.latin_to_arabic">
-<code class="highlight language-python">
-latin_to_arabic<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char</span><span class="p">)</span> </code>
-</h2>
-<div class="doc doc-contents">
-<p>Mapping Latin-based characters to the Arabic-based equivalents</p>
-<details class="quote">
-<summary>Source code in <code>klpt/transliterate.py</code></summary>
-<div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">latin_to_arabic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char</span><span class="p">):</span>
-    <span class="sd">"""Mapping Latin-based characters to the Arabic-based equivalents"""</span>
-    <span class="c1"># check if the character is in upper case</span>
-    <span class="n">mapped_char</span> <span class="o">=</span> <span class="s2">""</span>
+</code></pre></div>
+        </details>
+    </div>
 
-    <span class="k">if</span> <span class="n">char</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">:</span>
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="klpt.transliterate.Transliterate.bizroke_finder" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">bizroke_finder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Detection of the "i" character in the Arabic-based script. Incomplete version.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>klpt/transliterate.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">bizroke_finder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detection of the &quot;i&quot; character in the Arabic-based script. Incomplete version.&quot;&quot;&quot;</span>
+    <span class="n">word</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">latin_cons</span> <span class="ow">and</span> <span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">latin_cons</span> <span class="ow">and</span> <span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;w&quot;</span> <span class="ow">and</span> <span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span>
+        <span class="n">word</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;i&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="klpt.transliterate.Transliterate.latin_to_arabic" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">latin_to_arabic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Mapping Latin-based characters to the Arabic-based equivalents</p>
+
+        <details class="quote">
+          <summary>Source code in <code>klpt/transliterate.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">latin_to_arabic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mapping Latin-based characters to the Arabic-based equivalents&quot;&quot;&quot;</span>
+    <span class="c1"># check if the character is in upper case</span>
+    <span class="n">mapped_char</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">char</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">char</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">wy_mappings</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="n">mapped_char</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wy_mappings</span><span class="p">[</span><span class="n">char</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
         <span class="k">elif</span> <span class="n">char</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">characters_mapping</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -375,79 +485,106 @@ latin_to_arabic<span class="p">(</span><span class="bp">self</span><span class="
         <span class="k">return</span> <span class="n">mapped_char</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">char</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h2 class="doc doc-heading" id="klpt.transliterate.Transliterate.preprocessor">
-<code class="highlight language-python">
-preprocessor<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span> </code>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="klpt.transliterate.Transliterate.preprocessor" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">preprocessor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span></code>
+
+
 </h2>
-<div class="doc doc-contents">
-<p>Preprocessing by normalizing text encoding and removing embedding characters</p>
-<details class="quote">
-<summary>Source code in <code>klpt/transliterate.py</code></summary>
-<div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">preprocessor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
-    <span class="sd">"""Preprocessing by normalizing text encoding and removing embedding characters"""</span>
+
+    <div class="doc doc-contents ">
+
+      <p>Preprocessing by normalizing text encoding and removing embedding characters</p>
+
+        <details class="quote">
+          <summary>Source code in <code>klpt/transliterate.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">preprocessor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Preprocessing by normalizing text encoding and removing embedding characters&quot;&quot;&quot;</span>
     <span class="c1"># replace this by the normalization part</span>
-    <span class="n">word</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'</span><span class="se">\u202b</span><span class="s1">'</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'</span><span class="se">\u202c</span><span class="s1">'</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'</span><span class="se">\u202a</span><span class="s1">'</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s2">"وو"</span><span class="p">,</span> <span class="s2">"û"</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"</span><span class="se">\u200c</span><span class="s2">"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"ـ"</span><span class="p">,</span> <span class="s2">""</span><span class="p">))</span>
+    <span class="n">word</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\u202b</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\u202c</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\u202a</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;وو&quot;</span><span class="p">,</span> <span class="s2">&quot;û&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\u200c</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;ـ&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
     <span class="c1"># for char_index in range(len(word)):</span>
     <span class="c1">#     if(word[char_index] in self.tricky_characters.keys()):</span>
     <span class="c1">#         word[char_index] = self.tricky_characters[word[char_index]]</span>
-    <span class="k">return</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h2 class="doc doc-heading" id="klpt.transliterate.Transliterate.syllable_detector">
-<code class="highlight language-python">
-syllable_detector<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span> </code>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="klpt.transliterate.Transliterate.syllable_detector" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">syllable_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span></code>
+
+
 </h2>
-<div class="doc doc-contents">
-<p>Detection of the syllable based on the given pattern. May be used for transcription applications.</p>
-<details class="quote">
-<summary>Source code in <code>klpt/transliterate.py</code></summary>
-<div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">syllable_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
-    <span class="sd">"""Detection of the syllable based on the given pattern. May be used for transcription applications."""</span>
-    <span class="n">syllable_templates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"V"</span><span class="p">,</span> <span class="s2">"VC"</span><span class="p">,</span> <span class="s2">"VCC"</span><span class="p">,</span> <span class="s2">"CV"</span><span class="p">,</span> <span class="s2">"CVC"</span><span class="p">,</span> <span class="s2">"CVCCC"</span><span class="p">]</span>
-    <span class="n">CV_converted_list</span> <span class="o">=</span> <span class="s2">""</span>     <br/>
-<span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
+
+    <div class="doc doc-contents ">
+
+      <p>Detection of the syllable based on the given pattern. May be used for transcription applications.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>klpt/transliterate.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">syllable_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detection of the syllable based on the given pattern. May be used for transcription applications.&quot;&quot;&quot;</span>
+    <span class="n">syllable_templates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">,</span> <span class="s2">&quot;VC&quot;</span><span class="p">,</span> <span class="s2">&quot;VCC&quot;</span><span class="p">,</span> <span class="s2">&quot;CV&quot;</span><span class="p">,</span> <span class="s2">&quot;CVC&quot;</span><span class="p">,</span> <span class="s2">&quot;CVCCC&quot;</span><span class="p">]</span>
+    <span class="n">CV_converted_list</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>       
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">char</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">latin_vowels</span><span class="p">:</span>
-            <span class="n">CV_converted_list</span> <span class="o">+=</span> <span class="s2">"V"</span>
+            <span class="n">CV_converted_list</span> <span class="o">+=</span> <span class="s2">&quot;V&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">CV_converted_list</span> <span class="o">+=</span> <span class="s2">"C"</span>
+            <span class="n">CV_converted_list</span> <span class="o">+=</span> <span class="s2">&quot;C&quot;</span>
 
     <span class="n">syllables</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">CV_converted_list</span><span class="p">)):</span>
         <span class="n">syllable_templates_permutated</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">syllable_templates</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="n">i</span><span class="p">)]</span>
         <span class="k">for</span> <span class="n">syl</span> <span class="ow">in</span> <span class="n">syllable_templates_permutated</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">syl</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">CV_converted_list</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">CV_converted_list</span> <span class="o">==</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">syl</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">"VV"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">syl</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">syl</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">CV_converted_list</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">CV_converted_list</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">syl</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;VV&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">syl</span><span class="p">):</span>
                     <span class="n">syllables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">syl</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">syllables</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h2 class="doc doc-heading" id="klpt.transliterate.Transliterate.to_pieces">
-<code class="highlight language-python">
-to_pieces<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span> </code>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="klpt.transliterate.Transliterate.to_pieces" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">to_pieces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span></code>
+
+
 </h2>
-<div class="doc doc-contents">
-<p>Given a token, find other segments composed of numbers and punctuation marks not seperated by space ▁</p>
-<details class="quote">
-<summary>Source code in <code>klpt/transliterate.py</code></summary>
-<div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">to_pieces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
-    <span class="sd">"""Given a token, find other segments composed of numbers and punctuation marks not seperated by space ▁"""</span> 
+
+    <div class="doc doc-contents ">
+
+      <p>Given a token, find other segments composed of numbers and punctuation marks not seperated by space ▁</p>
+
+        <details class="quote">
+          <summary>Source code in <code>klpt/transliterate.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">to_pieces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a token, find other segments composed of numbers and punctuation marks not seperated by space ▁&quot;&quot;&quot;</span> 
     <span class="n">tokens_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="n">flag</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># True if a token is a \w</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
@@ -470,18 +607,27 @@ to_pieces<span class="p">(</span><span class="bp">self</span><span class="p">,</
             <span class="n">tokens_dict</span><span class="p">[</span><span class="n">char_index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">UNKNOWN</span>
 
     <span class="k">return</span> <span class="n">tokens_dict</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h2 class="doc doc-heading" id="klpt.transliterate.Transliterate.transliterate">
-<code class="highlight language-python">
-transliterate<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> </code>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="klpt.transliterate.Transliterate.transliterate" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">transliterate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span></code>
+
+
 </h2>
-<div class="doc doc-contents">
-<p>The main method of the class:</p>
+
+    <div class="doc doc-contents ">
+
+      <p>The main method of the class:</p>
 <pre><code>   - find word boundaries by splitting it using spaces and then retrieve words mixed with other characters (without space)
    - map characters
    - detect double-usage characters w/u and y/î
@@ -491,11 +637,11 @@ transliterate<span class="p">(</span><span class="bp">self</span><span class="p"
 </code></pre>
 <p>etc.).
        If the source and the target scripts are identical, the input text should be returned without any further processing.</p>
-<details class="quote">
-<summary>Source code in <code>klpt/transliterate.py</code></summary>
-<div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">transliterate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-    <span class="sd">"""The main method of the class:</span>
+
+        <details class="quote">
+          <summary>Source code in <code>klpt/transliterate.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">transliterate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The main method of the class:</span>
 
 <span class="sd">    - find word boundaries by splitting it using spaces and then retrieve words mixed with other characters (without space)</span>
 <span class="sd">    - map characters</span>
@@ -505,14 +651,14 @@ transliterate<span class="p">(</span><span class="bp">self</span><span class="p"
 <span class="sd">    Notice: text format should not be changed at all (no lower case, no style replacement \t, \n etc.).</span>
 <span class="sd">    If the source and the target scripts are identical, the input text should be returned without any further processing.</span>
 
-<span class="sd">    """</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prep</span><span class="o">.</span><span class="n">unify_numerals</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prep</span><span class="o">.</span><span class="n">unify_numerals</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">transliterated_text</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
         <span class="n">transliterated_line</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
-            <span class="n">trans_token</span> <span class="o">=</span> <span class="s2">""</span>
+            <span class="n">trans_token</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
             <span class="c1"># try:</span>
             <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocessor</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="c1"># This is not correct as the capital letter should be kept the way it is given.</span>
             <span class="n">tokens_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_pieces</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
@@ -520,180 +666,218 @@ transliterate<span class="p">(</span><span class="bp">self</span><span class="p"
             <span class="k">for</span> <span class="n">token_key</span> <span class="ow">in</span> <span class="n">tokens_dict</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens_dict</span><span class="p">[</span><span class="n">token_key</span><span class="p">]):</span>
                     <span class="n">word</span> <span class="o">=</span> <span class="n">tokens_dict</span><span class="p">[</span><span class="n">token_key</span><span class="p">]</span>
-                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">"arabic_to_latin"</span><span class="p">:</span>
-                        <span class="c1"># w/y detection based on the priority in "word"</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;arabic_to_latin&quot;</span><span class="p">:</span>
+                        <span class="c1"># w/y detection based on the priority in &quot;word&quot;</span>
                         <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
                             <span class="k">if</span> <span class="n">char</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_char</span><span class="p">:</span>
-                                <span class="n">word</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_Detector</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">char</span><span class="p">)</span><br/>
-<span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">hemze</span> <span class="ow">and</span> <span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">arabic_vowels</span><span class="p">:</span>
+                                <span class="n">word</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_Detector</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">char</span><span class="p">)</span>  
+                        <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">hemze</span> <span class="ow">and</span> <span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">arabic_vowels</span><span class="p">:</span>
                             <span class="n">word</span> <span class="o">=</span> <span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
                         <span class="n">word</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
                         <span class="k">for</span> <span class="n">char_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)):</span>
                             <span class="n">word</span><span class="p">[</span><span class="n">char_index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arabic_to_latin</span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="n">char_index</span><span class="p">])</span>
-                        <span class="n">word</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+                        <span class="n">word</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
                         <span class="n">word</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bizroke_finder</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
-                    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">"latin_to_arabic"</span><span class="p">:</span>
+                    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;latin_to_arabic&quot;</span><span class="p">:</span>
                         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
                             <span class="n">word</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
                             <span class="k">for</span> <span class="n">char_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)):</span>
                                 <span class="n">word</span><span class="p">[</span><span class="n">char_index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">latin_to_arabic</span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="n">char_index</span><span class="p">])</span>
                             <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">arabic_vowels</span> <span class="ow">or</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">bizroke</span><span class="p">:</span>
                                 <span class="n">word</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hemze</span><span class="p">)</span>
-                            <span class="n">word</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"û"</span><span class="p">,</span> <span class="s2">"وو"</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bizroke</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bizroke</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="s2">""</span><span class="p">)</span>
+                            <span class="n">word</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;û&quot;</span><span class="p">,</span> <span class="s2">&quot;وو&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bizroke</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bizroke</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
                         <span class="c1"># else:</span>
                         <span class="c1">#     return self.UNKNOWN</span>
 
                     <span class="n">trans_token</span> <span class="o">=</span> <span class="n">trans_token</span> <span class="o">+</span> <span class="n">word</span>
 
             <span class="n">transliterated_line</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trans_token</span><span class="p">)</span>
-        <span class="n">transliterated_text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">transliterated_line</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s2">" w "</span><span class="p">,</span> <span class="sa">u</span><span class="s2">" û "</span><span class="p">))</span>
+        <span class="n">transliterated_text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">transliterated_line</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot; w &quot;</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot; û &quot;</span><span class="p">))</span>
 
     <span class="c1"># standardize the output</span>
-    <span class="c1"># replace UNKOWN by the user's choice</span>
+    <span class="c1"># replace UNKOWN by the user&#39;s choice</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_UNKNOWN</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">transliterated_text</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_UNKNOWN</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">transliterated_text</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_UNKNOWN</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">transliterated_text</span><span class="p">)</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h2 class="doc doc-heading" id="klpt.transliterate.Transliterate.uw_iy_Detector">
-<code class="highlight language-python">
-uw_iy_Detector<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">target_char</span><span class="p">)</span> </code>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">transliterated_text</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="klpt.transliterate.Transliterate.uw_iy_Detector" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">uw_iy_Detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">target_char</span><span class="p">)</span></code>
+
+
 </h2>
-<div class="doc doc-contents">
-<p>Detection of "و" and "ی" in the Arabic-based script</p>
-<details class="quote">
-<summary>Source code in <code>klpt/transliterate.py</code></summary>
-<div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">uw_iy_Detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">target_char</span><span class="p">):</span>
-    <span class="sd">"""Detection of "و" and "ی" in the Arabic-based script"""</span>
+
+    <div class="doc doc-contents ">
+
+      <p>Detection of "و" and "ی" in the Arabic-based script</p>
+
+        <details class="quote">
+          <summary>Source code in <code>klpt/transliterate.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">uw_iy_Detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">target_char</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detection of &quot;و&quot; and &quot;ی&quot; in the Arabic-based script&quot;&quot;&quot;</span>
     <span class="n">word</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">target_char</span> <span class="o">==</span> <span class="s2">"و"</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">target_char</span> <span class="o">==</span> <span class="s2">&quot;و&quot;</span><span class="p">:</span>
         <span class="n">dic_index</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">dic_index</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">if</span> <span class="n">word</span> <span class="o">==</span> <span class="n">target_char</span><span class="p">:</span>
-        <span class="n">word</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">"target_char_cons"</span><span class="p">][</span><span class="n">dic_index</span><span class="p">]</span>
+        <span class="n">word</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">&quot;target_char_cons&quot;</span><span class="p">][</span><span class="n">dic_index</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">hemze</span> <span class="ow">and</span> <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_char</span><span class="p">:</span>
-                <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">"target_char_vowel"</span><span class="p">][</span><span class="n">dic_index</span><span class="p">]</span>
+                <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">&quot;target_char_vowel&quot;</span><span class="p">][</span><span class="n">dic_index</span><span class="p">]</span>
                 <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_char</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                        <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">"target_char_cons"</span><span class="p">][</span><span class="n">dic_index</span><span class="p">]</span>
+                        <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">&quot;target_char_cons&quot;</span><span class="p">][</span><span class="n">dic_index</span><span class="p">]</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">arabic_vowels</span><span class="p">:</span>
-                            <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">"target_char_cons"</span><span class="p">][</span><span class="n">dic_index</span><span class="p">]</span>
+                            <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">&quot;target_char_cons&quot;</span><span class="p">][</span><span class="n">dic_index</span><span class="p">]</span>
                         <span class="k">else</span><span class="p">:</span>
                             <span class="k">if</span> <span class="n">index</span><span class="o">+</span><span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
                                 <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">arabic_vowels</span><span class="p">:</span>
-                                    <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">"target_char_cons"</span><span class="p">][</span><span class="n">dic_index</span><span class="p">]</span>
+                                    <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">&quot;target_char_cons&quot;</span><span class="p">][</span><span class="n">dic_index</span><span class="p">]</span>
                                 <span class="k">else</span><span class="p">:</span>
-                                    <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">"target_char_vowel"</span><span class="p">][</span><span class="n">dic_index</span><span class="p">]</span>
+                                    <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">&quot;target_char_vowel&quot;</span><span class="p">][</span><span class="n">dic_index</span><span class="p">]</span>
                             <span class="k">else</span><span class="p">:</span>
-                                <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">"target_char_vowel"</span><span class="p">][</span><span class="n">dic_index</span><span class="p">]</span>
+                                <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">&quot;target_char_vowel&quot;</span><span class="p">][</span><span class="n">dic_index</span><span class="p">]</span>
 
-    <span class="n">word</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hemze</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">"target_char_vowel"</span><span class="p">][</span><span class="n">dic_index</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">"target_char_vowel"</span><span class="p">][</span><span class="n">dic_index</span><span class="p">])</span>
+    <span class="n">word</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hemze</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">&quot;target_char_vowel&quot;</span><span class="p">][</span><span class="n">dic_index</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">uw_iy_forms</span><span class="p">[</span><span class="s2">&quot;target_char_vowel&quot;</span><span class="p">][</span><span class="n">dic_index</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">word</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-</div>
-</div>
-</div></div>
-</div>
-<footer class="col-md-12 text-center">
-<hr/>
-<p>
-<small><a href="http://creativecommons.org/licenses/by-sa/4.0/" rel="license"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" style="border-width:0"/></a><br/><span property="dct:title" xmlns:dct="http://purl.org/dc/terms/">Kurdish Language Processing Toolkit</span> by <a href="https://github.com/sinaahmadi/klpt" property="cc:attributionName" rel="cc:attributionURL" xmlns:cc="http://creativecommons.org/ns#">Sina Ahmadi</a> is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/" rel="license">Creative Commons Attribution-ShareAlike 4.0 International License</a></small><br/>
-<small>© 2020 KLPT - Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</small>
-</p>
-<br/>
-<small>Revised on: 2020-11-12</small>
-</footer>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="../../js/bootstrap-3.0.3.min.js"></script>
-<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
-<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/python.min.js"></script>
-<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/json.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<script>var base_url = "../.."</script>
-<script src="../../js/base.js"></script>
-<script src="../../search/main.js"></script>
-<div aria-hidden="true" aria-labelledby="searchModalLabel" class="modal" id="mkdocs_search_modal" role="dialog" tabindex="-1">
-<div class="modal-dialog modal-lg">
-<div class="modal-content">
-<div class="modal-header">
-<button class="close" data-dismiss="modal" type="button">
-<span aria-hidden="true">×</span>
-<span class="sr-only">Close</span>
-</button>
-<h4 class="modal-title" id="searchModalLabel">Search</h4>
-</div>
-<div class="modal-body">
-<p>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div></div>
+        
+        
+    </div>
+
+    
+      <footer class="col-md-12 text-center">
+          
+          
+            <hr>
+            <p>
+            <small><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Kurdish Language Processing Toolkit</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/sinaahmadi/klpt" property="cc:attributionName" rel="cc:attributionURL">Sina Ahmadi</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a></small><br>
+            
+            <small>&copy; 2020 KLPT - Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</small>
+            </p>
+          
+
+          
+          <br>
+            <small>Revised on: 2020-11-12</small>
+          
+          
+      </footer>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/bootstrap-3.0.3.min.js"></script>
+
+    
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+        
+                <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/python.min.js"></script>
+                <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/json.min.js"></script>
+        
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    <script>var base_url = "../.."</script>
+    
+    <script src="../../js/base.js"></script>
+    <script src="../../search/main.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
                     From here you can search these documents. Enter
                     your search terms below.
                 </p>
-<form>
-<div class="form-group">
-<input class="form-control" id="mkdocs-search-query" placeholder="Search..." title="Type search term here" type="text"/>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
 </div>
-</form>
-<div id="mkdocs-search-results"></div>
-</div>
-<div class="modal-footer">
-</div>
-</div>
-</div>
-</div><div aria-hidden="true" aria-labelledby="keyboardModalLabel" class="modal" id="mkdocs_keyboard_modal" role="dialog" tabindex="-1">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-<button class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-</div>
-<div class="modal-body">
-<table class="table">
-<thead>
-<tr>
-<th style="width: 20%;">Keys</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="help shortcut"><kbd>?</kbd></td>
-<td>Open this help</td>
-</tr>
-<tr>
-<td class="next shortcut"><kbd>n</kbd></td>
-<td>Next page</td>
-</tr>
-<tr>
-<td class="prev shortcut"><kbd>p</kbd></td>
-<td>Previous page</td>
-</tr>
-<tr>
-<td class="search shortcut"><kbd>s</kbd></td>
-<td>Search</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="modal-footer">
-</div>
-</div>
-</div>
-</div>
-</body>
+    </body>
+
 </html>

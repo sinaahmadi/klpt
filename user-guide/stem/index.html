@@ -28,6 +28,7 @@
         <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/dracula.min.css">
         
     
+    <link href="../../assets/_mkdocstrings.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -184,48 +185,78 @@
         <li class="first-level "><a href="#klpt.stem.Stem">klpt.stem.Stem</a></li>
         <li class="first-level "><a href="#klpt.stem.Stem.analyze">analyze()</a></li>
         <li class="first-level "><a href="#klpt.stem.Stem.check_spelling">check_spelling()</a></li>
+        <li class="first-level "><a href="#klpt.stem.Stem.clean_stem">clean_stem()</a></li>
         <li class="first-level "><a href="#klpt.stem.Stem.correct_spelling">correct_spelling()</a></li>
+        <li class="first-level "><a href="#klpt.stem.Stem.stem">stem()</a></li>
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
 <h2 id="stem-package"><code>stem</code> package</h2>
-<div class="doc doc-object doc-class">
-<h2 class="hidden-toc" href="#klpt.stem.Stem" id="klpt.stem.Stem" style="visibility: hidden; position: absolute;">
-        </h2>
-<div class="doc doc-contents first">
-<p>The Stem module deals with various tasks, mainly through the following functions:
+
+
+  <div class="doc doc-object doc-class">
+
+<a id="klpt.stem.Stem"></a>
+    <div class="doc doc-contents first">
+
+      <p>The Stem module deals with various tasks, mainly through the following functions:
     - <code>check_spelling</code>: spell error detection
     - <code>correct_spelling</code>: spell error correction
     - <code>analyze</code>: morphological analysis</p>
 <p>Please note that only Sorani is supported in this version in this module. The module is based on the <a href="https://github.com/sinaahmadi/KurdishHunspell">Kurdish Hunspell project</a>.</p>
+
 <p><strong>Examples:</strong></p>
-<br />
-<pre><code class="python">&gt;&gt;&gt; from klpt.stem import Stem
-&gt;&gt;&gt; stemmer = Stem("Sorani", "Arabic")
-&gt;&gt;&gt; stemmer.check_spelling("سوتاندبووت")
+    
+      <pre><code class="language-python">&gt;&gt;&gt; from klpt.stem import Stem
+&gt;&gt;&gt; stemmer = Stem(&quot;Sorani&quot;, &quot;Arabic&quot;)
+&gt;&gt;&gt; stemmer.check_spelling(&quot;سوتاندبووت&quot;)
 False
-&gt;&gt;&gt; stemmer.correct_spelling("سوتاندبووت")
+&gt;&gt;&gt; stemmer.correct_spelling(&quot;سوتاندبووت&quot;)
 (False, ['ستاندبووت', 'سووتاندبووت', 'سووڕاندبووت', 'ڕووتاندبووت', 'فەوتاندبووت', 'بووژاندبووت'])
-&gt;&gt;&gt; stemmer.analyze("دیتبامن")
+&gt;&gt;&gt; stemmer.analyze(&quot;دیتبامن&quot;)
 [{'pos': 'verb', 'description': 'past_stem_transitive_active', 'base': 'دیت', 'terminal_suffix': 'بامن'}]
+&gt;&gt;&gt; stemmer.stem(&quot;دەچینەوە&quot;)
+['چ']
+
+&gt;&gt;&gt; stemmer = Stem(&quot;Kurmanji&quot;, &quot;Latin&quot;)
+&gt;&gt;&gt; stemmer.analyze(&quot;dibêjim&quot;)
+[{'base': 'gotin', 'description': 'vblex_tv_pri_p1_sg', 'pos': '', 'terminal_suffix': '', 'formation': ''}]
 </code></pre>
-<div class="doc doc-children">
-<div class="doc doc-object doc-method">
-<h2 class="doc doc-heading" id="klpt.stem.Stem.analyze">
-
-        <code class="highlight language-python">
-analyze<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word_form</span><span class="p">)</span>        </code>
 
 
-      </h2>
-<div class="doc doc-contents ">
-<p>Morphological analysis of a given word.</p>
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="klpt.stem.Stem.analyze" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word_form</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Morphological analysis of a given word.</p>
 <p>It returns morphological analyses. The morphological analysis is returned as a dictionary as follows:</p>
 <ul>
 <li>"pos": the part-of-speech of the word-form according to <a href="https://universaldependencies.org/u/pos/index.html">the Universal Dependency tag set</a>. </li>
 <li>"description": is flag</li>
 <li>"terminal_suffix": anything except ts flag</li>
+<li>"st": the stem of the word</li>
 <li>"formation": if ds flag is set, its value is assigned to description and the value of formation is set to derivational. Although the majority of our morphological rules cover inflectional forms, it is not accurate to say all of them are inflectional. Therefore, we only set this value to derivational wherever we are sure.</li>
 <li>"base": <code>ts</code> flag. The definition of terminal suffix is a bit tricky in Hunspell. According to <a href="http://manpages.ubuntu.com/manpages/trusty/en/man4/hunspell.4.html">the Hunspell documentation</a>, "Terminal suffix fields are inflectional suffix fields "removed" by additional (not terminal) suffixes". In other words, the ts flag in Hunspell represents whatever is left after stripping all affixes. Therefore, it is the morphological base.</li>
 </ul>
@@ -236,77 +267,72 @@ More details regarding Sorani Kurdish morphological analysis can be found at <a 
 <p>Kurmanji:
 Regarding Kurmanji, we use the morphological analyzer provided by the <a href="https://github.com/apertium/apertium-kmr">Kurmanji part</a></p>
 <p>Please note that there are delicate difference between who the analyzers work in Hunspell and Apertium. For instane, the <code>base</code> in the Kurmanji analysis refers to the lemma while in Sorani (from Hunspell), it refers to the morphological base.</p>
+
 <p><strong>Parameters:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>word_form</code></td>
-<td><code>str</code></td>
-<td>
-<p>a single word-form</p>
-</td>
-<td><em>required</em></td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>word_form</code></td>
+        <td><code>str</code></td>
+        <td><p>a single word-form</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
 </table>
 <p><strong>Exceptions:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>TypeError</code></td>
-<td>
-<p>only string as input</p>
-</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>TypeError</code></td>
+        <td><p>only string as input</p></td>
+      </tr>
+  </tbody>
 </table>
 <p><strong>Returns:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>(list(dict))</code></td>
-<td>
-<p>a list of all possible morphological analyses according to the defined morphological rules</p>
-</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(list(dict))</code></td>
+      <td><p>a list of all possible morphological analyses according to the defined morphological rules</p></td>
+    </tr>
+  </tbody>
 </table>
-<details class="quote">
+        <details class="quote">
           <summary>Source code in <code>klpt/stem.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word_form</span><span class="p">):</span>
-    <span class="sd">"""</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word_form</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Morphological analysis of a given word.</span>
 
 <span class="sd">    It returns morphological analyses. The morphological analysis is returned as a dictionary as follows:</span>
 
-<span class="sd">    - "pos": the part-of-speech of the word-form according to [the Universal Dependency tag set](https://universaldependencies.org/u/pos/index.html). </span>
-<span class="sd">    - "description": is flag</span>
-<span class="sd">    - "terminal_suffix": anything except ts flag</span>
-<span class="sd">    - "formation": if ds flag is set, its value is assigned to description and the value of formation is set to derivational. Although the majority of our morphological rules cover inflectional forms, it is not accurate to say all of them are inflectional. Therefore, we only set this value to derivational wherever we are sure.</span>
-<span class="sd">    - "base": `ts` flag. The definition of terminal suffix is a bit tricky in Hunspell. According to [the Hunspell documentation](http://manpages.ubuntu.com/manpages/trusty/en/man4/hunspell.4.html), "Terminal suffix fields are inflectional suffix fields "removed" by additional (not terminal) suffixes". In other words, the ts flag in Hunspell represents whatever is left after stripping all affixes. Therefore, it is the morphological base.</span>
+<span class="sd">    - &quot;pos&quot;: the part-of-speech of the word-form according to [the Universal Dependency tag set](https://universaldependencies.org/u/pos/index.html). </span>
+<span class="sd">    - &quot;description&quot;: is flag</span>
+<span class="sd">    - &quot;terminal_suffix&quot;: anything except ts flag</span>
+<span class="sd">    - &quot;st&quot;: the stem of the word</span>
+<span class="sd">    - &quot;formation&quot;: if ds flag is set, its value is assigned to description and the value of formation is set to derivational. Although the majority of our morphological rules cover inflectional forms, it is not accurate to say all of them are inflectional. Therefore, we only set this value to derivational wherever we are sure.</span>
+<span class="sd">    - &quot;base&quot;: `ts` flag. The definition of terminal suffix is a bit tricky in Hunspell. According to [the Hunspell documentation](http://manpages.ubuntu.com/manpages/trusty/en/man4/hunspell.4.html), &quot;Terminal suffix fields are inflectional suffix fields &quot;removed&quot; by additional (not terminal) suffixes&quot;. In other words, the ts flag in Hunspell represents whatever is left after stripping all affixes. Therefore, it is the morphological base.</span>
 
-<span class="sd">    As in [{'pos': 'verb', 'description': 'past_stem_transitive_active', 'base': 'دیت', 'terminal_suffix': 'بامن'}]</span>
+<span class="sd">    As in [{&#39;pos&#39;: &#39;verb&#39;, &#39;description&#39;: &#39;past_stem_transitive_active&#39;, &#39;base&#39;: &#39;دیت&#39;, &#39;terminal_suffix&#39;: &#39;بامن&#39;}]</span>
 <span class="sd">    If the input cannot be analyzed morphologically, an empty list is returned.</span>
 
 <span class="sd">    Sorani: </span>
@@ -326,133 +352,137 @@ Regarding Kurmanji, we use the morphological analyzer provided by the <a href="h
 <span class="sd">    Returns:</span>
 <span class="sd">        (list(dict)): a list of all possible morphological analyses according to the defined morphological rules</span>
 
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">word_form</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Only a word (str) is allowed."</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Only a word (str) is allowed.&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">word_analysis</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">==</span> <span class="s2">"Sorani"</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">==</span> <span class="s2">"Arabic"</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">==</span> <span class="s2">&quot;Sorani&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">==</span> <span class="s2">&quot;Arabic&quot;</span><span class="p">:</span>
             <span class="c1"># Given the morphological analysis of a word-form with Hunspell flags, extract relevant information and return a dictionary</span>
             <span class="k">for</span> <span class="n">analysis</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">word_form</span><span class="p">)):</span>
                 <span class="n">analysis_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
                 <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">analysis</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
-                    <span class="k">if</span> <span class="s2">":"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="s2">&quot;:&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
                         <span class="k">continue</span>
-                    <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"ts"</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ts&quot;</span><span class="p">:</span>
                         <span class="c1"># ts flag exceptionally appears after the value as value:key in the Hunspell output</span>
-                        <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">"base"</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;base&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                         <span class="c1"># anything except the terminal_suffix is considered to be the base</span>
-                        <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">word_form</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">""</span><span class="p">)</span>
-                    <span class="k">elif</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">word_form</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                        <span class="c1"># TODO: prefixes and suffixes are merged together as ts. To be separated.  </span>
+                    <span class="k">elif</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                         <span class="c1"># assign the key:value pairs from the Hunspell string output to the dictionary output of the current function</span>
                         <span class="c1"># for ds flag, add derivation as the formation type, otherwise inflection</span>
-                        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"ds"</span><span class="p">:</span>
-                            <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]]</span> <span class="o">=</span> <span class="s2">"derivational"</span>
-                            <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">"is"</span><span class="p">]]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ds&quot;</span><span class="p">:</span>
+                            <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]]</span> <span class="o">=</span> <span class="s2">&quot;derivational&quot;</span>
+                            <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">&quot;is&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="c1"># for st flag, stem should be cleaned first</span>
+                        <span class="k">elif</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;st&quot;</span><span class="p">:</span>
+                            <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_stem</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
                         <span class="k">else</span><span class="p">:</span>
-                            <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                            <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
 
                 <span class="c1"># if there is no value assigned to the ts flag, the terminal suffix is a zero-morpheme 0</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">"ts"</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">analysis_dict</span> <span class="ow">or</span> <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">"ts"</span><span class="p">]]</span> <span class="o">==</span> <span class="s2">""</span><span class="p">:</span>
-                    <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">"ts"</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">"0"</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">&quot;ts&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">analysis_dict</span> <span class="ow">or</span> <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">&quot;ts&quot;</span><span class="p">]]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                    <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">&quot;ts&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
 
                 <span class="n">word_analysis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">analysis_dict</span><span class="p">)</span>
 
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">==</span> <span class="s2">"Kurmanji"</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">==</span> <span class="s2">"Latin"</span><span class="p">:</span>
-            <span class="n">att_analysis</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">(</span><span class="s2">"Kurmanji"</span><span class="p">,</span> <span class="s2">"Latin"</span><span class="p">)</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">word_form</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">==</span> <span class="s2">&quot;Kurmanji&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">==</span> <span class="s2">&quot;Latin&quot;</span><span class="p">:</span>
+            <span class="n">att_analysis</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">(</span><span class="s2">&quot;Kurmanji&quot;</span><span class="p">,</span> <span class="s2">&quot;Latin&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">word_form</span><span class="p">)</span>
+
             <span class="c1"># check if the word-form is analyzed or no</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">att_analysis</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">att_analysis</span><span class="p">):</span>
                 <span class="c1"># the word-form could not be analyzed</span>
                 <span class="k">return</span> <span class="p">[]</span>
 
-            <span class="k">for</span> <span class="n">form_analysis</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">att_analysis</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
-                <span class="k">for</span> <span class="n">analysis</span> <span class="ow">in</span> <span class="n">form_analysis</span><span class="p">:</span>
-                    <span class="n">analysis_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-                    <span class="n">structure</span> <span class="o">=</span> <span class="n">analysis</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">'@'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"&lt;"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-                    <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">"base"</span><span class="p">],</span> <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">"description"</span><span class="p">]</span> <span class="o">=</span> <span class="n">structure</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">structure</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"&gt;&lt;"</span><span class="p">,</span> <span class="s2">"_"</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"&gt;"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-                    <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">"pos"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">""</span>
-                    <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">"terminal_suffix"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">""</span>
-                    <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">"formation"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">""</span>
-                    <span class="c1"># TODO: the description needs further information extraction in such a way that some values should be assigned to the "pos" key </span>
-                    <span class="c1"># analysis_dict["terminal_suffix"] = word_form.replace(analysis_dict["base"], "")</span>
-                    <span class="n">word_analysis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">analysis_dict</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">analysis</span> <span class="ow">in</span> <span class="n">att_analysis</span><span class="p">:</span>
+                <span class="n">analysis_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+                <span class="n">structure</span> <span class="o">=</span> <span class="n">analysis</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&lt;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;base&quot;</span><span class="p">],</span> <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">structure</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">structure</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&gt;&lt;&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;terminal_suffix&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;formation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="c1"># TODO: the description needs further information extraction in such a way that some values should be assigned to the &quot;pos&quot; key </span>
+                <span class="c1"># analysis_dict[&quot;terminal_suffix&quot;] = word_form.replace(analysis_dict[&quot;base&quot;], &quot;&quot;)</span>
+                <span class="n">word_analysis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">analysis_dict</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">word_analysis</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h2 class="doc doc-heading" id="klpt.stem.Stem.check_spelling">
+</code></pre></div>
+        </details>
+    </div>
 
-        <code class="highlight language-python">
-check_spelling<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>        </code>
+  </div>
 
 
-      </h2>
-<div class="doc doc-contents ">
-<p>Check spelling of a word</p>
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="klpt.stem.Stem.check_spelling" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">check_spelling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Check spelling of a word</p>
+
 <p><strong>Parameters:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>word</code></td>
-<td><code>str</code></td>
-<td>
-<p>input word to be spell-checked</p>
-</td>
-<td><em>required</em></td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>word</code></td>
+        <td><code>str</code></td>
+        <td><p>input word to be spell-checked</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
 </table>
 <p><strong>Exceptions:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>TypeError</code></td>
-<td>
-<p>only string as input</p>
-</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>TypeError</code></td>
+        <td><p>only string as input</p></td>
+      </tr>
+  </tbody>
 </table>
 <p><strong>Returns:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>bool</code></td>
-<td>
-<p>True if the spelling is correct, False if the spelling is incorrect</p>
-</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>bool</code></td>
+      <td><p>True if the spelling is correct, False if the spelling is incorrect</p></td>
+    </tr>
+  </tbody>
 </table>
-<details class="quote">
+        <details class="quote">
           <summary>Source code in <code>klpt/stem.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">check_spelling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
-    <span class="sd">"""Check spelling of a word</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">check_spelling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check spelling of a word</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        word (str): input word to be spell-checked</span>
@@ -462,88 +492,146 @@ check_spelling<span class="p">(</span><span class="bp">self</span><span class="p
 
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: True if the spelling is correct, False if the spelling is incorrect</span>
-<span class="sd">    """</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">==</span> <span class="s2">"Sorani"</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">==</span> <span class="s2">"Arabic"</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Not supported yet."</span><span class="p">)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">==</span> <span class="s2">&quot;Sorani&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">==</span> <span class="s2">&quot;Arabic&quot;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Not supported yet.&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">spell</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h2 class="doc doc-heading" id="klpt.stem.Stem.correct_spelling">
+</code></pre></div>
+        </details>
+    </div>
 
-        <code class="highlight language-python">
-correct_spelling<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>        </code>
+  </div>
 
 
-      </h2>
-<div class="doc doc-contents ">
-<p>Correct spelling errors if the input word is incorrect. It returns a tuple where the first element indicates the correctness of the word (True if correct, False if incorrect).
-    If the input word is incorrect, suggestions are provided in a list as the second element of the tuple, as (False, []).
-    If no suggestion is available, the list is returned empty as (True, []).</p>
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="klpt.stem.Stem.clean_stem" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">clean_stem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Remove extra characters in the stem
+The following issue was observed when stemming with Hunspell (version 2.0.2) where
+the retrieved stem of a verb is accompanied by the flag of the word, which is an unwanted extra character.
+Possible flags are T, V and I. :lf should also be taken into account.</p>
+
 <p><strong>Parameters:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>word</code></td>
-<td><code>str</code></td>
-<td>
-<p>input word to be spell-checked</p>
-</td>
-<td><em>required</em></td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>word</code></td>
+        <td><code>[str]</code></td>
+        <td><p>[stem]</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>klpt/stem.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">clean_stem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Remove extra characters in the stem</span>
+<span class="sd">    The following issue was observed when stemming with Hunspell (version 2.0.2) where</span>
+<span class="sd">    the retrieved stem of a verb is accompanied by the flag of the word, which is an unwanted extra character.</span>
+<span class="sd">    Possible flags are T, V and I. :lf should also be taken into account.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        word ([str]): [stem]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">,</span> <span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">]:</span>
+        <span class="n">word</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">word</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;:lf&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="klpt.stem.Stem.correct_spelling" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">correct_spelling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Correct spelling errors if the input word is incorrect. It returns a tuple where the first element indicates the correctness of the word (True if correct, False if incorrect).
+    If the input word is incorrect, suggestions are provided in a list as the second element of the tuple, as (False, []).
+    If no suggestion is available, the list is returned empty as (True, []).</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>word</code></td>
+        <td><code>str</code></td>
+        <td><p>input word to be spell-checked</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
 </table>
 <p><strong>Exceptions:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>TypeError</code></td>
-<td>
-<p>only string as input</p>
-</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>TypeError</code></td>
+        <td><p>only string as input</p></td>
+      </tr>
+  </tbody>
 </table>
 <p><strong>Returns:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code></code></td>
-<td>
-<p>tuple (boolean, list)</p>
-</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><p>tuple (boolean, list)</p></td>
+    </tr>
+  </tbody>
 </table>
-<details class="quote">
+        <details class="quote">
           <summary>Source code in <code>klpt/stem.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">correct_spelling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
-    <span class="sd">"""</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">correct_spelling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Correct spelling errors if the input word is incorrect. It returns a tuple where the first element indicates the correctness of the word (True if correct, False if incorrect).</span>
 <span class="sd">        If the input word is incorrect, suggestions are provided in a list as the second element of the tuple, as (False, []).</span>
 <span class="sd">        If no suggestion is available, the list is returned empty as (True, []).</span>
@@ -557,21 +645,117 @@ correct_spelling<span class="p">(</span><span class="bp">self</span><span class=
 <span class="sd">    Returns:</span>
 <span class="sd">        tuple (boolean, list)</span>
 
-<span class="sd">    """</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">==</span> <span class="s2">"Sorani"</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">==</span> <span class="s2">"Arabic"</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Not supported yet."</span><span class="p">)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">==</span> <span class="s2">&quot;Sorani&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">==</span> <span class="s2">&quot;Arabic&quot;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Not supported yet.&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_spelling</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
             <span class="k">return</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="p">[])</span>
         <span class="k">return</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">suggest</span><span class="p">(</span><span class="n">word</span><span class="p">)))</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-</div>
-</div>
-</div></div>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h2 id="klpt.stem.Stem.stem" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">stem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>A function for stemming a single word</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>word</code></td>
+        <td><code>str</code></td>
+        <td><p>input word to be spell-checked</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Exceptions:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>TypeError</code></td>
+        <td><p>only string as input</p></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>list</code></td>
+      <td><p>list of stem(s)</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>klpt/stem.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">stem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A function for stemming a single word</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        word (str): input word to be spell-checked</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeError: only string as input</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: list of stem(s)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">==</span> <span class="s2">&quot;Sorani&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">==</span> <span class="s2">&quot;Arabic&quot;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Not supported yet.&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">clean_stem</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)]))</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div></div>
         
         
     </div>

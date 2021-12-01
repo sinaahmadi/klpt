@@ -28,6 +28,7 @@
         <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/dracula.min.css">
         
     
+    <link href="../../assets/_mkdocstrings.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -203,16 +204,14 @@
 </ul>
 <h3 id="pip">pip</h3>
 <p>Using pip, KLPT releases are available as source packages and binary wheels. Please make sure that a compatible Python version is installed:</p>
-<pre><code class="bash">pip install klpt
+<pre><code class="language-bash">pip install klpt
 </code></pre>
-
 <p>All the data files including lexicons and morphological rules are also installed with the package. </p>
 <p>Although KLPT is not dependent on any NLP toolkit, there is one important requirement, particularly for the <code>stem</code> module. That is <a href="https://pypi.org/project/cyhunspell/"><code>cyhunspell</code></a> which should be installed with a version &gt;= 2.0.1.</p>
 <h3 id="import-klpt">Import <code>klpt</code></h3>
 <p>Once the package is installed, you can import the toolkit as follows:</p>
-<pre><code class="python">import klpt
+<pre><code class="language-python">import klpt
 </code></pre>
-
 <p>As a principle, the following parameters are widely used in the toolkit:</p>
 <ul>
 <li><code>dialect</code>: the name of the dialect as <code>Sorani</code> or <code>Kurmanji</code> (ISO 639-3 code will be also added)</li>
