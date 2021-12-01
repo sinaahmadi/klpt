@@ -26,6 +26,8 @@ class Preprocess:
     - `standardize`: given a normalized text, it returns standardized text based on the Kurdish orthographies following recommendations for [Kurmanji](https://books.google.ie/books?id=Z7lDnwEACAAJ) and [Sorani](http://yageyziman.com/Renusi_Kurdi.htm)
     - `unify_numerals`: conversion of the various types of numerals used in Kurdish texts
 
+    In addition, it is possible to remove stopwords using the `stopwords` variable. It is better to remove stopwords after the tokenization task.
+
     It is recommended that the output of this module be used as the input of subsequent tasks in an NLP pipeline.
     
     Example:
@@ -46,6 +48,8 @@ class Preprocess:
     'di sala 2018an'
     >>> preprocessor_kmr.standardize("hêviya")
     'hêvîya'
+    >>> preprocessor_kmr.stopwords[:10]
+    ['a', 'an', 'bareya', 'bareyê', 'barên', 'basa', 'be', 'belê', 'ber', 'bereya']
     ```
 
     The preprocessing rules are provided at [`data/preprocess_map.json`](https://github.com/sinaahmadi/klpt/blob/master/klpt/data/preprocess_map.json).
@@ -69,6 +73,9 @@ class Preprocess:
         self.script = configuration.script
         self.numeral = configuration.numeral
         # self.preprocess_map = config.preprocess_map
+
+        with open(klpt.data_directory["stopwords"], "r") as f:
+            self.stopwords = json.load(f)[dialect][script]
 
     def standardize(self, text):
         """
@@ -136,7 +143,6 @@ class Preprocess:
                 temp_text = re.sub(rf"{rep}", rf"{rep_tar}", temp_text, flags=re.I)
 
         return temp_text.strip()
-
 
     def unify_numerals(self, text):
         """

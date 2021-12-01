@@ -12,14 +12,6 @@ __maintainer_email__ = "ahmadi.sina@outlook.com"
 __author__ = __maintainer__
 __author_email__ = __maintainer_email__
 
-# with open("data/stopwords.json") as f:
-#         stopwords = json.load(f)[self.dialect][self.script]
-# if __name__ == "__main__":
-
-# def remove_stopwords(self, text):
-#         """remove stopwords"""
-#         return " ".join([token for token in text.split() if token not in self.stopwords])
-
 _ROOT = os.path.abspath(os.path.dirname(__file__))
 def get_data(path):
     return os.path.join(_ROOT, '', path)
@@ -41,6 +33,6 @@ data_directory = {
     "analyser": {
         "Sorani": get_data("data/ckb-analyser.att"),
         "Kurmanji": get_data("data/kmr-analyser.att")
-    }
+    },
+    "stopwords": get_data("data/stopwords.json")
 }
-

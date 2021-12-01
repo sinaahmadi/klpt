@@ -39,7 +39,7 @@
 			"Arabic": {},
 			"Latin": {
 				"Kurdiya me": "Kurdîya me",
-				"Ermenistan": "Ermenîstan",
+				"Ermenîstan": "Ermenistan",
 				"2018-an": "2018an",
 				"di sala 2018-an": "di sala 2018an",
 				"2018-An": "2018An",
@@ -88,5 +88,19 @@
 			"<U>": {"έτσι": "<U><U><U><U>"},
 			"�": {"έτσι": "����"}
 		}
-    }
+    },
+	"stopwords": {
+		"Sorani": {
+			"Arabic": {
+				"وێبگەڕەکانی ئەمڕۆ جگە لە توانای نمایشکردن و گەڕۆکی لە پەڕەکانی وێبدا": ["وێبگەڕەکانی", "توانای", "نمایشکردن", "گەڕۆکی", "پەڕەکانی", "وێبدا"]
+			},
+			"Latin": {}
+		},
+		"Kurmanji": {
+			"Arabic": {},
+			"Latin": {
+				"Gelek bername û malper agahiyên xwe li ser danegehê vedişêrin": ["Gelek", "bername", "malper", "agahiyên", "danegehê", "vedişêrin"]
+			}
+		}
+	}
 }

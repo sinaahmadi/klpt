@@ -71,7 +71,7 @@ Please note that KLPT is under development and some of the functionalities will 
 </thead>
 <tbody>
   <tr>
-    <td rowspan="3"><code>preprocess</code></td>
+    <td rowspan="4"><code>preprocess</code></td>
     <td>normalization</td>
     <td>&#10003; (v0.1.0)</td>
     <td>&#10003; (v0.1.0)</td>
@@ -85,6 +85,11 @@ Please note that KLPT is under development and some of the functionalities will 
     <td>unification of numerals</td>
     <td>&#10003; (v0.1.0)</td>
     <td>&#10003; (v0.1.0)</td>
+  </tr>
+  <tr>
+    <td>stopwords 🆕</td>
+    <td>&#10003; (v0.1.4)</td>
+    <td>&#10003; (v0.1.4)</td>
   </tr>
   <tr>
     <td rowspan="3"><code>tokenize</code></td>
@@ -196,6 +201,16 @@ It is recommended that the output of this module be used as the input of subsequ
 'di sala 2018an'
 >>> preprocessor_kmr.standardize("hêviya")
 'hêvîya'
+```
+
+In addition, it is possible to remove Kurdish [stopwords](https://en.wikipedia.org/wiki/Stop_word) using the `stopwords` variable. You can define a function like the following to do so:
+
+```python
+from klpt.preprocess import Preprocess
+
+def remove_stopwords(text, dialect, script):
+    p = Preprocess(dialect, script)
+    return [token for token in text.split() if token not in p.stopwords]
 ```
 
 ### Tokenization

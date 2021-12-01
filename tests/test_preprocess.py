@@ -8,6 +8,7 @@ from klpt.preprocess import Preprocess
 import klpt
 import json
 
+
 class TestPreprocess(unittest.TestCase):
     """ Test unit for the Preprocess class"""
     def setUp(self):
@@ -43,6 +44,14 @@ class TestPreprocess(unittest.TestCase):
             for case in self.test_cases["numerals"][numeral]:
                 prep = Preprocess("Sorani", "Latin", numeral)
                 self.assertEqual(prep.unify_numerals(case), self.test_cases["numerals"][numeral][case])
+
+    def test_stopwords(self):
+        # print("stopwords")
+        for dialect in self.options["dialects"]:
+            for script in self.options["scripts"]:
+                for case in self.test_cases["stopwords"][dialect][script]:
+                    prep = Preprocess(dialect, script)
+                    self.assertEqual([token for token in case.split() if token not in prep.stopwords], self.test_cases["stopwords"][dialect][script][case])
 
 if __name__ == "__main__":
     unittest.main()
