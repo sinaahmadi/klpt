@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kurdish Language Processing Project">
+    <meta name="description" content="Kurdish Language Processing Toolkit">
     <meta name="author" content="Sina Ahmadi">
     <link rel="canonical" href="https://sinaahmadi.github.io/klpt/user-guide/tokenize/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
@@ -325,7 +325,7 @@
             <span class="k">if</span> <span class="n">punct</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
                 <span class="n">sentence</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">punct</span><span class="p">,</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">punct</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
 
-    <span class="c1"># look for compound words and delimit them by double the separator</span>
+    <span class="c1"># look for compound words and delimit them by double separator</span>
     <span class="k">for</span> <span class="n">compound_lemma</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mwe_lexicon</span><span class="p">:</span>
         <span class="n">compound_lemma_context</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">compound_lemma</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span>
         <span class="k">if</span> <span class="n">compound_lemma_context</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>

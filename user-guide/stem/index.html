@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kurdish Language Processing Project">
+    <meta name="description" content="Kurdish Language Processing Toolkit">
     <meta name="author" content="Sina Ahmadi">
     <link rel="canonical" href="https://sinaahmadi.github.io/klpt/user-guide/stem/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
@@ -187,6 +187,7 @@
         <li class="first-level "><a href="#klpt.stem.Stem.check_spelling">check_spelling()</a></li>
         <li class="first-level "><a href="#klpt.stem.Stem.clean_stem">clean_stem()</a></li>
         <li class="first-level "><a href="#klpt.stem.Stem.correct_spelling">correct_spelling()</a></li>
+        <li class="first-level "><a href="#klpt.stem.Stem.lemmatize">lemmatize()</a></li>
         <li class="first-level "><a href="#klpt.stem.Stem.stem">stem()</a></li>
     </ul>
 </div></div>
@@ -203,8 +204,14 @@
       <p>The Stem module deals with various tasks, mainly through the following functions:
     - <code>check_spelling</code>: spell error detection
     - <code>correct_spelling</code>: spell error correction
-    - <code>analyze</code>: morphological analysis</p>
-<p>Please note that only Sorani is supported in this version in this module. The module is based on the <a href="https://github.com/sinaahmadi/KurdishHunspell">Kurdish Hunspell project</a>.</p>
+    - <code>analyze</code>: morphological analysis
+    - <code>stem</code>: stemming, e.g. "بڕاوە" → "بڕ"
+    - <code>lemmatize</code>: lemmatization, e.g. "بردمنەوە" → "بردن"</p>
+<p>It is recommended that this module be used on tokens using the tokenization module. 
+Please note that only Sorani is supported in this version in this module. The module is based on the <a href="https://github.com/sinaahmadi/KurdishHunspell">Kurdish Hunspell project</a>.</p>
+<p>Regarding stemming, the following procedure is followed:
+    - for tokens of a single word, as "kirin" (to do), the stem of the token is returned.
+    - for compound forms and multi-word expressions, the stem of the noun, adjective or adverb are taken into account. For instance, in the light verbal constructions such as "bar kirin" (to load), the stem of the nominal component "bar" is returned. In other cases, the stem of that part of the MWE token is returned that is semantically more important, as in "دەست تێ وەردان" (dest-tê-werdan) where the stem of "dest" is returned.</p>
 
 <p><strong>Examples:</strong></p>
     
@@ -215,9 +222,13 @@ False
 &gt;&gt;&gt; stemmer.correct_spelling(&quot;سوتاندبووت&quot;)
 (False, ['ستاندبووت', 'سووتاندبووت', 'سووڕاندبووت', 'ڕووتاندبووت', 'فەوتاندبووت', 'بووژاندبووت'])
 &gt;&gt;&gt; stemmer.analyze(&quot;دیتبامن&quot;)
-[{'pos': 'verb', 'description': 'past_stem_transitive_active', 'base': 'دیت', 'terminal_suffix': 'بامن'}]
+[{'pos': ['verb'], 'description': 'past_stem_transitive_active', 'stem': 'دی', 'lemma': ['دیتن'], 'base': 'دیت', 'prefixes': '', 'suffixes': 'بامن'}]
 &gt;&gt;&gt; stemmer.stem(&quot;دەچینەوە&quot;)
 ['چ']
+&gt;&gt;&gt; stemmer.stem(&quot;گورەکە&quot;, mark_unknown=True)
+['_گور_']
+&gt;&gt;&gt; stemmer.lemmatize(&quot;گوڵەکانم&quot;))
+['گوڵ', 'گوڵە']
 
 &gt;&gt;&gt; stemmer = Stem(&quot;Kurmanji&quot;, &quot;Latin&quot;)
 &gt;&gt;&gt; stemmer.analyze(&quot;dibêjim&quot;)
@@ -255,12 +266,14 @@ False
 <ul>
 <li>"pos": the part-of-speech of the word-form according to <a href="https://universaldependencies.org/u/pos/index.html">the Universal Dependency tag set</a>. </li>
 <li>"description": is flag</li>
-<li>"terminal_suffix": anything except ts flag</li>
+<li>"prefixes": anything appearing before the base</li>
+<li>"suffixes": anything appearing after the base</li>
 <li>"st": the stem of the word</li>
+<li>"lem": the lemma of the word</li>
 <li>"formation": if ds flag is set, its value is assigned to description and the value of formation is set to derivational. Although the majority of our morphological rules cover inflectional forms, it is not accurate to say all of them are inflectional. Therefore, we only set this value to derivational wherever we are sure.</li>
 <li>"base": <code>ts</code> flag. The definition of terminal suffix is a bit tricky in Hunspell. According to <a href="http://manpages.ubuntu.com/manpages/trusty/en/man4/hunspell.4.html">the Hunspell documentation</a>, "Terminal suffix fields are inflectional suffix fields "removed" by additional (not terminal) suffixes". In other words, the ts flag in Hunspell represents whatever is left after stripping all affixes. Therefore, it is the morphological base.</li>
 </ul>
-<p>As in [{'pos': 'verb', 'description': 'past_stem_transitive_active', 'base': 'دیت', 'terminal_suffix': 'بامن'}]
+<p>As for the word "دیتبامن" (that I have seen them), the morphological analysis would look like this: [{'pos': ['verb'], 'description': 'past_stem_transitive_active', 'stem': 'دی', 'lemma': ['دیتن'], 'base': 'دیت', 'prefixes': '', 'suffixes': 'بامن'}]
 If the input cannot be analyzed morphologically, an empty list is returned.</p>
 <p>Sorani: 
 More details regarding Sorani Kurdish morphological analysis can be found at <a href="https://github.com/sinaahmadi/KurdishHunspell">https://github.com/sinaahmadi/KurdishHunspell</a>.</p>
@@ -327,12 +340,14 @@ Regarding Kurmanji, we use the morphological analyzer provided by the <a href="h
 
 <span class="sd">    - &quot;pos&quot;: the part-of-speech of the word-form according to [the Universal Dependency tag set](https://universaldependencies.org/u/pos/index.html). </span>
 <span class="sd">    - &quot;description&quot;: is flag</span>
-<span class="sd">    - &quot;terminal_suffix&quot;: anything except ts flag</span>
+<span class="sd">    - &quot;prefixes&quot;: anything appearing before the base</span>
+<span class="sd">    - &quot;suffixes&quot;: anything appearing after the base</span>
 <span class="sd">    - &quot;st&quot;: the stem of the word</span>
+<span class="sd">    - &quot;lem&quot;: the lemma of the word</span>
 <span class="sd">    - &quot;formation&quot;: if ds flag is set, its value is assigned to description and the value of formation is set to derivational. Although the majority of our morphological rules cover inflectional forms, it is not accurate to say all of them are inflectional. Therefore, we only set this value to derivational wherever we are sure.</span>
 <span class="sd">    - &quot;base&quot;: `ts` flag. The definition of terminal suffix is a bit tricky in Hunspell. According to [the Hunspell documentation](http://manpages.ubuntu.com/manpages/trusty/en/man4/hunspell.4.html), &quot;Terminal suffix fields are inflectional suffix fields &quot;removed&quot; by additional (not terminal) suffixes&quot;. In other words, the ts flag in Hunspell represents whatever is left after stripping all affixes. Therefore, it is the morphological base.</span>
 
-<span class="sd">    As in [{&#39;pos&#39;: &#39;verb&#39;, &#39;description&#39;: &#39;past_stem_transitive_active&#39;, &#39;base&#39;: &#39;دیت&#39;, &#39;terminal_suffix&#39;: &#39;بامن&#39;}]</span>
+<span class="sd">    As for the word &quot;دیتبامن&quot; (that I have seen them), the morphological analysis would look like this: [{&#39;pos&#39;: [&#39;verb&#39;], &#39;description&#39;: &#39;past_stem_transitive_active&#39;, &#39;stem&#39;: &#39;دی&#39;, &#39;lemma&#39;: [&#39;دیتن&#39;], &#39;base&#39;: &#39;دیت&#39;, &#39;prefixes&#39;: &#39;&#39;, &#39;suffixes&#39;: &#39;بامن&#39;}]</span>
 <span class="sd">    If the input cannot be analyzed morphologically, an empty list is returned.</span>
 
 <span class="sd">    Sorani: </span>
@@ -359,6 +374,7 @@ Regarding Kurmanji, we use the morphological analyzer provided by the <a href="h
         <span class="n">word_analysis</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">==</span> <span class="s2">&quot;Sorani&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">==</span> <span class="s2">&quot;Arabic&quot;</span><span class="p">:</span>
             <span class="c1"># Given the morphological analysis of a word-form with Hunspell flags, extract relevant information and return a dictionary</span>
+            <span class="c1"># print(self.huns.analyze(word_form))</span>
             <span class="k">for</span> <span class="n">analysis</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">word_form</span><span class="p">)):</span>
                 <span class="n">analysis_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
                 <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">analysis</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
@@ -366,25 +382,41 @@ Regarding Kurmanji, we use the morphological analyzer provided by the <a href="h
                         <span class="k">continue</span>
                     <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ts&quot;</span><span class="p">:</span>
                         <span class="c1"># ts flag exceptionally appears after the value as value:key in the Hunspell output</span>
+                        <span class="c1"># anything except the terminal_suffix (ts) is considered to be the base</span>
                         <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;base&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                        <span class="c1"># anything except the terminal_suffix is considered to be the base</span>
-                        <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">word_form</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-                        <span class="c1"># TODO: prefixes and suffixes are merged together as ts. To be separated.  </span>
+                        <span class="n">affixes</span> <span class="o">=</span> <span class="n">utility</span><span class="o">.</span><span class="n">extract_prefix_suffix</span><span class="p">(</span><span class="n">word_form</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                        <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;prefixes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">affixes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;suffixes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">affixes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
                     <span class="k">elif</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                         <span class="c1"># assign the key:value pairs from the Hunspell string output to the dictionary output of the current function</span>
-                        <span class="c1"># for ds flag, add derivation as the formation type, otherwise inflection</span>
                         <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ds&quot;</span><span class="p">:</span>
+                            <span class="c1"># for ds flag, add derivation as the formation type, otherwise inflection</span>
                             <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]]</span> <span class="o">=</span> <span class="s2">&quot;derivational&quot;</span>
                             <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">&quot;is&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-                        <span class="c1"># for st flag, stem should be cleaned first</span>
-                        <span class="k">elif</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;st&quot;</span><span class="p">:</span>
-                            <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_stem</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
-                        <span class="k">else</span><span class="p">:</span>
-                            <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
 
-                <span class="c1"># if there is no value assigned to the ts flag, the terminal suffix is a zero-morpheme 0</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">&quot;ts&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">analysis_dict</span> <span class="ow">or</span> <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">&quot;ts&quot;</span><span class="p">]]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                    <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="s2">&quot;ts&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
+                        <span class="k">elif</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;st&quot;</span><span class="p">:</span>
+                            <span class="c1"># for st flag, stem should be cleaned first</span>
+                            <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_stem</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="c1"># remove I, T or V using clean_stem()</span>
+                            <span class="n">analysis_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hunspell_flags</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_stem</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+
+                <span class="c1"># convert lemma and pos to a list and split based on _ when there is more than one output, e.g. more than one lemma for a given word</span>
+                <span class="k">if</span> <span class="s2">&quot;lemma&quot;</span> <span class="ow">in</span> <span class="n">analysis_dict</span><span class="p">:</span>
+                    <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;lemma&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;lemma&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;lemma&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="s2">&quot;pos&quot;</span> <span class="ow">in</span> <span class="n">analysis_dict</span><span class="p">:</span>
+                    <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
+
+                <span class="c1"># for nouns, base is lemma</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">])</span> <span class="ow">and</span> <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="p">[</span><span class="s2">&quot;verb&quot;</span><span class="p">]:</span>
+                    <span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;lemma&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">analysis_dict</span><span class="p">[</span><span class="s2">&quot;base&quot;</span><span class="p">]]</span>
 
                 <span class="n">word_analysis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">analysis_dict</span><span class="p">)</span>
 
@@ -664,8 +696,98 @@ Possible flags are T, V and I. :lf should also be taken into account.</p>
 
 
 
+<h2 id="klpt.stem.Stem.lemmatize" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">lemmatize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>A function for lemmatization of words</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>word</code></td>
+        <td><code>[str]</code></td>
+        <td><p>[given a word, return its lemma form, i.e. dictionary entry form]</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Exceptions:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>TypeError</code></td>
+        <td><p>only string as input</p></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>list</code></td>
+      <td><p>list of lemma(s)</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>klpt/stem.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">lemmatize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A function for lemmatization of words</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        word ([str]): [given a word, return its lemma form, i.e. dictionary entry form]</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeError: only string as input</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: list of lemma(s)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">==</span> <span class="s2">&quot;Sorani&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">==</span> <span class="s2">&quot;Arabic&quot;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Not supported yet.&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">word_analysis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">word_analysis</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">[</span><span class="s2">&quot;lemma&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">item</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">]))</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
 <h2 id="klpt.stem.Stem.stem" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">stem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">stem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">mark_unknown</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
 
 </h2>
@@ -690,6 +812,12 @@ Possible flags are T, V and I. :lf should also be taken into account.</p>
         <td><code>str</code></td>
         <td><p>input word to be spell-checked</p></td>
         <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mark_unknown</code></td>
+        <td><code>False</code></td>
+        <td><p>if the given word is unknown in the tagged lexicon, KLPT stems is following rules. Such stems can be marked with "_" if this variable set to True</p></td>
+        <td><code>False</code></td>
       </tr>
   </tbody>
 </table>
@@ -725,11 +853,12 @@ Possible flags are T, V and I. :lf should also be taken into account.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>klpt/stem.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">stem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">stem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">mark_unknown</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A function for stemming a single word</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        word (str): input word to be spell-checked</span>
+<span class="sd">        mark_unknown (False): if the given word is unknown in the tagged lexicon, KLPT stems is following rules. Such stems can be marked with &quot;_&quot; if this variable set to True</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        TypeError: only string as input</span>
@@ -740,7 +869,54 @@ Possible flags are T, V and I. :lf should also be taken into account.</p>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">==</span> <span class="s2">&quot;Sorani&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">==</span> <span class="s2">&quot;Arabic&quot;</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Not supported yet.&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">clean_stem</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)]))</span>
+        <span class="n">stems</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">clean_stem</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)]))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stems</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">stems</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># not detected by Hunspell or the word doesn&#39;t exist in the tagged lexicon</span>
+            <span class="k">for</span> <span class="n">verb</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">light_verbs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">verb</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="n">verb</span><span class="p">)[</span><span class="mi">0</span><span class="p">]):</span>
+                    <span class="n">stems</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">clean_stem</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="n">verb</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())]))</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stems</span><span class="p">):</span>
+                        <span class="c1"># the word is a compound form with a light verb. The other part can be stemmed by Hunspell</span>
+                        <span class="k">return</span> <span class="n">stems</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># the word is a compound form with a light verb but the other part cannot be stemmed by Hunspell</span>
+                        <span class="n">word</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="n">verb</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+            <span class="c1"># the other part of the word or the whole word cannot be stemmed by Hunspell</span>
+            <span class="c1"># so, find the stem following morphological rules by checking if removing possible prefixes and suffixes would help finding the stem</span>
+            <span class="c1"># Note: even though the same morphemes used in the tokenization system are used in the rules here, there is a delicate difference.</span>
+            <span class="c1">#    In the tokenization system, the trimming is done in such a way that shorter morphemes are first checked for suffixes (suffixes in the json file is sorted by length) and </span>
+            <span class="c1">#    longer prefixes are trimmer first.</span>
+            <span class="c1">#    For the stemmer, however, we do differently by first checking the longer morphemes then shorter ones (for both prefixes and suffixes). </span>
+            <span class="c1">#    This is due to the different purposes of the two tasks. Therefore, the list of the morphemes is to be reversed for suffixes (not prefixes). </span>
+
+            <span class="k">for</span> <span class="n">preposition</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">morphemes</span><span class="p">[</span><span class="s2">&quot;prefixes&quot;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">preposition</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">preposition</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">clean_stem</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">preposition</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">])]))):</span>
+                        <span class="n">stems</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">clean_stem</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">preposition</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">])]))</span>
+                        <span class="k">if</span> <span class="n">mark_unknown</span><span class="p">:</span>
+                            <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">stems</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">word</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">preposition</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="k">break</span>
+
+            <span class="k">for</span> <span class="n">postposition</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">morphemes</span><span class="p">[</span><span class="s2">&quot;suffixes&quot;</span><span class="p">])):</span>
+                <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">postposition</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="n">postposition</span><span class="p">)[</span><span class="mi">0</span><span class="p">]):</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">clean_stem</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="n">postposition</span><span class="p">)[</span><span class="mi">0</span><span class="p">])]))):</span>
+                        <span class="n">stems</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">clean_stem</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">huns</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="n">postposition</span><span class="p">)[</span><span class="mi">0</span><span class="p">])]))</span>
+                        <span class="k">if</span> <span class="n">mark_unknown</span><span class="p">:</span>
+                            <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">stems</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">word</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="n">postposition</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="k">break</span>
+
+            <span class="c1"># not possible to stem the word using the tagged lexicon or the rule-based approach. Return the word as it is.</span>
+            <span class="k">if</span> <span class="n">mark_unknown</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">word</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">word</span><span class="p">]</span>
 </code></pre></div>
         </details>
     </div>
