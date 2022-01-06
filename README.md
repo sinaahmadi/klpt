@@ -28,9 +28,19 @@
 
 ### Welcome / *Hûn bi xêr hatin* / بە خێر بێن! 🙂
 
-
 Kurdish Language Processing Toolkit--KLPT is a [natural language processing](https://en.wikipedia.org/wiki/Natural_language_processing) (NLP) toolkit in Python for the [Kurdish language](https://en.wikipedia.org/wiki/Kurdish_languages). The current version comes with four core modules, namely `preprocess`, `stem`, `transliterate` and `tokenize` and addresses basic language processing tasks such as text preprocessing, stemming, tokenization, spell-checking and morphological analysis for the [Sorani](https://en.wikipedia.org/wiki/Sorani) and the [Kurmanji](https://en.wikipedia.org/wiki/Kurmanji) dialects of Kurdish.
 
+---
+#### Latest update on January 6th, 2022 🎉
+
+In the latest version, the followings are done:
+
+- It is possible to **stem** and **lemmatize** words of all part-of-speech. Up to version 0.1.4, stemming was only possible for verbs.
+- For stemming unknown words, a rule-based approach is provided.
+- When using the morphological analyzer (in [stem module](https://github.com/sinaahmadi/klpt/blob/master/klpt/stem.py)), prefixes and suffixes are returned separately. These used to be previously merged.
+- Stopwords are now available for both Sorani and Kurmanji.
+
+---
 
 ## Install KLPT
 
@@ -87,12 +97,12 @@ Please note that KLPT is under development and some of the functionalities will 
     <td>&#10003; (v0.1.0)</td>
   </tr>
   <tr>
-    <td>stopwords 🆕</td>
+    <td>stopwords</td>
     <td>&#10003; (v0.1.4)</td>
     <td>&#10003; (v0.1.4)</td>
   </tr>
   <tr>
-    <td rowspan="3"><code>tokenize</code></td>
+    <td rowspan="4"><code>tokenize</code></td>
     <td>word tokenization<br></td>
     <td>&#10003; (v0.1.0)</td>
     <td>&#10003; (v0.1.0)</td>
@@ -106,6 +116,11 @@ Please note that KLPT is under development and some of the functionalities will 
     <td>sentence tokenization</td>
     <td>&#10003; (v0.1.0)</td>
     <td>&#10003; (v0.1.0)</td>
+  </tr>
+  <tr>
+    <td>part-of-speech tagging</td>
+    <td>&#x2717;</td>
+    <td>&#x2717;</td>
   </tr>
   <tr>
     <td rowspan="4"><code>transliterate</code></td>
@@ -141,12 +156,12 @@ Please note that KLPT is under development and some of the functionalities will 
   </tr>
   <tr>
     <td>stemming</td>
-    <td>only verbs (v.0.1.3) 🆕</td>
+    <td>&#10003; (v.0.1.5) 🆕</td>
     <td>&#x2717;</td>
   </tr>
   <tr>
     <td>lemmatization</td>
-    <td>&#x2717;</td>
+    <td>&#10003; (v.0.1.5) 🆕</td>
     <td>&#x2717;</td>
   </tr>
   <tr>
@@ -221,7 +236,7 @@ This module focuses on the tokenization of both Kurmanji and Sorani dialects of 
 - `mwe_tokenize`: tokenization of texts by only taking compound forms into account
 - `sent_tokenize`: tokenization of texts into sentences
 
-The module is based on the [Kurdish tokenization project](https://github.com/sinaahmadi/KurdishTokenization).
+This module is based on the [Kurdish tokenization project](https://github.com/sinaahmadi/KurdishTokenization). It is recommended that the output of this module be used as the input of the `Stem` module. 
 
 ```python
 >>> from klpt.tokenize import Tokenize
@@ -260,7 +275,8 @@ The Stem module deals with various tasks, mainly through the following functions
 - `check_spelling`: spell error detection
 - `correct_spelling`: spell error correction
 - `analyze`: morphological analysis
-- `stem`: stemming (only available for Sorani verbs for the moment).
+- `stem`: stemming, e.g. "بڕ" → "بڕاوە"
+- `lemmatize`: lemmatization, e.g. "بردن" → "بردمنەوە"
 
 The module is based on the [Kurdish Hunspell project](https://github.com/sinaahmadi/KurdishHunspell) for Sorani and the [Apertium project](https://github.com/apertium/apertium-kmr) for Kurmanji. Please note that this module is currently getting further completed and we are aware of its current shortcomings.
 
@@ -272,9 +288,13 @@ False
 >>> stemmer.correct_spelling("سوتاندبووت")
 (False, ['ستاندبووت', 'سووتاندبووت', 'سووڕاندبووت', 'ڕووتاندبووت', 'فەوتاندبووت', 'بووژاندبووت'])
 >>> stemmer.analyze("دیتبامن")
-[{'pos': 'verb', 'description': 'past_stem_transitive_active', 'base': 'دیت', 'terminal_suffix': 'بامن'}]
+[{'pos': ['verb'], 'description': 'past_stem_transitive_active', 'stem': 'دی', 'lemma': ['دیتن'], 'base': 'دیت', 'prefixes': '', 'suffixes': 'بامن'}]
 >>> stemmer.stem("دەچینەوە")
 ['چ']
+>>> stemmer.stem("گورەکە", mark_unknown=True) # گوڵەکە in Hewlêrî dialect
+['_گور_']
+>>> stemmer.lemmatize("گوڵەکانم"))
+['گوڵ', 'گوڵە']
 
 >>> stemmer = Stem("Kurmanji", "Latin")
 >>> stemmer.analyze("dibêjim")
@@ -311,7 +331,7 @@ Don't forget, **open-source is fun!** 😊
 - Python >=3.6
 - [`cyhunspell`](https://pypi.org/project/cyhunspell/) >= 2.0.1
 
-## Cite this paper
+## Cite this project
 Please consider citing [this paper](https://sinaahmadi.github.io/docs/articles/ahmadi2020klpt.pdf), if you use any part of the data or the tool ([`bib` file](https://sinaahmadi.github.io/bibliography/ahmadi2020klpt.txt)):
 
 	@inproceedings{ahmadi2020klpt,

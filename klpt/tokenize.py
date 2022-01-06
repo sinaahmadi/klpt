@@ -97,7 +97,7 @@ class Tokenize:
                 if punct in sentence:
                     sentence = sentence.replace(punct, " " + punct + " ")
 
-        # look for compound words and delimit them by double the separator
+        # look for compound words and delimit them by double separator
         for compound_lemma in self.mwe_lexicon:
             compound_lemma_context = " " + compound_lemma + " "
             if compound_lemma_context in sentence:
