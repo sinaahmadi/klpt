@@ -48,7 +48,7 @@ class Stem:
     ['چ']
     >>> stemmer.stem("گورەکە", mark_unknown=True)
     ['_گور_']
-    >>> stemmer.lemmatize("گوڵەکانم"))
+    >>> stemmer.lemmatize("گوڵەکانم")
     ['گوڵ', 'گوڵە']
     
     >>> stemmer = Stem("Kurmanji", "Latin")

@@ -293,7 +293,7 @@ False
 ['چ']
 >>> stemmer.stem("گورەکە", mark_unknown=True) # گوڵەکە in Hewlêrî dialect
 ['_گور_']
->>> stemmer.lemmatize("گوڵەکانم"))
+>>> stemmer.lemmatize("گوڵەکانم")
 ['گوڵ', 'گوڵە']
 
 >>> stemmer = Stem("Kurmanji", "Latin")
