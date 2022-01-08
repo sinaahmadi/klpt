@@ -12,10 +12,10 @@ import json
 class TestPreprocess(unittest.TestCase):
     """ Test unit for the Preprocess class"""
     def setUp(self):
-        with open(klpt.get_data("data/test_cases.json")) as f:
+        with open(klpt.get_data("data/test_cases.json"), encoding = "utf-8") as f:
             self.test_cases = json.load(f)
                     
-        with open(klpt.get_data("data/default-options.json")) as f:
+        with open(klpt.get_data("data/default-options.json"), encoding = "utf-8") as f:
             self.options = json.load(f)
 
     def tearDown(self):

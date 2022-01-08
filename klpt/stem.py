@@ -66,13 +66,13 @@ class Stem:
         self.hunspell_flags = {"po": "pos", "is": "description", "ds": "formation", "st": "stem", "lem": "lemma"}
         if self.dialect == "Sorani" and self.script == "Arabic":
             self.huns = Hunspell("ckb-Arab", hunspell_data_dir=klpt.get_data("data/"))
-            with open(klpt.data_directory["morphemes"][self.dialect], "r") as f_morphemes:
+            with open(klpt.data_directory["morphemes"][self.dialect], "r", encoding = "utf-8") as f_morphemes:
                 self.light_verbs = json.load(f_morphemes)["Morphemes"]["light_verbs"][self.script]
         else:
             if not (self.dialect == "Kurmanji" and self.script == "Latin"):
                 raise Exception("Sorry, only Sorani dialect in the Arabic script and Kurmanji in the Latin script is supported now. Stay tuned for other dialects and scripts!")
             
-        with open(klpt.data_directory["morphemes"][self.dialect], "r") as f_morphemes:
+        with open(klpt.data_directory["morphemes"][self.dialect], "r", encoding = "utf-8") as f_morphemes:
             self.morphemes = json.load(f_morphemes)["Morphemes"]["Concatenated"][self.script]
 
     def stem(self, word, mark_unknown=False):

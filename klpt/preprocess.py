@@ -65,7 +65,7 @@ class Preprocess:
             numeral (str): the type of the numeral
         
         """
-        with open(klpt.get_data("data/preprocess_map.json")) as preprocess_file:
+        with open(klpt.get_data("data/preprocess_map.json"), encoding = "utf-8") as preprocess_file:
             self.preprocess_map = json.load(preprocess_file)
 
         configuration = Configuration({"dialect": dialect, "script": script, "numeral": numeral})
@@ -74,7 +74,7 @@ class Preprocess:
         self.numeral = configuration.numeral
         # self.preprocess_map = config.preprocess_map
 
-        with open(klpt.data_directory["stopwords"], "r") as f:
+        with open(klpt.data_directory["stopwords"], "r", encoding = "utf-8") as f:
             self.stopwords = json.load(f)[dialect][script]
 
     def standardize(self, text):
