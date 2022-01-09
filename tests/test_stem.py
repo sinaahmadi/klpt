@@ -28,24 +28,24 @@ class TestStem(unittest.TestCase):
                     # print(dialect, script)
                     # test the morphological analyzer
                     for test_case in self.test_cases["analyze"][dialect][script]:
-                        self.assertEqual(stemmer.analyze(test_case), self.test_cases["analyze"][dialect][script][test_case])
+                        self.assertCountEqual(stemmer.analyze(test_case), self.test_cases["analyze"][dialect][script][test_case])
                     
                     # test the stemmer
                     for test_case in self.test_cases["stem"][dialect][script]:
                         for case in test_case["cases"]:
-                            self.assertEqual(stemmer.stem(case, mark_unknown=test_case["parameters"]["mark_unknown"]), test_case["cases"][case])
+                            self.assertCountEqual(stemmer.stem(case, mark_unknown=test_case["parameters"]["mark_unknown"]), test_case["cases"][case])
                     
                     # test the lemmatizer
                     for test_case in self.test_cases["lemmatize"][dialect][script]:
                         # order of the lemmata may cause an error. Run many times.
-                        self.assertEqual(stemmer.lemmatize(test_case), self.test_cases["lemmatize"][dialect][script][test_case])
+                        self.assertCountEqual(stemmer.lemmatize(test_case), self.test_cases["lemmatize"][dialect][script][test_case])
 
                 elif dialect == "Kurmanji" and script == "Latin":
                     stemmer = Stem("Kurmanji", "Latin")
                     # NOTICE: the order in which att_analyze returns morphological analyses may make these tests fail. Make sure the tests are run enough times.
                     for test_case in self.test_cases["analyze"][dialect][script]:
                         # print(test_case, stemmer.analyze(test_case))
-                        self.assertEqual(stemmer.analyze(test_case), self.test_cases["analyze"][dialect][script][test_case])
+                        self.assertCountEqual(stemmer.analyze(test_case), self.test_cases["analyze"][dialect][script][test_case])
 
                 else: # otherwise, not supported currently
                     pass

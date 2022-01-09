@@ -29,7 +29,7 @@ class TestTokenize(unittest.TestCase):
                     for test_case in self.test_cases["mwe_tokenize"][dialect][script]:
                         for case in test_case["cases"]:
                             # print(case, test_case["parameters"]["separator"], test_case["parameters"]["in_separator"], test_case["parameters"]["punct_marked"])
-                            self.assertEqual(tokenizer.mwe_tokenize(case, separator=test_case["parameters"]["separator"],
+                            self.assertCountEqual(tokenizer.mwe_tokenize(case, separator=test_case["parameters"]["separator"],
                                                                             in_separator=test_case["parameters"]["in_separator"],
                                                                             punct_marked=test_case["parameters"]["punct_marked"],
                                                                             keep_form=test_case["parameters"]["keep_form"]),
@@ -42,7 +42,7 @@ class TestTokenize(unittest.TestCase):
                     for case in self.test_cases["sent_tokenize"][dialect][script]:
                         tokenizer = Tokenize(dialect, script)
                         # print(case)
-                        self.assertEqual(tokenizer.sent_tokenize(case), self.test_cases["sent_tokenize"][dialect][script][case])
+                        self.assertCountEqual(tokenizer.sent_tokenize(case), self.test_cases["sent_tokenize"][dialect][script][case])
 
 if __name__ == "__main__":
     unittest.main()
