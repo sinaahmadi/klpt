@@ -12,10 +12,10 @@ import json
 class TestPreprocess(unittest.TestCase):
     """ Test unit for the Preprocess class"""
     def setUp(self):
-        with open(klpt.get_data("data/test_cases.json")) as f:
+        with open(klpt.get_data("data/test_cases.json"), encoding = "utf-8") as f:
             self.test_cases = json.load(f)
                     
-        with open(klpt.get_data("data/default-options.json")) as f:
+        with open(klpt.get_data("data/default-options.json"), encoding = "utf-8") as f:
             self.options = json.load(f)
 
     def tearDown(self):
@@ -27,7 +27,7 @@ class TestPreprocess(unittest.TestCase):
                 for case in self.test_cases["normalizer"][dialect][script]:
                     prep = Preprocess(dialect, script)
                     # print(case, prep.normalizer(case))
-                    self.assertEqual(prep.normalize(case), self.test_cases["normalizer"][dialect][script][case])
+                    self.assertCountEqual(prep.normalize(case), self.test_cases["normalizer"][dialect][script][case])
 
     def test_standardizer(self):
         # print("standardization")
@@ -36,14 +36,14 @@ class TestPreprocess(unittest.TestCase):
                 for case in self.test_cases["standardizer"][dialect][script]:
                     prep = Preprocess(dialect, script)
                     # print(case, prep.standardizer(case))
-                    self.assertEqual(prep.standardize(case), self.test_cases["standardizer"][dialect][script][case])
+                    self.assertCountEqual(prep.standardize(case), self.test_cases["standardizer"][dialect][script][case])
 
     def test_unify_numerals(self):
         # print("unify numerals")
         for numeral in self.options["numerals"]:
             for case in self.test_cases["numerals"][numeral]:
                 prep = Preprocess("Sorani", "Latin", numeral)
-                self.assertEqual(prep.unify_numerals(case), self.test_cases["numerals"][numeral][case])
+                self.assertCountEqual(prep.unify_numerals(case), self.test_cases["numerals"][numeral][case])
 
     def test_stopwords(self):
         # print("stopwords")
@@ -51,7 +51,7 @@ class TestPreprocess(unittest.TestCase):
             for script in self.options["scripts"]:
                 for case in self.test_cases["stopwords"][dialect][script]:
                     prep = Preprocess(dialect, script)
-                    self.assertEqual([token for token in case.split() if token not in prep.stopwords], self.test_cases["stopwords"][dialect][script][case])
+                    self.assertCountEqual([token for token in case.split() if token not in prep.stopwords], self.test_cases["stopwords"][dialect][script][case])
 
 if __name__ == "__main__":
     unittest.main()

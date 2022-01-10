@@ -60,10 +60,10 @@ class Transliterate:
         #     options = json.load(f)
         
         self.UNKNOWN = "�"
-        with open(klpt.get_data("data/wergor.json")) as f:
+        with open(klpt.get_data("data/wergor.json"), encoding = "utf-8") as f:
             self.wergor_configurations = json.load(f)
 
-        with open(klpt.get_data("data/preprocess_map.json")) as f:
+        with open(klpt.get_data("data/preprocess_map.json"), encoding = "utf-8") as f:
             self.preprocess_map = json.load(f)["normalizer"]
         
         configuration = Configuration({"dialect": dialect, "script": script, "numeral": numeral, "target_script": target_script, "unknown": unknown})

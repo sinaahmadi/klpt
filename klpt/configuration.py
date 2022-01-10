@@ -26,7 +26,7 @@ class Configuration:
 
         """
 
-        with open(klpt.get_data("data/default-options.json")) as options_file:
+        with open(klpt.get_data("data/default-options.json"), encoding = "utf-8") as options_file:
             self.options = json.load(options_file)
         
         self.unknown = None

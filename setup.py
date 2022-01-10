@@ -2,10 +2,10 @@ from setuptools import setup, find_packages
 from os import path
 
 this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+with open(path.join(this_directory, 'README.md'), encoding = "utf-8") as f:
     long_description = f.read()
 
-with open('requirements.txt') as f:
+with open('requirements.txt', encoding = "utf-8") as f:
     required = [req.strip() for req in f.read().splitlines() if req.strip()]
 
 setup(

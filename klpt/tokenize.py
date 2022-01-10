@@ -49,10 +49,10 @@ class Tokenize:
     def __init__(self, dialect, script, numeral="Latin", separator='▁'):
 
         # validate parameters
-        with open(klpt.get_data("data/tokenize.json")) as tokenize_file:
+        with open(klpt.get_data("data/tokenize.json"), encoding = "utf-8") as tokenize_file:
             self.tokenize_map = json.load(tokenize_file)
 
-        with open(klpt.get_data("data/preprocess_map.json")) as preprocess_file:
+        with open(klpt.get_data("data/preprocess_map.json"), encoding = "utf-8") as preprocess_file:
             self.preprocess_map = json.load(preprocess_file)
 
         # sentence tokenizer variables
@@ -66,12 +66,12 @@ class Tokenize:
         self.digits = "([%s])"%"".join(list(set(list(self.preprocess_map["normalizer"]["universal"]["numerals"][numeral].values()))))
 
         # load lexicons
-        with open(klpt.data_directory["tokenize"][self.dialect][self.script], "r") as f_lexicon:
+        with open(klpt.data_directory["tokenize"][self.dialect][self.script], "r", encoding = "utf-8") as f_lexicon:
             self.lexicon = json.load(f_lexicon)["Lexicon"]
          
         self.mwe_lexicon = {lemma: form for lemma, form in self.lexicon.items() if "-" in lemma}
 
-        with open(klpt.data_directory["morphemes"][self.dialect], "r") as f_morphemes:
+        with open(klpt.data_directory["morphemes"][self.dialect], "r", encoding = "utf-8") as f_morphemes:
             self.morphemes = json.load(f_morphemes)["Morphemes"]["Concatenated"][self.script]
         
     
