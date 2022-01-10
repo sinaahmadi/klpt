@@ -35,7 +35,7 @@ Kurdish Language Processing Toolkit--KLPT is a [natural language processing](htt
 
 In the latest version, the followings are done:
 
-- It is possible to **stem** and **lemmatize** words of all part-of-speech. Up to version 0.1.4, stemming was only possible for verbs.
+- It is possible to **stem** and **lemmatize** words with all part-of-speech tags. Up to version 0.1.4, stemming was only possible for verbs.
 - For stemming unknown words, a rule-based approach is provided.
 - When using the morphological analyzer (in [stem module](https://github.com/sinaahmadi/klpt/blob/master/klpt/stem.py)), prefixes and suffixes are returned separately. These used to be previously merged.
 - Stopwords are now available for both Sorani and Kurmanji.
