@@ -205,6 +205,7 @@
 <li><code>normalize</code>: deals with different encodings and unifies characters based on dialects and scripts</li>
 <li><code>standardize</code>: given a normalized text, it returns standardized text based on the Kurdish orthographies following recommendations for <a href="https://books.google.ie/books?id=Z7lDnwEACAAJ">Kurmanji</a> and <a href="http://yageyziman.com/Renusi_Kurdi.htm">Sorani</a></li>
 <li><code>unify_numerals</code>: conversion of the various types of numerals used in Kurdish texts</li>
+<li><code>preprocess</code>: one single function for normalization, standardization and unification of numerals</li>
 </ul>
 <p>In addition, it is possible to remove stopwords using the <code>stopwords</code> variable. It is better to remove stopwords after the tokenization task.</p>
 <p>It is recommended that the output of this module be used as the input of subsequent tasks in an NLP pipeline.</p>
@@ -220,6 +221,8 @@
 'ڕاستە لەو وڵاتەدا'
 &gt;&gt;&gt; preprocessor_ckb.unify_numerals(&quot;٢٠٢٠&quot;)
 '2020'
+&gt;&gt;&gt; preprocessor_ckb.preprocess(&quot;راستە لە ووڵاتەی ٢٣هەمدا&quot;)
+'ڕاستە لە وڵاتەی 23هەمدا'
 
 &gt;&gt;&gt; preprocessor_kmr = Preprocess(&quot;Kurmanji&quot;, &quot;Latin&quot;)
 &gt;&gt;&gt; preprocessor_kmr.standardize(&quot;di sala 2018-an&quot;)
@@ -304,7 +307,7 @@
 <span class="sd">        numeral (str): the type of the numeral</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">klpt</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s2">&quot;data/preprocess_map.json&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">preprocess_file</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">klpt</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s2">&quot;data/preprocess_map.json&quot;</span><span class="p">),</span> <span class="n">encoding</span> <span class="o">=</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">preprocess_file</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preprocess_map</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">preprocess_file</span><span class="p">)</span>
 
     <span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">({</span><span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span> <span class="s2">&quot;script&quot;</span><span class="p">:</span> <span class="n">script</span><span class="p">,</span> <span class="s2">&quot;numeral&quot;</span><span class="p">:</span> <span class="n">numeral</span><span class="p">})</span>
@@ -313,7 +316,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">numeral</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">numeral</span>
     <span class="c1"># self.preprocess_map = config.preprocess_map</span>
 
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">klpt</span><span class="o">.</span><span class="n">data_directory</span><span class="p">[</span><span class="s2">&quot;stopwords&quot;</span><span class="p">],</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">klpt</span><span class="o">.</span><span class="n">data_directory</span><span class="p">[</span><span class="s2">&quot;stopwords&quot;</span><span class="p">],</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stopwords</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="n">dialect</span><span class="p">][</span><span class="n">script</span><span class="p">]</span>
 </code></pre></div>
         </details>
