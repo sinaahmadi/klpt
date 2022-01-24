@@ -197,6 +197,7 @@ This module deals with normalizing scripts and orthographies by using writing co
 - `normalize`: deals with different encodings and unifies characters based on dialects and scripts
 - `standardize`: given a normalized text, it returns standardized text based on the Kurdish orthographies following recommendations for [Kurmanji](https://books.google.ie/books?id=Z7lDnwEACAAJ) and [Sorani](http://yageyziman.com/Renusi_Kurdi.htm)
 - `unify_numerals`: conversion of the various types of numerals used in Kurdish texts
+- `preprocess`: one single function for normalization, standardization and unification of numerals
 
 It is recommended that the output of this module be used as the input of subsequent tasks in an NLP pipeline.
 
@@ -210,6 +211,8 @@ It is recommended that the output of this module be used as the input of subsequ
 'ڕاستە لەو وڵاتەدا'
 >>> preprocessor_ckb.unify_numerals("٢٠٢٠")
 '2020'
+>>> preprocessor_ckb.preprocess("راستە لە ووڵاتەی ٢٣هەمدا")
+'ڕاستە لە وڵاتەی 23هەمدا'
 
 >>> preprocessor_kmr = Preprocess("Kurmanji", "Latin")
 >>> preprocessor_kmr.standardize("di sala 2018-an")
