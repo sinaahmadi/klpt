@@ -1,0 +1,464 @@
+# =======================================================================================
+#                    Spell detection and correction for Kurmanji Kurdish
+#                          	List of affixes
+# =======================================================================================
+#                             Version 0.1.0 (Last updated on 27-04-2022)
+#                             <https://github.com/sinaahmadi/KurdishHunspell>
+# =======================================================================================
+# Copyright 2022 Sina Ahmadi <ahmadi.sina@outlook.com> <sinaahmadi.github.io/>
+# This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+# ئەو پڕۆژەیە بە چەندین مانگ کاری خۆبەخشانە گەیشتووەتە ئەو قۆناغە. تکایە مافی کۆپی بپارێزن.
+# WARNING: THIS PROJECT IS THE RESULT OF MONTHS OF RESEARCH AND IMPLEMENTATION. PLEASE DO NOT USE IT WITHOUT PROPER CITING.
+# Created on January 2022
+# This file contains morphological rules for Kurmanji Kurdish. In version 0.1.0, inflectional and derivational rules regarding verbs, adjectives, adverbs and nouns are implemented. Next versions will include compound forms and further enrichments of the current categories.
+# Description of the flags which are identitical to those of the Sorani Hunspell (see the same repository):
+#	N: Noun
+#	V: present stem of verbs
+#	I: past stem of intransitive verbs
+#	T: past stem of transitive verbs
+#	A: adjectives
+#	R: adverbs
+#	E: numerals
+#	C: conjunction
+#	D: interjection
+#	B: pronouns
+#	E: numerals
+#	F: adpositions
+#	G: particle
+#	X: infinitive
+#	Z: proper names
+#	W: exceptional cases like were 'come.imp.2s'
+# If the flags don't make much sense to you, the part of speech tags, i.e. po flag, will hopefully do as they are provided according to the Universal Dependency tag. See: https://universaldependencies.org/u/pos/index.html
+# To see these rules in action, try KLPT (https://github.com/sinaahmadi/klpt).
+# It should be noted that the I and T flags are treated equally given that ergativity is dealt with differently from Sorani. However, to keep things consistent in the implementation of Sorani and Kurmanji Hunspell, the rules are repeated for both flags.
+# =======================================================================================
+#########################################################################################
+SET UTF-8
+LANG kmr
+COMPLEXPREFIXES
+TRY abcçdeêfghiîjklmnopqrsştuûvwxyzABCÇDEÊFGHIÎJKLMNOPQRSŞTUÛVWXYZ
+KEY qwertyuiopûş|asdfghjklêîç|<zxcvbnm,.-
+
+WORDCHARS ,.-[]|/;"%`'
+
+BREAK 2
+BREAK -
+BREAK --    # n-dash
+
+REP 3
+REP ch ç
+REP sh ş
+REP iy îy
+
+############### Morphological rules ######################################################
+############### Nouns, adjectives and adverbs ##########################################################
+
+SFX F Y 22
+SFX F 0 a [^aeêiîouû] .
+SFX F 0 ê [^aeêiîouû] .
+SFX F 0 ên [^aeêiîouû] .
+SFX F 0 an [^aeêiîouû] .
+SFX F 0 ek [^aeêiîouû] .
+SFX F 0 eke [^aeêiîouû] .
+SFX F 0 ekê [^aeêiîouû] .
+SFX F 0 in [^aeêiîouû] .
+SFX F 0 ine [^aeêiîouû] .
+SFX F 0 inan [^aeêiîouû] .
+SFX F 0 ya [aeêiîouû] .
+SFX F 0 yê [aeêiîouû] .
+SFX F 0 yên [aeêiîouû] .
+SFX F 0 yan [aeêiîouû] .
+SFX F 0 yek [aeêiîouû] .
+SFX F 0 yeke [aeêiîouû] .
+SFX F 0 yekê [aeêiîouû] .
+SFX F 0 yin [aeêiîouû] .
+SFX F 0 yine [aeêiîouû] .
+SFX F 0 yinan [aeêiîouû] .
+SFX F 0 ino [^aeêiîouû] .
+SFX F 0 yino [aeêiîouû] .
+
+SFX M Y 22
+SFX M 0 ê [^aeêiîouû] .
+SFX M 0 î [^aeêiîouû] .
+SFX M 0 ên [^aeêiîouû] .
+SFX M 0 an [^aeêiîouû] .
+SFX M 0 ek [^aeêiîouû] .
+SFX M 0 ekî [^aeêiîouû] .
+SFX M 0 in [^aeêiîouû] .
+SFX M 0 ine [^aeêiîouû] .
+SFX M 0 inan [^aeêiîouû] .
+SFX M 0 yê [aeêiîouû] .
+SFX M 0 yî [aeêiîouû] .
+SFX M 0 yên [aeêiîouû] .
+SFX M 0 yan [aeêiîouû] .
+SFX M 0 yek [aeêiîouû] .
+SFX M 0 yekî [aeêiîouû] .
+SFX M 0 yin [aeêiîouû] .
+SFX M 0 yine [aeêiîouû] .
+SFX M 0 yinan [aeêiîouû] .
+SFX M 0 o [^aeêiîouû] .
+SFX M 0 yo [aeêiîouû] .
+SFX M 0 ino [^aeêiîouû] .
+SFX M 0 yino [aeêiîouû] .
+
+SFX N Y 16
+SFX N 0 an [^aeêiîouû] .
+SFX N 0 ek [^aeêiîouû] .
+SFX N 0 in [^aeêiîouû] .
+SFX N 0 inan [^aeêiîouû] .
+SFX N 0 ine [^aeêiîouû] .
+SFX N 0 ino [^aeêiîouû] .
+SFX N 0 yan [aeêiîouû] .
+SFX N 0 yek [aeêiîouû] .
+SFX N 0 yin [aeêiîouû] .
+SFX N 0 yinan [aeêiîouû] .
+SFX N 0 yine [aeêiîouû] .
+SFX N 0 yino [aeêiîouû] .
+SFX N 0 yê [aeêiîouû] .
+SFX N 0 yên [aeêiîouû] .
+SFX N 0 ê [^aeêiîouû] .
+SFX N 0 ên [^aeêiîouû] .
+
+SFX A Y 55
+SFX A 0 tir [^t] .
+SFX A 0 tirîn [^t] .
+SFX A 0 tira [^t] .
+SFX A 0 tirê [^t] .
+SFX A 0 tirên [^t] .
+SFX A 0 tiran [^t] .
+SFX A 0 tirek [^t] .
+SFX A 0 tireke [^t] .
+SFX A 0 tirekê [^t] .
+SFX A 0 tirîna [^t] .
+SFX A 0 tirînê [^t] .
+SFX A 0 tirînên [^t] .
+SFX A 0 tirînan [^t] .
+SFX A 0 tirînek [^t] .
+SFX A 0 tirîneke [^t] .
+SFX A 0 tirînekê [^t] .
+SFX A 0 tirê [^t] .
+SFX A 0 tirî [^t] .
+SFX A 0 tirên [^t] .
+SFX A 0 tiran [^t] .
+SFX A 0 tirek [^t] .
+SFX A 0 tirekî [^t] .
+SFX A 0 tirînê [^t] .
+SFX A 0 tirînî [^t] .
+SFX A 0 tirînên [^t] .
+SFX A 0 tirînan [^t] .
+SFX A 0 tirînek [^t] .
+SFX A 0 tirînekî [^t] .
+SFX A 0 ir t .
+SFX A 0 ira t .
+SFX A 0 irê t .
+SFX A 0 irên t .
+SFX A 0 iran t .
+SFX A 0 irek t .
+SFX A 0 ireke t .
+SFX A 0 irekê t .
+SFX A 0 irê t .
+SFX A 0 irî t .
+SFX A 0 irên t .
+SFX A 0 iran t .
+SFX A 0 irek t .
+SFX A 0 irekî t .
+SFX A 0 irîna t .
+SFX A 0 irînê t .
+SFX A 0 irînên t .
+SFX A 0 irînan t .
+SFX A 0 irînek t .
+SFX A 0 irîneke t .
+SFX A 0 irînekê t .
+SFX A 0 irînê t .
+SFX A 0 irînî t .
+SFX A 0 irînên t .
+SFX A 0 irînan t .
+SFX A 0 irînek t .
+SFX A 0 irînekî t .
+
+############### Verbs ##########################################################
+# PFX and SFX of I and T are identical.
+
+PFX V Y 44
+PFX V 0 di [^aê]
+PFX V 0 d [aê]
+PFX V 0 na .
+PFX V 0 bi .
+PFX V 0 ne .
+PFX V 0 hil .
+PFX V 0 hildi [^aê]
+PFX V 0 hild [aê]
+PFX V 0 hilna .
+PFX V 0 hilbi .
+PFX V 0 hilne .
+PFX V 0 ve .
+PFX V 0 vedi [^aê]
+PFX V 0 ved [aê]
+PFX V 0 vebi .
+PFX V 0 vena .
+PFX V 0 vene .
+PFX V 0 rû .
+PFX V 0 rûdi [^aê]
+PFX V 0 rûd [aê]
+PFX V 0 rûbi .
+PFX V 0 rûna .
+PFX V 0 rûne .
+PFX V 0 da .
+PFX V 0 dadi [^aê]
+PFX V 0 dad [aê]
+PFX V 0 dabi .
+PFX V 0 dana .
+PFX V 0 dane .
+PFX V 0 der .
+PFX V 0 derdi [^aê]
+PFX V 0 derd [aê]
+PFX V 0 derbi .
+PFX V 0 derna .
+PFX V 0 derne .
+PFX V 0 ber .
+PFX V 0 berdi [^aê]
+PFX V 0 berd [aê]
+PFX V 0 berbi .
+PFX V 0 berna .
+PFX V 0 berne .
+PFX V çêdi çêna çêdi
+PFX V çêdi çê çêdi
+PFX V çêdi çêne çêdi
+
+SFX V Y 7
+SFX V 0 im [^oêi]
+SFX V 0 î [^oêi]
+SFX V 0 in [^oêi]
+SFX V 0 e [^oêi]
+SFX V 0 m [oêi]
+SFX V 0 yî [oêi]
+SFX V 0 n [oêi]
+
+PFX I Y 48
+PFX I 0 di [^aê]
+PFX I 0 d [aê]
+PFX I 0 na .
+PFX I 0 bi .
+PFX I 0 ne .
+PFX I 0 nedi .
+PFX I 0 hil .
+PFX I 0 hildi [^aê]
+PFX I 0 hild [aê]
+PFX I 0 hilna .
+PFX I 0 hilbi .
+PFX I 0 hilne .
+PFX I 0 hilnedi .
+PFX I 0 ve .
+PFX I 0 vedi [^aê]
+PFX I 0 ved [aê]
+PFX I 0 vebi .
+PFX I 0 vena .
+PFX I 0 vene .
+PFX I 0 venedi .
+PFX I 0 rû .
+PFX I 0 rûdi [^aê]
+PFX I 0 rûd [aê]
+PFX I 0 rûbi .
+PFX I 0 rûna .
+PFX I 0 rûne .
+PFX I 0 rûnedi .
+PFX I 0 da .
+PFX I 0 dadi [^aê]
+PFX I 0 dad [aê]
+PFX I 0 dabi .
+PFX I 0 dana .
+PFX I 0 dane .
+PFX I 0 danedi .
+PFX I 0 der .
+PFX I 0 derdi [^aê]
+PFX I 0 derd [aê]
+PFX I 0 derbi .
+PFX I 0 derna .
+PFX I 0 derne .
+PFX I 0 dernedi .
+PFX I 0 ber .
+PFX I 0 berdi [^aê]
+PFX I 0 berd [aê]
+PFX I 0 berbi .
+PFX I 0 berna .
+PFX I 0 berne .
+PFX I 0 bernedi .
+
+SFX I Y 52
+SFX I 0 im [^aîû]
+SFX I 0 ime [^aîû]
+SFX I 0 î [^aîû]
+SFX I 0 îye [^aîû]
+SFX I 0 in [^aîû]
+SFX I 0 ibûm [^aîû]
+SFX I 0 ibûma [^aîû]
+SFX I 0 ibûyî [^aîû]
+SFX I 0 ibûye [^aîû]
+SFX I 0 ibûya [^aîû]
+SFX I 0 ibû [^aîû]
+SFX I 0 ibûn [^aîû]
+SFX I 0 ibûna [^aîû]
+SFX I 0 ibim [^aîû]
+SFX I 0 ibî [^aîû]
+SFX I 0 ibe [^aîû]
+SFX I 0 ibin [^aîû]
+SFX I 0 iban [^aîû]
+SFX I 0 iye [^aîû]
+SFX I 0 ine [^aîû]
+SFX I 0 m [aîû]
+SFX I 0 yî [aû]
+SFX I 0 ye [aû]
+SFX I 0 n [aîû]
+SFX I 0 me [aîû]
+SFX I 0 yine [aû]
+SFX I 0 ne [aîû]
+SFX I 0 bûm [aîû]
+SFX I 0 bûma [aîû]
+SFX I 0 bûyî [aîû]
+SFX I 0 bûya [aîû]
+SFX I 0 bû [aîû]
+SFX I 0 bûn [aîû]
+SFX I 0 bûna [aîû]
+SFX I 0 bûye [aîû]
+SFX I 0 bûne [aîû]
+SFX I 0 bim [aîû]
+SFX I 0 bî [aîû]
+SFX I 0 be [aîû]
+SFX I 0 bin [aîû]
+SFX I 0 ban [aîû]
+SFX I î yî î
+SFX I î ye î
+SFX I î yine î
+SFX I 0 ma [aeêiîouû]
+SFX I 0 ya [aeêiîouû]
+SFX I 0 ama [^aeêiîouû]
+SFX I 0 ayî [^aeêiîouû]
+SFX I 0 a [^aeêiîouû]
+SFX I 0 ana [^aeêiîouû]
+SFX I 0 e [^aeêiîouû]
+SFX I 0 ê [^aeêiîouû]
+
+PFX T Y 48
+PFX T 0 di [^aê]
+PFX T 0 d [aê]
+PFX T 0 na .
+PFX T 0 bi .
+PFX T 0 ne .
+PFX T 0 nedi .
+PFX T 0 hil .
+PFX T 0 hildi [^aê]
+PFX T 0 hild [aê]
+PFX T 0 hilna .
+PFX T 0 hilbi .
+PFX T 0 hilne .
+PFX T 0 hilnedi .
+PFX T 0 ve .
+PFX T 0 vedi [^aê]
+PFX T 0 ved [aê]
+PFX T 0 vebi .
+PFX T 0 vena .
+PFX T 0 vene .
+PFX T 0 venedi .
+PFX T 0 rû .
+PFX T 0 rûdi [^aê]
+PFX T 0 rûd [aê]
+PFX T 0 rûbi .
+PFX T 0 rûna .
+PFX T 0 rûne .
+PFX T 0 rûnedi .
+PFX T 0 da .
+PFX T 0 dadi [^aê]
+PFX T 0 dad [aê]
+PFX T 0 dabi .
+PFX T 0 dana .
+PFX T 0 dane .
+PFX T 0 danedi .
+PFX T 0 der .
+PFX T 0 derdi [^aê]
+PFX T 0 derd [aê]
+PFX T 0 derbi .
+PFX T 0 derna .
+PFX T 0 derne .
+PFX T 0 dernedi .
+PFX T 0 ber .
+PFX T 0 berdi [^aê]
+PFX T 0 berd [aê]
+PFX T 0 berbi .
+PFX T 0 berna .
+PFX T 0 berne .
+PFX T 0 bernedi .
+
+SFX T Y 52
+SFX T 0 im [^aîû]
+SFX T 0 ime [^aîû]
+SFX T 0 î [^aîû]
+SFX T 0 îye [^aîû]
+SFX T 0 in [^aîû]
+SFX T 0 ibûm [^aîû]
+SFX T 0 ibûma [^aîû]
+SFX T 0 ibûyî [^aîû]
+SFX T 0 ibûye [^aîû]
+SFX T 0 ibûya [^aîû]
+SFX T 0 ibû [^aîû]
+SFX T 0 ibûn [^aîû]
+SFX T 0 ibûna [^aîû]
+SFX T 0 ibim [^aîû]
+SFX T 0 ibî [^aîû]
+SFX T 0 ibe [^aîû]
+SFX T 0 ibin [^aîû]
+SFX T 0 iban [^aîû]
+SFX T 0 iye [^aîû]
+SFX T 0 ine [^aîû]
+SFX T 0 m [aîû]
+SFX T 0 yî [aû]
+SFX T 0 ye [aû]
+SFX T 0 n [aîû]
+SFX T 0 me [aîû]
+SFX T 0 yine [aû]
+SFX T 0 ne [aîû]
+SFX T 0 bûm [aîû]
+SFX T 0 bûma [aîû]
+SFX T 0 bûyî [aîû]
+SFX T 0 bûya [aîû]
+SFX T 0 bû [aîû]
+SFX T 0 bûn [aîû]
+SFX T 0 bûna [aîû]
+SFX T 0 bûye [aîû]
+SFX T 0 bûne [aîû]
+SFX T 0 bim [aîû]
+SFX T 0 bî [aîû]
+SFX T 0 be [aîû]
+SFX T 0 bin [aîû]
+SFX T 0 ban [aîû]
+SFX T î yî î
+SFX T î ye î
+SFX T î yine î
+SFX T 0 ma [aeêiîouû]
+SFX T 0 ya [aeêiîouû]
+SFX T 0 ama [^aeêiîouû]
+SFX T 0 ayî [^aeêiîouû]
+SFX T 0 a [^aeêiîouû]
+SFX T 0 ana [^aeêiîouû]
+SFX T 0 e [^aeêiîouû]
+SFX T 0 ê [^aeêiîouû]
+
+#######################################################################
+# END OF MORPHOLOGICAL RULES FOR NOUNS, VERBS, ADJECTIVES AND ADVERBS
+#######################################################################
+###### Numerals
+
+SFX E Y 2
+SFX E 0 em
+SFX E 0 emîn
+
+PFX X Y 1
+PFX X 0 ne
+
+# END OF AFF FILE
+# =======================================================================================
+# Copyright 2022 Sina Ahmadi <ahmadi.sina@outlook.com> <sinaahmadi.github.io/>
+# =======================================================================================
+
+
+
+

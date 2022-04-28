@@ -31,14 +31,9 @@
 Kurdish Language Processing Toolkit--KLPT is a [natural language processing](https://en.wikipedia.org/wiki/Natural_language_processing) (NLP) toolkit in Python for the [Kurdish language](https://en.wikipedia.org/wiki/Kurdish_languages). The current version comes with four core modules, namely `preprocess`, `stem`, `transliterate` and `tokenize` and addresses basic language processing tasks such as text preprocessing, stemming, tokenization, spell-checking and morphological analysis for the [Sorani](https://en.wikipedia.org/wiki/Sorani) and the [Kurmanji](https://en.wikipedia.org/wiki/Kurmanji) dialects of Kurdish.
 
 ---
-#### Latest update on January 6th, 2022 🎉
+#### Latest update on April 29th, 2022 🎉
 
-In the latest version, the followings are done:
-
-- It is possible to **stem** and **lemmatize** words with all part-of-speech tags. Up to version 0.1.4, stemming was only possible for verbs.
-- For stemming unknown words, a rule-based approach is provided.
-- When using the morphological analyzer (in [stem module](https://github.com/sinaahmadi/klpt/blob/master/klpt/stem.py)), prefixes and suffixes are returned separately. These used to be previously merged.
-- Stopwords are now available for both Sorani and Kurmanji.
+In the latest version, I focused on Kurmanji for which a morphological analyzer, a stemmer and a lemmatizer are now added to the toolkit. These tasks were partially addressed previously using the [Apertium project](https://github.com/apertium/apertium-kmr). Now, that is fully replaced by the Kurmanji implementation of [Kurdish Hunspell](https://github.com/sinaahmadi/KurdishHunspell). 
 
 ---
 
@@ -150,24 +145,19 @@ Please note that KLPT is under development and some of the functionalities will 
     <td>&#10003; (v0.1.1)</td>
   </tr>
   <tr>
-    <td>morphological generation</td>
-    <td>&#10003; (v0.1.0)</td>
-    <td>&#x2717;</td>
-  </tr>
-  <tr>
     <td>stemming</td>
-    <td>&#10003; (v.0.1.5) 🆕</td>
-    <td>&#x2717;</td>
+    <td>&#10003; (v.0.1.5)</td>
+    <td>&#10003; (v.0.1.6) 🆕</td>
   </tr>
   <tr>
     <td>lemmatization</td>
-    <td>&#10003; (v.0.1.5) 🆕</td>
-    <td>&#x2717;</td>
+    <td>&#10003; (v.0.1.5)</td>
+    <td>&#10003; (v.0.1.6) 🆕</td>
   </tr>
   <tr>
     <td>spell error detection and correction</td>
     <td>&#10003; (v0.1.0)</td>
-    <td>&#x2717;</td>
+    <td>&#10003; (v.0.1.6) 🆕</td>
   </tr>
 </tbody>
 </table>
@@ -278,8 +268,8 @@ The Stem module deals with various tasks, mainly through the following functions
 - `check_spelling`: spell error detection
 - `correct_spelling`: spell error correction
 - `analyze`: morphological analysis
-- `stem`: stemming, e.g. "بڕ" → "بڕاوە"
-- `lemmatize`: lemmatization, e.g. "بردن" → "بردمنەوە"
+- `stem`: stemming, e.g. "بڕ" → "بڕاوە" or "dixwî" → "xw"
+- `lemmatize`: lemmatization, e.g. "بردن" → "بردمنەوە" or "jimartibûye" → "hejmartin"
 
 The module is based on the [Kurdish Hunspell project](https://github.com/sinaahmadi/KurdishHunspell) for Sorani and the [Apertium project](https://github.com/apertium/apertium-kmr) for Kurmanji. Please note that this module is currently getting further completed and we are aware of its current shortcomings.
 
@@ -301,7 +291,11 @@ False
 
 >>> stemmer = Stem("Kurmanji", "Latin")
 >>> stemmer.analyze("dibêjim")
-[{'base': 'gotin', 'description': 'vblex_tv_pri_p1_sg', 'pos': '', 'terminal_suffix': '', 'formation': ''}]
+[{'base': 'bêj', 'prefixes': 'di', 'suffixes': 'im', 'pos': ['verb'], 'description': 'present_stem_transitive_active', 'stem': 'bêj', 'lemma': ['gotin']}]
+>>> stemmer.stem("dixwî")
+['xw']
+>>> stemmer.lemmatize("jimartibûye")
+['hejmartin']
 ```
 
 📖 **Please note that a more complete documentation of the toolkit is available at [https://sinaahmadi.github.io/klpt/](https://sinaahmadi.github.io/klpt/)**.
@@ -353,7 +347,4 @@ Please consider citing [this paper](https://sinaahmadi.github.io/docs/articles/a
 - **You are free to share**, copy and redistribute the material in any medium or format and also adapt, remix, transform, and build upon the material
 for any purpose, **even commercially**. 
 - **You must give appropriate credit**, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
-- If you remix, transform, or build upon the material, **you must distribute your contributions under the same license as the original**. 
-
-
-
+- If you remix, transform, or build upon the material, **you must distribute your contributions under the same license as the original**.

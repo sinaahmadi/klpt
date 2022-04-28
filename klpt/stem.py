@@ -57,20 +57,24 @@ class Stem:
     ```
 
     """
-
+    # to do: make the following function work for Kurmanji Latin also following the same algorithm
     def __init__(self, dialect, script):
 
         self.dialect = dialect
         self.script = script 
 
         self.hunspell_flags = {"po": "pos", "is": "description", "ds": "formation", "st": "stem", "lem": "lemma"}
+        
         if self.dialect == "Sorani" and self.script == "Arabic":
             self.huns = Hunspell("ckb-Arab", hunspell_data_dir=klpt.get_data("data/"))
             with open(klpt.data_directory["morphemes"][self.dialect], "r", encoding = "utf-8") as f_morphemes:
                 self.light_verbs = json.load(f_morphemes)["Morphemes"]["light_verbs"][self.script]
+        elif self.dialect == "Kurmanji" and self.script == "Latin":
+            self.huns = Hunspell("kmr-Latn", hunspell_data_dir=klpt.get_data("data/"))
+            with open(klpt.data_directory["morphemes"][self.dialect], "r", encoding = "utf-8") as f_morphemes:
+                self.light_verbs = json.load(f_morphemes)["Morphemes"]["light_verbs"][self.script]
         else:
-            if not (self.dialect == "Kurmanji" and self.script == "Latin"):
-                raise Exception("Sorry, only Sorani dialect in the Arabic script and Kurmanji in the Latin script is supported now. Stay tuned for other dialects and scripts!")
+            raise Exception("Sorry, only Sorani dialect in the Arabic script and Kurmanji in the Latin script is supported now. Stay tuned for other dialects and scripts!")
             
         with open(klpt.data_directory["morphemes"][self.dialect], "r", encoding = "utf-8") as f_morphemes:
             self.morphemes = json.load(f_morphemes)["Morphemes"]["Concatenated"][self.script]
@@ -88,9 +92,9 @@ class Stem:
         Returns:
             list: list of stem(s)
         """
-        if not isinstance(word, str) or not (self.dialect == "Sorani" and self.script == "Arabic"):
+        if not isinstance(word, str):
             raise TypeError("Not supported yet.")
-        else:
+        elif (self.dialect == "Sorani" and self.script == "Arabic") or (self.dialect == "Kurmanji" and self.script == "Latin"):
             stems = list(set([self.clean_stem(i) for i in self.huns.stem(word)]))
             if len(stems):
                 return stems
@@ -107,12 +111,12 @@ class Stem:
                             word = word.rpartition(verb)[0].strip()
                 
                 # the other part of the word or the whole word cannot be stemmed by Hunspell
-                # so, find the stem following morphological rules by checking if removing possible prefixes and suffixes would help finding the stem
+                # so, find the stem following morphological rules by checking if removing possible prefixes and suffixes would help finding the stem.
                 # Note: even though the same morphemes used in the tokenization system are used in the rules here, there is a delicate difference.
-                #    In the tokenization system, the trimming is done in such a way that shorter morphemes are first checked for suffixes (suffixes in the json file is sorted by length) and 
-                #    longer prefixes are trimmer first.
+                #    In the tokenization system, the trimming is done in such a way that shorter morphemes are first checked for suffixes (suffixes in the json file is sorted by length) and longer prefixes are trimmed first.
                 #    For the stemmer, however, we do differently by first checking the longer morphemes then shorter ones (for both prefixes and suffixes). 
                 #    This is due to the different purposes of the two tasks. Therefore, the list of the morphemes is to be reversed for suffixes (not prefixes). 
+                # In order not to modify the json files, the `reversed` function is used for suffixes.
                 
                 for preposition in self.morphemes["prefixes"]:
                     if word.startswith(preposition) and len(word.split(preposition, 1)) > 1:
@@ -152,9 +156,9 @@ class Stem:
         Returns:
             list: list of lemma(s)
         """
-        if not isinstance(word, str) or not (self.dialect == "Sorani" and self.script == "Arabic"):
+        if not isinstance(word, str):
             raise TypeError("Not supported yet.")
-        else:
+        elif (self.dialect == "Sorani" and self.script == "Arabic") or (self.dialect == "Kurmanji" and self.script == "Latin"):
             word_analysis = self.analyze(word)
             return list(set([item for sublist in word_analysis for item in sublist["lemma"] if item != '']))
 
@@ -183,9 +187,9 @@ class Stem:
         Returns:
             bool: True if the spelling is correct, False if the spelling is incorrect
         """
-        if not isinstance(word, str) or not (self.dialect == "Sorani" and self.script == "Arabic"):
+        if not isinstance(word, str):
             raise TypeError("Not supported yet.")
-        else:
+        elif (self.dialect == "Sorani" and self.script == "Arabic") or (self.dialect == "Kurmanji" and self.script == "Latin"):
             return self.huns.spell(word)
 
     def correct_spelling(self, word):
@@ -204,9 +208,9 @@ class Stem:
             tuple (boolean, list)
 
         """
-        if not isinstance(word, str) or not (self.dialect == "Sorani" and self.script == "Arabic"):
+        if not isinstance(word, str):
             raise TypeError("Not supported yet.")
-        else:
+        elif (self.dialect == "Sorani" and self.script == "Arabic") or (self.dialect == "Kurmanji" and self.script == "Latin"):
             if self.check_spelling(word):
                 return (True, [])
             return (False, list(self.huns.suggest(word)))
@@ -217,7 +221,7 @@ class Stem:
         
         It returns morphological analyses. The morphological analysis is returned as a dictionary as follows:
         
-        - "pos": the part-of-speech of the word-form according to [the Universal Dependency tag set](https://universaldependencies.org/u/pos/index.html). 
+        - "pos": the part-of-speech of the word-form according to [the Universal Dependency tag set](https://universaldependencies.org/u/pos/index.html). The gender for nouns in Kurmanji is also provided after the "noun" tag.
         - "description": is flag
         - "prefixes": anything appearing before the base
         - "suffixes": anything appearing after the base
@@ -229,13 +233,10 @@ class Stem:
         As for the word "دیتبامن" (that I have seen them), the morphological analysis would look like this: [{'pos': ['verb'], 'description': 'past_stem_transitive_active', 'stem': 'دی', 'lemma': ['دیتن'], 'base': 'دیت', 'prefixes': '', 'suffixes': 'بامن'}]
         If the input cannot be analyzed morphologically, an empty list is returned.
 
-        Sorani: 
         More details regarding Sorani Kurdish morphological analysis can be found at [https://github.com/sinaahmadi/KurdishHunspell](https://github.com/sinaahmadi/KurdishHunspell).
 
-        Kurmanji:
-        Regarding Kurmanji, we use the morphological analyzer provided by the [Kurmanji part](https://github.com/apertium/apertium-kmr)
-
-        Please note that there are delicate difference between who the analyzers work in Hunspell and Apertium. For instane, the `base` in the Kurmanji analysis refers to the lemma while in Sorani (from Hunspell), it refers to the morphological base.
+        Nota bene:
+        In the previous versions of KLPT, the `stem` module for Kurmanji was relied on the [Apertium project](https://github.com/apertium/apertium-kmr). Now, that is fully replaced by the Kurmanji implementation of [Kurdish Hunspell](https://github.com/sinaahmadi/KurdishHunspell). 
 
         Args:
             word_form (str): a single word-form
@@ -251,72 +252,51 @@ class Stem:
             raise TypeError("Only a word (str) is allowed.")
         else:
             word_analysis = list()
-            if self.dialect == "Sorani" and self.script == "Arabic":
-                # Given the morphological analysis of a word-form with Hunspell flags, extract relevant information and return a dictionary
-                # print(self.huns.analyze(word_form))
-                for analysis in list(self.huns.analyze(word_form)):
-                    analysis_dict = dict()
-                    for item in analysis.split():
-                        if ":" not in item:
-                            continue
-                        if item.split(":")[1] == "ts":
-                            # ts flag exceptionally appears after the value as value:key in the Hunspell output
-                            # anything except the terminal_suffix (ts) is considered to be the base
-                            analysis_dict["base"] = item.split(":")[0]
-                            affixes = utility.extract_prefix_suffix(word_form, item.split(":")[0])
-                            analysis_dict["prefixes"] = affixes[0]
-                            analysis_dict["suffixes"] = affixes[2]
+            # Given the morphological analysis of a word-form with Hunspell flags, extract relevant information and return a dictionary
+            # print(self.huns.analyze(word_form))
+            for analysis in list(self.huns.analyze(word_form)):
+                analysis_dict = dict()
+                for item in analysis.split():
+                    if ":" not in item:
+                        continue
+                    if item.split(":")[1] == "ts":
+                        # ts flag exceptionally appears after the value as value:key in the Hunspell output
+                        # anything except the terminal_suffix (ts) is considered to be the base
+                        analysis_dict["base"] = item.split(":")[0]
+                        affixes = utility.extract_prefix_suffix(word_form, item.split(":")[0])
+                        analysis_dict["prefixes"] = affixes[0]
+                        analysis_dict["suffixes"] = affixes[2]
+                        
+                    elif item.split(":")[0] in self.hunspell_flags.keys():
+                        # assign the key:value pairs from the Hunspell string output to the dictionary output of the current function
+                        if item.split(":")[0] == "ds":
+                            # for ds flag, add derivation as the formation type, otherwise inflection
+                            analysis_dict[self.hunspell_flags[item.split(":")[0]]] = "derivational"
+                            analysis_dict[self.hunspell_flags["is"]] = item.split(":")[1]
+
+                        elif item.split(":")[0] == "st":
+                            # for st flag, stem should be cleaned first
+                            analysis_dict[self.hunspell_flags[item.split(":")[0]]] = self.clean_stem(item.split(":")[1])
+
+                        else:
+                            # remove I, T or V using clean_stem()
+                            analysis_dict[self.hunspell_flags[item.split(":")[0]]] = self.clean_stem(item.split(":")[1])
                             
-                        elif item.split(":")[0] in self.hunspell_flags.keys():
-                            # assign the key:value pairs from the Hunspell string output to the dictionary output of the current function
-                            if item.split(":")[0] == "ds":
-                                # for ds flag, add derivation as the formation type, otherwise inflection
-                                analysis_dict[self.hunspell_flags[item.split(":")[0]]] = "derivational"
-                                analysis_dict[self.hunspell_flags["is"]] = item.split(":")[1]
+                # convert lemma and pos to a list and split based on _ when there is more than one output, e.g. more than one lemma for a given word
+                if "lemma" in analysis_dict:
+                    analysis_dict["lemma"] = analysis_dict["lemma"].split("_")
+                else:
+                    analysis_dict["lemma"] = [""]
+                
+                if "pos" in analysis_dict:
+                    analysis_dict["pos"] = analysis_dict["pos"].split("_")
+                else:
+                    analysis_dict["pos"] = [""]
+                
+                # for nouns, base is lemma
+                if len(analysis_dict["pos"]) and analysis_dict["pos"] != ["verb"]:
+                    analysis_dict["lemma"] = [analysis_dict["base"]]
 
-                            elif item.split(":")[0] == "st":
-                                # for st flag, stem should be cleaned first
-                                analysis_dict[self.hunspell_flags[item.split(":")[0]]] = self.clean_stem(item.split(":")[1])
-
-                            else:
-                                # remove I, T or V using clean_stem()
-                                analysis_dict[self.hunspell_flags[item.split(":")[0]]] = self.clean_stem(item.split(":")[1])
-                                
-                    # convert lemma and pos to a list and split based on _ when there is more than one output, e.g. more than one lemma for a given word
-                    if "lemma" in analysis_dict:
-                        analysis_dict["lemma"] = analysis_dict["lemma"].split("_")
-                    else:
-                        analysis_dict["lemma"] = [""]
-                    
-                    if "pos" in analysis_dict:
-                        analysis_dict["pos"] = analysis_dict["pos"].split("_")
-                    else:
-                        analysis_dict["pos"] = [""]
-                    
-                    # for nouns, base is lemma
-                    if len(analysis_dict["pos"]) and analysis_dict["pos"] != ["verb"]:
-                        analysis_dict["lemma"] = [analysis_dict["base"]]
-
-                    word_analysis.append(analysis_dict)
-
-            elif self.dialect == "Kurmanji" and self.script == "Latin":
-                att_analysis = Analysis("Kurmanji", "Latin").analyze(word_form)
-
-                # check if the word-form is analyzed or no
-                if not len(att_analysis):
-                    # the word-form could not be analyzed
-                    return []
-
-                for analysis in att_analysis:
-                    analysis_dict = dict()
-                    structure = analysis[0].split("<", 1)
-                    analysis_dict["base"], analysis_dict["description"] = structure[0], structure[1].replace("><", "_").replace(">", "").strip()
-                    analysis_dict["pos"] = ""
-                    analysis_dict["terminal_suffix"] = ""
-                    analysis_dict["formation"] = ""
-                    # TODO: the description needs further information extraction in such a way that some values should be assigned to the "pos" key 
-                    # analysis_dict["terminal_suffix"] = word_form.replace(analysis_dict["base"], "")
-                    word_analysis.append(analysis_dict)
+                word_analysis.append(analysis_dict)
 
         return word_analysis
-

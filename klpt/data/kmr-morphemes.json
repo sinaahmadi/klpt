@@ -83,6 +83,18 @@
 				"suffixes": [],
 				"prefixes": []
 			}
+		},
+		"light_verbs": {
+			"Latin": [
+				"bûn",
+				"kirin",
+				"dan",
+				"girtin",
+				"xistin",
+				"xwarin",
+				"ketin",
+				"hatin"
+			]
 		}
 	}
 }
