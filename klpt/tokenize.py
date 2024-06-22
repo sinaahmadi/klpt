@@ -16,6 +16,7 @@ import re
 sys.path.append('../klpt')
 from klpt.configuration import Configuration
 from klpt.preprocess import Preprocess
+from klpt.stem import Stem
 import klpt
 
 class Tokenize:
@@ -64,6 +65,7 @@ class Tokenize:
         self.websites = self.tokenize_map["sent_tokenize"]["universal"]["websites"]
         self.acronyms = self.tokenize_map["sent_tokenize"][self.dialect][self.script]["acronyms"]
         self.digits = "([%s])"%"".join(list(set(list(self.preprocess_map["normalizer"]["universal"]["numerals"][numeral].values()))))
+        self.stem = Stem(dialect, script)
 
         # load lexicons
         with open(klpt.data_directory["tokenize"][self.dialect][self.script], "r", encoding = "utf-8") as f_lexicon:
@@ -90,6 +92,7 @@ class Tokenize:
 
         """
         sentence = " " + sentence + " "
+        sentence = self.lemmatize_sentence(sentence)
 
         if not punct_marked:
             # find punctuation marks and add a space around
@@ -215,3 +218,12 @@ class Tokenize:
         sentences = [s.strip() for s in sentences if len(s.strip())]
         
         return sentences
+
+    def lemmatize_sentence(self, sentence):
+        lemmatize_words = []
+        for word in sentence.split():
+            lemmatized_word = self.stem.lemmatize(word)
+            if lemmatized_word:
+                lemmatize_words.append(lemmatized_word[0])
+
+        return " ".join(lemmatize_words)
