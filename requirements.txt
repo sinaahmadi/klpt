@@ -1,1 +1,1 @@
-cyhunspell>=2.0.1
+chunspell
