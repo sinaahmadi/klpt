@@ -2,7 +2,7 @@
 #                    Spell detection and correction for Kurmanji Kurdish
 #                          	List of affixes
 # =======================================================================================
-#                             Version 0.1.0 (Last updated on 27-04-2022)
+#                             Version 0.1.1 (Last updated on 19-06-2025)
 #                             <https://github.com/sinaahmadi/KurdishHunspell>
 # =======================================================================================
 # Copyright 2022 Sina Ahmadi <ahmadi.sina@outlook.com> <sinaahmadi.github.io/>
@@ -13,6 +13,8 @@
 # This file contains morphological rules for Kurmanji Kurdish. In version 0.1.0, inflectional and derivational rules regarding verbs, adjectives, adverbs and nouns are implemented. Next versions will include compound forms and further enrichments of the current categories.
 # Description of the flags which are identitical to those of the Sorani Hunspell (see the same repository):
 #	N: Noun
+#	M: Masculine noun
+#	F: Feminine noun (in Kurmanji)
 #	V: present stem of verbs
 #	I: past stem of intransitive verbs
 #	T: past stem of transitive verbs
@@ -23,15 +25,17 @@
 #	D: interjection
 #	B: pronouns
 #	E: numerals
-#	F: adpositions
+#	P: adpositions (currently F in Sorani data)
 #	G: particle
 #	X: infinitive
 #	Z: proper names
 #	W: exceptional cases like were 'come.imp.2s'
+# 	H: punctuation marks
+# 	J: numerals as digits (0-9)
 # If the flags don't make much sense to you, the part of speech tags, i.e. po flag, will hopefully do as they are provided according to the Universal Dependency tag. See: https://universaldependencies.org/u/pos/index.html
 # To see these rules in action, try KLPT (https://github.com/sinaahmadi/klpt).
 # It should be noted that the I and T flags are treated equally given that ergativity is dealt with differently from Sorani. However, to keep things consistent in the implementation of Sorani and Kurmanji Hunspell, the rules are repeated for both flags.
-# =======================================================================================
+# Version 0.1.1 contains more words in the lexicon along with additional rules for numerals (digits with H flag) and punctuation marks (J)
 #########################################################################################
 SET UTF-8
 LANG kmr
@@ -40,6 +44,11 @@ TRY abcçdeêfghiîjklmnopqrsştuûvwxyzABCÇDEÊFGHIÎJKLMNOPQRSŞTUÛVWXYZ
 KEY qwertyuiopûş|asdfghjklêîç|<zxcvbnm,.-
 
 WORDCHARS ,.-[]|/;"%`'
+
+# Compound rules for numerals
+COMPOUNDFLAG J
+COMPOUNDMIN 1
+COMPOUNDWORDMAX 10
 
 BREAK 2
 BREAK -
