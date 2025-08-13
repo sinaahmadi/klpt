@@ -31,9 +31,10 @@
 Kurdish Language Processing Toolkit--KLPT is a [natural language processing](https://en.wikipedia.org/wiki/Natural_language_processing) (NLP) toolkit in Python for the [Kurdish language](https://en.wikipedia.org/wiki/Kurdish_languages). The current version comes with four core modules, namely `preprocess`, `stem`, `transliterate` and `tokenize` and addresses basic language processing tasks such as text preprocessing, stemming, tokenization, spell-checking and morphological analysis for the [Sorani](https://en.wikipedia.org/wiki/Sorani) and the [Kurmanji](https://en.wikipedia.org/wiki/Kurmanji) dialects of Kurdish.
 
 ---
-#### Latest update on April 29th, 2022 🎉
+#### Updates 
 
-In the latest version, I focused on Kurmanji for which a morphological analyzer, a stemmer and a lemmatizer are now added to the toolkit. These tasks were partially addressed previously using the [Apertium project](https://github.com/apertium/apertium-kmr). Now, that is fully replaced by the Kurmanji implementation of [Kurdish Hunspell](https://github.com/sinaahmadi/KurdishHunspell). 
+- August 2025: [KurdishHunspell](https://github.com/sinaahmadi/KurdishHunspell/tree/main) is updated with additional tagged words (10k in Sorani and 21k in Kurmanji).
+- April 2022: In the latest version, I focused on Kurmanji for which a morphological analyzer, a stemmer and a lemmatizer are now added to the toolkit. These tasks were partially addressed previously using the [Apertium project](https://github.com/apertium/apertium-kmr). Now, that is fully replaced by the Kurmanji implementation of [Kurdish Hunspell](https://github.com/sinaahmadi/KurdishHunspell).
 
 ---
 
@@ -41,25 +42,34 @@ In the latest version, I focused on Kurmanji for which a morphological analyzer,
 
 <!--For detailed installation instructions, see the [documentation]().-->
 
-- **Operating system**: macOS / OS X · Linux · Windows (Cygwin, MinGW, Visual
-  Studio)
-- **Python version**: Python 3.5+ 
-- **Package managers**: [pip](https://pypi.org/project/klpt/)
-
-[pip]: https://pypi.org/project/spacy/
-[conda]: https://anaconda.org/conda-forge/spacy
+- **Operating system**: macOS / OS X · Linux · Windows (Cygwin, MinGW, Visual Studio)
+- **Python version**: Python 3.5+
+- **Package managers**: pip
 
 ### pip
 
-Using pip, KLPT releases are available as source packages and binary wheels. Please make sure that a compatible Python version is installed:
+It's recommended to use a virtual environment to avoid dependency conflicts and to install the latest development version directly from the GitHub repository:
+
+```bash
+# Create and activate a virtual environment
+python -m venv klpt-env
+source klpt-env/bin/activate  # On Windows: klpt-env\Scripts\activate
+
+# Install from Git
+pip install git+https://github.com/sinaahmadi/klpt.git
+```
+
+This will install the most recent version from the main branch, which may include features not yet available in the PyPI release.
+
+<!-- Using pip, KLPT releases are available as source packages and binary wheels. Please make sure that a compatible Python version is installed:
 
 ```bash
 pip install klpt
-```
+``` -->
 
-All the data files including lexicons and morphological rules are also installed with the package. 
+All the data files including lexicons and morphological rules are also installed with the package.
 
-Although KLPT is not dependent on any NLP toolkit, there is one important requirement, particularly for the `stem` module. That is [`cyhunspell`](https://pypi.org/project/cyhunspell/) which should be installed with a version >= 2.0.1.
+Although KLPT is not dependent on any NLP toolkit, there is one important requirement, particularly for the `stem` module. That is [`chunspell`](https://github.com/cdhigh/chunspell) which should be installed with a version >= 2.0.1. Please note that Hunspell has some known issues with certain architectures. This is not caused by KLPT. Please refer to [Hunspell](https://github.com/pyhunspell/pyhunspell) for solutions (including this [issue](https://github.com/pyhunspell/pyhunspell/issues/80)).
 
 ### About this version
 
@@ -326,7 +336,7 @@ Don't forget, **open-source is fun!** 😊
 
 ## Requirements
 - Python >=3.6
-- [`cyhunspell`](https://pypi.org/project/cyhunspell/) >= 2.0.1
+- [`chunspell`](https://github.com/cdhigh/chunspell)
 
 ## Cite this project
 Please consider citing [this paper](https://sinaahmadi.github.io/docs/articles/ahmadi2020klpt.pdf), if you use any part of the data or the tool ([`bib` file](https://sinaahmadi.github.io/bibliography/ahmadi2020klpt.txt)):
